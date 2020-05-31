@@ -1,0 +1,44 @@
+﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|Default">
+  <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/wwwroot/css/login.css">
+    <Files>
+      <File FileName="AGSIdentity/Repositories/EF/EFRepository.cs" Line="21" Column="87" />
+      <File FileName="AGSIdentity/Pages/login.cshtml.cs" Line="38" Column="51" />
+      <File FileName="AGSIdentity/Pages/login.cshtml" Line="29" Column="23" />
+      <File FileName="AGSIdentity/Services/ExceptionFactory/IExceptionFactory.cs" Line="6" Column="39" />
+      <File FileName="AGSIdentity/Services/Auth/Identity/IdentityAuthService.cs" Line="28" Column="21" />
+      <File FileName="AGSIdentity/wwwroot/css/login.css" Line="3" Column="16" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AGS" expanded="True">
+            <Node name="AGSIdentity" expanded="True">
+              <Node name="Pages" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="Auth" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
+                <Node name="ExceptionFactory" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="css" expanded="True">
+                  <Node name="login.css" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/Auth/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/Auth/Identity/IdentityAuthService.cs" line="30" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

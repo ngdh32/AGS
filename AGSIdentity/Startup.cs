@@ -6,6 +6,16 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AGSIdentity.Models;
+using AGSIdentity.Repositories;
+using AGSIdentity.Repositories.EF;
+using AGSIdentity.Services;
+using AGSIdentity.Services.Auth;
+using AGSIdentity.Services.Auth.Identity;
+using AGSIdentity.Services.ExceptionFactory;
+using AGSIdentity.Services.ExceptionFactory.Json;
+//using AGSIdentity.Services.Identity;
+using IdentityServer4.EntityFramework.Stores;
+using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,6 +102,13 @@ namespace AGSIdentity
 
             // add controllers 
             services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            // add repository object
+            services.AddSingleton<IExceptionFactory, JsonExceptionFactory>();
+            services.AddHttpContextAccessor();
+            services.AddTransient<IAuthService, IdentityAuthService>();
+            services.AddTransient<IRepository, EFRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +121,8 @@ namespace AGSIdentity
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseIdentityServer();
@@ -112,6 +131,7 @@ namespace AGSIdentity
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
 
