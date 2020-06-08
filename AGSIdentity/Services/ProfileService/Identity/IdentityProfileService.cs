@@ -33,17 +33,16 @@ namespace AGSIdentity.Services.ProfileService.Identity
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public async Task GetProfileDataAsync(ProfileDataRequestContext context)
+        public Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             Console.WriteLine("GetProfileDataAsync fired!");
             var userId = context.Subject.GetSubjectId();
-            var user = await _userManager.FindByIdAsync(userId);
-            var roleNames = await _userManager.GetRolesAsync(user);
+            var user = _userManager.FindByIdAsync(userId).Result;
+            var roleNames = _userManager.GetRolesAsync(user).Result;
             foreach(var roleName in roleNames)
             {
-                Console.WriteLine("roleName:" + roleName);
-                var role = await _roleManager.FindByNameAsync(roleName);
-                var roleClaims = await _roleManager.GetClaimsAsync(role);
+                var role = _roleManager.FindByNameAsync(roleName).Result;
+                var roleClaims = _roleManager.GetClaimsAsync(role).Result;
                 foreach(var roleClaim in roleClaims)
                 {
                     Console.WriteLine("roleClaim:" + roleClaim);
@@ -52,6 +51,17 @@ namespace AGSIdentity.Services.ProfileService.Identity
                 context.IssuedClaims.Add(new Claim(JwtClaimTypes.Role, roleName));
             }
 
+            Console.WriteLine("context.IssuedClaims");
+            foreach(var claim in context.IssuedClaims){
+                Console.WriteLine($"{claim.Type} : {claim.Value}");
+            }
+
+            Console.WriteLine("context.Subject.Claims");
+            foreach(var claim in context.Subject.Claims){
+                Console.WriteLine($"{claim.Type} : {claim.Value}");
+            }
+
+            return Task.CompletedTask;
         }
 
         public async Task IsActiveAsync(IsActiveContext context)

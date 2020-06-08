@@ -3,11 +3,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvide
 
-<h1>Counter</h1>
-
-<p>Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary">Click me</button>
 
 <AuthorizeView>
     <h1>Username: @context.User.Identity.Name</h1>
@@ -18,11 +14,5 @@
 </AuthorizeView>
 
 @code {
-    private int currentCount = 0;
 
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
 }

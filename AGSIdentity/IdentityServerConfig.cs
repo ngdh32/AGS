@@ -111,7 +111,8 @@ namespace AGSIdentity
                         ,AGSCommon.CommonConstant.AGSFunctionScopeConstant
                     },
                     
-                    AllowAccessTokensViaBrowser = true
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true
                 }
             };
         }

@@ -79,6 +79,8 @@ namespace AGSIdentity
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             // Add identity server for OAuth 2.0
+            services.AddTransient<IProfileService, IdentityProfileService>(); // customized IProfile servoce
+
             services.AddIdentityServer(options =>
             {
                 // set up the login page url
@@ -95,9 +97,9 @@ namespace AGSIdentity
                     b.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                 options.EnableTokenCleanup = true;
             })
-            .AddProfileService<IdentityProfileService>() // add the service of customization of token
             .AddAspNetIdentity<ApplicationUser>() // use asp.net identity user as the user of identity server
-            .AddSigningCredential(GetCertificate()); // use the certificate so that the token is still valid after application is rebooted
+            .AddSigningCredential(GetCertificate()) // use the certificate so that the token is still valid after application is rebooted
+            .AddProfileService<IdentityProfileService>(); // add the service of customization of token
             #endregion
 
             #region Setup JWT Bearer Authentication
@@ -125,7 +127,7 @@ namespace AGSIdentity
             services.AddRazorPages();
 
             // add repository object
-            services.AddTransient<IProfileService, IdentityProfileService>();
+            
             services.AddSingleton<IExceptionFactory, JsonExceptionFactory>();
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();

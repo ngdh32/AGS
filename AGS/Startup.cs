@@ -33,7 +33,7 @@ namespace AGS
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             // add oidc authentication and use cookie to store the token
             services.AddAuthentication(options =>
@@ -50,6 +50,7 @@ namespace AGS
                 options.ClientSecret = Configuration["auth_client_secret"];
                 options.ResponseType = "id_token token";
                 options.SaveTokens = true;
+                // options.GetClaimsFromUserInfoEndpoint = true;
                 // add the necessary scopes
                 options.Scope.Add(AGSCommon.CommonConstant.AGSDocumentScopeConstant);
                 options.Scope.Add(AGSCommon.CommonConstant.AGSIdentityScopeConstant);
