@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 using Microsoft.AspNetCore.Identity;
 
 namespace AGSIdentity.Repositories.EF
@@ -9,23 +9,23 @@ namespace AGSIdentity.Repositories.EF
     public class EFGroupRepository : IGroupRepository
     {
         private ApplicationDbContext _applicationDbContext { get; set; }
-        private RoleManager<IdentityRole> _roleManager { get; set; }
+        private RoleManager<ApplicationRole> _roleManager { get; set; }
 
-        public EFGroupRepository(ApplicationDbContext applicationDbContext, RoleManager<IdentityRole> roleManager)
+        public EFGroupRepository(ApplicationDbContext applicationDbContext, RoleManager<ApplicationRole> roleManager)
         {
             _applicationDbContext = applicationDbContext;
             _roleManager = roleManager;
         }
 
-        public void Create(Group group)
+        public void Create(AGSGroup group)
         {
-            var identityRole = new IdentityRole()
+            var ApplicationRole = new ApplicationRole()
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = group.Name,
                 NormalizedName = group.Name
             };
-            _ = _roleManager.CreateAsync(identityRole).Result;
+            _ = _roleManager.CreateAsync(ApplicationRole).Result;
         }
 
         public void Delete(string id)
@@ -37,25 +37,25 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public Group Get(string id)
+        public AGSGroup Get(string id)
         {
             var selected = _roleManager.FindByIdAsync(id).Result;
-            var result = new Group(selected);
+            var result = selected.GetAGSGroup();
             return result;
         }
 
-        public List<Group> GetAll()
+        public List<AGSGroup> GetAll()
         {
-            var groups = new List<Group>();
+            var groups = new List<AGSGroup>();
             foreach(var role in _applicationDbContext.Roles)
             {
-                groups.Add(new Group(role));
+                groups.Add(role.GetAGSGroup()) ;
             }
             return groups;
 
         }
 
-        public void Update(Group group)
+        public void Update(AGSGroup group)
         {
             var selected = _roleManager.FindByIdAsync(group.Id).Result;
             if (selected != null)

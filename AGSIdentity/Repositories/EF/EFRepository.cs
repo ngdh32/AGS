@@ -13,7 +13,7 @@ namespace AGSIdentity.Repositories.EF
         public IMenuRepository menuRepository { get; private set; }
         public IFunctionClaimRepository functionClaimRepository { get; private set; }
 
-        public EFRepository(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public EFRepository(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _applicationDbContext = applicationDbContext;
 

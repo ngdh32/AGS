@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AGSIdentity.Models.DataModels
+namespace AGSCommon.Models.DataModels.AGSIdentity
 {
-    public class Menu
+    public class AGSMenu
     {
         [Key]
         public int Id { get; set; }
@@ -15,9 +15,9 @@ namespace AGSIdentity.Models.DataModels
         [Required]
         public int Order { get; set; }
 
-        public FunctionClaim functionClaim { get; set; }
+        public AGSFunctionClaim functionClaim { get; set; }
 
-        public Menu Parent { get; set; }
+        public AGSMenu Parent { get; set; }
 
     }
 }

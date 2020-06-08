@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 using System.Linq;
 
 namespace AGSIdentity.Repositories.EF
@@ -15,7 +15,7 @@ namespace AGSIdentity.Repositories.EF
             _applicationDbContext = applicationDbContext;
         }
 
-        public FunctionClaim Get(int id)
+        public AGSFunctionClaim Get(int id)
         {
             var selected = (from x in _applicationDbContext.FunctionClaims
                             where x.Id == id
@@ -23,7 +23,7 @@ namespace AGSIdentity.Repositories.EF
             return selected;
         }
 
-        public List<FunctionClaim> GetAll()
+        public List<AGSFunctionClaim> GetAll()
         {
             return _applicationDbContext.FunctionClaims.ToList();
         }
@@ -40,12 +40,12 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public void Create(FunctionClaim functionClaim)
+        public void Create(AGSFunctionClaim functionClaim)
         {
             _applicationDbContext.FunctionClaims.Add(functionClaim);
         }
 
-        public void Update(FunctionClaim functionClaim)
+        public void Update(AGSFunctionClaim functionClaim)
         {
             _applicationDbContext.FunctionClaims.Update(functionClaim);
         }

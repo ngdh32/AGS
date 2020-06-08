@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
     public interface IGroupRepository
     {
-        Group  Get(string id);
-        List<Group> GetAll();
+        AGSGroup  Get(string id);
+        List<AGSGroup> GetAll();
         void Delete(string id);
-        void Create(Group  group);
-        void Update(Group  group);
+        void Create(AGSGroup  group);
+        void Update(AGSGroup  group);
     }
 }

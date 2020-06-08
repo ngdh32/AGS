@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,19 +18,19 @@ namespace AGSIdentity.Repositories.EF
             _userManager = userManager;
         }
 
-        public User Get(string id)
+        public AGSUser Get(string id)
         {
             var selected = _userManager.FindByIdAsync(id).Result;
-            var result = new User(selected);
+            var result = selected.GetAGSUser();
             return result;
         }
 
-        public List<User> GetAll()
+        public List<AGSUser> GetAll()
         {
-            var users = new List<User>();
+            var users = new List<AGSUser>();
             foreach (var user in _applicationDbContext.Users)
             {
-                users.Add(new User(user));
+                users.Add(user.GetAGSUser());
             }
             return users;
         }
@@ -44,7 +44,7 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public void Create(User user)
+        public void Create(AGSUser user)
         {
             ApplicationUser _user = new ApplicationUser()
             {
@@ -58,7 +58,7 @@ namespace AGSIdentity.Repositories.EF
             _ = _userManager.CreateAsync(_user).Result;
         }
 
-        public void Update(User user)
+        public void Update(AGSUser user)
         {
             var selected = _userManager.FindByIdAsync(user.Id).Result;
             selected.UserName = user.Username;

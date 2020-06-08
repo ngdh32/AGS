@@ -1,25 +1,26 @@
 ﻿<Properties StartupConfiguration="AGSLaunchConfiguration">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/appsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
     <Files>
-      <File FileName="AGS/Startup.cs" Line="48" Column="38" />
-      <File FileName="AGSIdentity/IdentityServerConfig.cs" />
-      <File FileName="AGSIdentity/Program.cs" />
-      <File FileName="AGSIdentity/Startup.cs" />
-      <File FileName="AGSIdentity/appsettings.json" />
-      <File FileName="AGS/appsettings.json" Line="5" Column="22" />
+      <File FileName="AGSIdentity/Repositories/EF/EFUserRepository.cs" Line="22" Column="10" />
+      <File FileName="AGSIdentity/appsettings.json" Line="7" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
-            <Node name="AGS" expanded="True">
-              <Node name="appsettings.json" selected="True" />
-            </Node>
-            <Node name="AGSCommon" expanded="True" />
             <Node name="AGSIdentity" expanded="True">
               <Node name="Properties" expanded="True" />
+              <Node name="Repositories" expanded="True">
+                <Node name="EF" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True">
+                <Node name="ProfileService" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="appsettings.json" selected="True" />
             </Node>
           </Node>
         </State>

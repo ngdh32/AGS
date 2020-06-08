@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
     public interface IFunctionClaimRepository
     {
-        FunctionClaim Get(int id);
-        List<FunctionClaim> GetAll();
+        AGSFunctionClaim Get(int id);
+        List<AGSFunctionClaim> GetAll();
         void Delete(int id);
-        void Create(FunctionClaim functionClaim);
-        void Update(FunctionClaim functionClaim);
+        void Create(AGSFunctionClaim functionClaim);
+        void Update(AGSFunctionClaim functionClaim);
     }
 }

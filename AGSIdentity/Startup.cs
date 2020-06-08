@@ -57,7 +57,7 @@ namespace AGSIdentity
                 options.UseMySql(connectionString));
 
             // use customized identity user in identity & take application db context as the db for entity framework
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -195,7 +195,7 @@ namespace AGSIdentity
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
                 var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
@@ -267,7 +267,10 @@ namespace AGSIdentity
                                 new Claim(JwtClaimTypes.Email, email)
                             }).Result;
 
-                adminRole = new IdentityRole(adminName);
+                adminRole = new ApplicationRole()
+                {
+                    Name = adminName
+                };
                 
                 _ = roleManager.CreateAsync(adminRole).Result;
                 adminRole = roleManager.FindByNameAsync(adminRole.Name).Result;

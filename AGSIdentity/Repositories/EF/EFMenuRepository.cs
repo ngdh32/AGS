@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 using System.Linq;
 
 namespace AGSIdentity.Repositories.EF
@@ -15,7 +15,7 @@ namespace AGSIdentity.Repositories.EF
             _applicationDbContext = applicationDbContext;
         }
 
-        public void Create(Menu  menu)
+        public void Create(AGSMenu  menu)
         {
             _applicationDbContext.Menus.Add(menu);
         }
@@ -32,7 +32,7 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public Menu Get(int id)
+        public AGSMenu Get(int id)
         {
             var selected = (from x in _applicationDbContext.Menus
                             where x.Id == id
@@ -40,12 +40,12 @@ namespace AGSIdentity.Repositories.EF
             return selected;
         }
 
-        public List<Menu> GetAll()
+        public List<AGSMenu> GetAll()
         {
             return _applicationDbContext.Menus.ToList();
         }
 
-        public void Update(Menu menu)
+        public void Update(AGSMenu menu)
         {
             _applicationDbContext.Menus.Update(menu);
         }

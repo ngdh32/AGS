@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
     public interface IUserRepository
     {
-        User  Get(string id);
-        List<User> GetAll();
+        AGSUser  Get(string id);
+        List<AGSUser> GetAll();
         void Delete(string id);
-        void Create(User  user);
-        void Update(User  user);
+        void Create(AGSUser  user);
+        void Update(AGSUser  user);
     }
 }

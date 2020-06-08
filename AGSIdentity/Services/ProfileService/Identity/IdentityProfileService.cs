@@ -15,11 +15,11 @@ namespace AGSIdentity.Services.ProfileService.Identity
     {
         private ApplicationDbContext _applicationDbContext { get; set; }
         private UserManager<ApplicationUser> _userManager { get; set; }
-        private RoleManager<IdentityRole> _roleManager { get; set; }
+        private RoleManager<ApplicationRole> _roleManager { get; set; }
 
         public IdentityProfileService(
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<ApplicationRole> roleManager,
             IOptions<IdentityOptions> optionsAccessor,
             ApplicationDbContext applicationDbContext)
         {

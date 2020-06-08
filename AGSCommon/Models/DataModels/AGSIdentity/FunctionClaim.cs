@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AGSIdentity.Models.DataModels
+namespace AGSCommon.Models.DataModels.AGSIdentity
 {
-    public class FunctionClaim
+    public class AGSFunctionClaim
     {
         [Key]
         public int Id { get; set; }

@@ -1,16 +1,16 @@
 ﻿using System;
-using AGSIdentity.Models.DataModels;
+using AGSCommon.Models.DataModels.AGSIdentity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AGSIdentity.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Menu> Menus { get; set; }
+        public DbSet<AGSMenu> Menus { get; set; }
 
-        public DbSet<FunctionClaim> FunctionClaims { get; set; }
+        public DbSet<AGSFunctionClaim> FunctionClaims { get; set; }
     }
 }
