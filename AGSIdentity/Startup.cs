@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AGSIdentity.Models;
@@ -13,10 +14,15 @@ using AGSIdentity.Services.Auth;
 using AGSIdentity.Services.Auth.Identity;
 using AGSIdentity.Services.ExceptionFactory;
 using AGSIdentity.Services.ExceptionFactory.Json;
+using AGSIdentity.Services.ProfileService.Identity;
+using IdentityModel;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
 //using AGSIdentity.Services.Identity;
 using IdentityServer4.EntityFramework.Stores;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +33,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using IdentityServer4.Services;
 
 namespace AGSIdentity
 {
@@ -54,6 +61,8 @@ namespace AGSIdentity
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            
+
             // Configure asp.net Identity settings
             services.Configure<IdentityOptions>(options =>
             {
@@ -63,13 +72,18 @@ namespace AGSIdentity
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
+                
             });
 
             // this is for ef migration file generation
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             // Add identity server for OAuth 2.0
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                // set up the login page url
+                options.UserInteraction.LoginUrl = "/login";
+            })
             .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = b =>
@@ -81,22 +95,28 @@ namespace AGSIdentity
                     b.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                 options.EnableTokenCleanup = true;
             })
-            .AddAspNetIdentity<ApplicationUser>()
+            .AddProfileService<IdentityProfileService>() // add the service of customization of token
+            .AddAspNetIdentity<ApplicationUser>() // use asp.net identity user as the user of identity server
             .AddSigningCredential(GetCertificate()); // use the certificate so that the token is still valid after application is rebooted
             #endregion
 
             #region Setup JWT Bearer Authentication
             // add authentication using bearer 
-            services.AddAuthentication(x =>
+            services.AddAuthentication(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                // this is for telling asp.net core identity that the user has been logined
+                options.DefaultSignInScheme  = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                // this is for authenticating when calling API
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+
             })
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = Configuration["auth_url"];
                 options.RequireHttpsMetadata = false;
-                options.Audience = "api1";
+                options.Audience = AGSCommon.CommonConstant.AGSIdentityScopeConstant;
             });
             #endregion
 
@@ -105,6 +125,7 @@ namespace AGSIdentity
             services.AddRazorPages();
 
             // add repository object
+            services.AddTransient<IProfileService, IdentityProfileService>();
             services.AddSingleton<IExceptionFactory, JsonExceptionFactory>();
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();
@@ -114,6 +135,11 @@ namespace AGSIdentity
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (Configuration["data_initialization"] == "Y") {
+                InitializeDatabase(app);
+            }
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -152,6 +178,140 @@ namespace AGSIdentity
 
             cert = new X509Certificate2(certPath, Configuration["cert_pw"], X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
             return cert;
+        }
+
+
+        /// <summary>
+        /// This is to initialize the database by coding instead of seeding data or sql scripts. In my opinion,
+        /// the former is much easier way to initialize the database than the later two. If later on
+        /// the authentication changes to AD authentication, then this function may no longer be useful
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="userManager"></param>
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+
+
+                #region remove all users, clients and api resources in db
+                var userName = Configuration["default_user_name"];
+                var email = Configuration["default_user_email"];
+                var userPassword = Configuration["default_user_password"];
+                var adminName = "admin";
+
+                var user = userManager.FindByNameAsync(userName).Result;
+                if (user != null)
+                {
+                    _ = userManager.DeleteAsync(user).Result;
+                }
+
+                var adminRole = roleManager.FindByNameAsync(adminName).Result;
+                if (adminRole != null)
+                {
+                    _ = roleManager.DeleteAsync(adminRole).Result;
+                }
+
+                applicationDbContext.SaveChanges();
+
+                if (configurationDbContext.Clients.Any())
+                {
+                    foreach(var client in configurationDbContext.Clients)
+                    {
+                        configurationDbContext.Clients.Remove(client);
+                    }
+                }
+
+                if (configurationDbContext.IdentityResources.Any())
+                {
+                    foreach (var IdentityResource in configurationDbContext.IdentityResources)
+                    {
+                        configurationDbContext.IdentityResources.Remove(IdentityResource);
+                    }
+                }
+
+                if (configurationDbContext.ApiResources.Any())
+                {
+                    foreach (var ApiResource in configurationDbContext.ApiResources)
+                    {
+                        configurationDbContext.ApiResources.Remove(ApiResource);
+                    }
+                    
+                }
+
+                configurationDbContext.SaveChanges();
+
+                #endregion
+
+
+                #region initialize the users and roles of asp.net identity core
+
+                user = new ApplicationUser
+                {
+                    //Id = Guid.NewGuid().ToString(),
+                    UserName = userName,
+                    Email = email,
+                    SecurityStamp = Guid.NewGuid().ToString() // need to add this !!!
+                };
+                _ = userManager.CreateAsync(user, userPassword).Result;
+                user = userManager.FindByNameAsync(userName).Result;
+
+                _ = userManager.AddClaimsAsync(user, new Claim[]{
+                                new Claim(JwtClaimTypes.Name, userName),
+                                new Claim(JwtClaimTypes.Email, email)
+                            }).Result;
+
+                adminRole = new IdentityRole(adminName);
+                
+                _ = roleManager.CreateAsync(adminRole).Result;
+                adminRole = roleManager.FindByNameAsync(adminRole.Name).Result;
+                _ = roleManager.AddClaimAsync(adminRole, new Claim(AGSCommon.CommonConstant.FunctionClaimTypeConstant, "user_read")).Result;
+                _ = userManager.AddToRoleAsync(user, adminRole.Name).Result;
+
+                applicationDbContext.SaveChanges();
+                #endregion
+
+
+                #region initialize the identity and api resources in identity server 
+                IdentityServerConfig identityServerConfig = new IdentityServerConfig();
+
+                
+                //configurationDbContext.Database.Migrate();
+                if (!configurationDbContext.Clients.Any())
+                {
+                    foreach (var client in identityServerConfig.GetClients())
+                    {
+                        configurationDbContext.Clients.Add(client.ToEntity());
+                    }
+                    configurationDbContext.SaveChanges();
+                }
+
+                if (!configurationDbContext.IdentityResources.Any())
+                {
+                    foreach (var resource in identityServerConfig.GetIdentityResources())
+                    {
+                        configurationDbContext.IdentityResources.Add(resource.ToEntity());
+                    }
+                    configurationDbContext.SaveChanges();
+                }
+
+                if (!configurationDbContext.ApiResources.Any())
+                {
+                    foreach (var resource in identityServerConfig.GetApis())
+                    {
+                        configurationDbContext.ApiResources.Add(resource.ToEntity());
+                    }
+                    configurationDbContext.SaveChanges();
+                }
+
+                
+
+                #endregion
+            }
         }
     }
 }

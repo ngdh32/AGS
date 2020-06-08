@@ -8,8 +8,12 @@ namespace AGSIdentity.Services.Auth
     {
         bool Login(LoginInputModel loginInputModel);
 
+        bool CheckIfInLoginRequest(string redirectUrl);
+
+        string GetRedirectUrl();
+
         void Logout();
 
-        ClaimsPrincipal GetCurrentUser();
+        //ClaimsPrincipal GetCurrentUser();
     }
 }

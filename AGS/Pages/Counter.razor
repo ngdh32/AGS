@@ -1,4 +1,7 @@
 ﻿@page "/counter"
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvide
 
 <h1>Counter</h1>
 
@@ -6,8 +9,17 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<AuthorizeView>
+    <h1>Username: @context.User.Identity.Name</h1>
+    @foreach (var claim in context.User.Claims)
+    {
+        <p>@claim.Type : @claim.Value</p>
+    }
+</AuthorizeView>
+
 @code {
     private int currentCount = 0;
+
 
     private void IncrementCount()
     {

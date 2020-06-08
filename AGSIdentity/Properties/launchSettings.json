@@ -20,11 +20,11 @@
     "AGSIdentity": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:34811;http://localhost:62048"
+      "applicationUrl": "http://localhost:6204"
     }
   }
 }

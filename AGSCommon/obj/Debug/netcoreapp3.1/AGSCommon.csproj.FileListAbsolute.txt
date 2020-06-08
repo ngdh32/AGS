@@ -1,0 +1,9 @@
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/bin/Debug/netcoreapp3.1/AGSCommon.deps.json
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/bin/Debug/netcoreapp3.1/AGSCommon.dll
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/bin/Debug/netcoreapp3.1/AGSCommon.pdb
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/obj/Debug/netcoreapp3.1/AGSCommon.AssemblyInfoInputs.cache
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/obj/Debug/netcoreapp3.1/AGSCommon.AssemblyInfo.cs
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/obj/Debug/netcoreapp3.1/AGSCommon.csproj.CoreCompileInputs.cache
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/obj/Debug/netcoreapp3.1/AGSCommon.dll
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/obj/Debug/netcoreapp3.1/AGSCommon.pdb
+/Users/ngdh32/Desktop/AGS_git/AGSCommon/obj/Debug/netcoreapp3.1/AGSCommon.csprojAssemblyReference.cache

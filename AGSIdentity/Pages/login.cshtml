@@ -27,7 +27,8 @@
                     <label>Password:</label>
                     <input type="password" class="form-control" asp-for="loginInputModel.password" />
                 </div>
-                <button type="submit" class="btn btn-primary">Login!</button>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="text-danger">@Model.errorMessage</p>
                 @Html.AntiForgeryToken()
             </form>
         </div>

@@ -10,7 +10,8 @@ namespace AGSIdentity.Services.ExceptionFactory
 
     public enum ErrorCodeEnum
     {
-        UsernameOrPasswordError = 1,
+        UsernameOrPasswordError = 90000,
+        RedirectUrlError = 90001,
         UnknownError = 99999
     }
 }

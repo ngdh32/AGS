@@ -35,5 +35,13 @@
     <Folder Include="Services\Auth\" />
     <Folder Include="Services\ExceptionFactory\" />
     <Folder Include="Services\ExceptionFactory\Json\" />
+    <Folder Include="Services\ProfileService\" />
+    <Folder Include="Services\ProfileService\Identity\" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AGSCommon\AGSCommon.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

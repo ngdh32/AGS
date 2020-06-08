@@ -4,9 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Services\GetCurrentUser\" />
-    <Folder Include="Services\GetCurrentUser\HttpContext\" />
-  </ItemGroup>
 </Project>

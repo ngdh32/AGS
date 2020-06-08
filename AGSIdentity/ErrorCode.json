@@ -1,3 +1,4 @@
 ﻿{
-  "1" :  "Invalid Username or password"
+  "90000": "Invalid Username or password",
+  "90001":  "Invalid Redirect Url"
 }
