@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using AGSIdentity.Models;
 using AGSCommon.Models.DataModels.AGSIdentity;
 using System.Linq;
+using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Models.EntityModels;
 
 namespace AGSIdentity.Repositories.EF
 {
@@ -15,20 +17,38 @@ namespace AGSIdentity.Repositories.EF
             _applicationDbContext = applicationDbContext;
         }
 
-        public AGSFunctionClaim Get(int id)
+        public AGSFunctionClaimEntity Get(string id)
         {
             var selected = (from x in _applicationDbContext.FunctionClaims
                             where x.Id == id
                             select x).FirstOrDefault();
-            return selected;
+            if (selected != null)
+            {
+                var result = new AGSFunctionClaimEntity()
+                {
+                    Id = selected.Id,
+                    Name = selected.Name
+                };
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
-        public List<AGSFunctionClaim> GetAll()
+        public List<string> GetAll()
         {
-            return _applicationDbContext.FunctionClaims.ToList();
+            var result = new List<string>();
+            foreach(var fc in _applicationDbContext.FunctionClaims.ToList())
+            {
+                result.Add(fc.Id);
+            }
+            return result;
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var selected = (from x in _applicationDbContext.FunctionClaims
                             where x.Id == id
@@ -40,14 +60,29 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public void Create(AGSFunctionClaim functionClaim)
+        public string Create(AGSFunctionClaimEntity functionClaim)
         {
-            _applicationDbContext.FunctionClaims.Add(functionClaim);
+            FunctionClaim result = new FunctionClaim()
+            {
+                Id = functionClaim.Id,
+                Name = functionClaim.Name
+            };
+            _applicationDbContext.FunctionClaims.Add(result);
+            return result.Id;
+
         }
 
-        public void Update(AGSFunctionClaim functionClaim)
+        public void Update(AGSFunctionClaimEntity functionClaim)
         {
-            _applicationDbContext.FunctionClaims.Update(functionClaim);
+            var selected = (from x in _applicationDbContext.FunctionClaims
+                            where x.Id == functionClaim.Id
+                            select x).FirstOrDefault();
+            if (selected != null)
+            {
+                selected.Name = functionClaim.Name;
+                _applicationDbContext.FunctionClaims.Update(selected);
+            }
+            
         }
     }
 }

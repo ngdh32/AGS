@@ -1,6 +1,9 @@
 ﻿@page "/counter"
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
 @inject AuthenticationStateProvider AuthenticationStateProvide
 
 <button class="btn btn-primary">Click me</button>
@@ -11,8 +14,28 @@
     {
         <p>@claim.Type : @claim.Value</p>
     }
+
+    <h1>Message: @message</h1>
+
 </AuthorizeView>
 
 @code {
+    public string message { get; set; } = "";
 
+    protected override void OnInitialized()
+    {
+        HttpClient httpClient = new HttpClient();
+        var accessToken = httpContextAccessor.HttpContext.GetTokenAsync("access_token").Result;
+        httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+        var responseMessage = httpClient.GetAsync("https://localhost:8964/api/v1.0/users").Result;
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            message = responseMessage.Content.ReadAsStringAsync().Result;
+        }else
+        {
+            message = "Error Occurs:" + responseMessage.StatusCode;
+        }
+
+        base.OnInitialized();
+    }
 }

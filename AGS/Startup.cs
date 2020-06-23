@@ -46,18 +46,18 @@ namespace AGS
             {
                 options.Authority = Configuration["auth_url"];
                 options.RequireHttpsMetadata = true;
-                options.ClientId = AGSCommon.CommonConstant.AGSClientIdConstant;
+                options.ClientId = AGSCommon.CommonConstant.AGSIdentityConstant.AGSClientIdConstant;
                 options.ClientSecret = Configuration["auth_client_secret"];
                 options.ResponseType = "id_token token";
                 options.SaveTokens = true;
                 // options.GetClaimsFromUserInfoEndpoint = true;
                 // add the necessary scopes
-                options.Scope.Add(AGSCommon.CommonConstant.AGSDocumentScopeConstant);
-                options.Scope.Add(AGSCommon.CommonConstant.AGSIdentityScopeConstant);
-                options.Scope.Add(IdentityModel.JwtClaimTypes.Profile);
-                options.Scope.Add(IdentityModel.JwtClaimTypes.Email);
+                options.Scope.Add(AGSCommon.CommonConstant.AGSIdentityConstant.AGSDocumentScopeConstant); // api resource
+                options.Scope.Add(AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant); // api resource
+                options.Scope.Add(IdentityModel.JwtClaimTypes.Profile); // identity resource
+                options.Scope.Add(IdentityModel.JwtClaimTypes.Email); // identity resource
                 options.Scope.Add("openid"); // this is mandatory for oidc implicit flow
-                options.Scope.Add(AGSCommon.CommonConstant.AGSFunctionScopeConstant);
+                options.Scope.Add(AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionScopeConstant); // identity resource
             });
 
             // add authentitcation filter to middleware
@@ -69,6 +69,9 @@ namespace AGS
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            // add httpcontextaccessor so that blazor component can access httpcontext
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

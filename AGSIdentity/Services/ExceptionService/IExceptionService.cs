@@ -1,9 +1,9 @@
 ﻿using System;
 using AGSIdentity.Models.ExceptionModels;
 
-namespace AGSIdentity.Services.ExceptionFactory
+namespace AGSIdentity.Services.ExceptionService
 {
-    public interface IExceptionFactory
+    public interface IExceptionService
     {
         AGSException GetErrorByCode(ErrorCodeEnum errorCode);
     }

@@ -2,6 +2,8 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AGSIdentity.Models;
+using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Repositories;
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -16,16 +18,18 @@ namespace AGSIdentity.Services.ProfileService.Identity
         private ApplicationDbContext _applicationDbContext { get; set; }
         private UserManager<ApplicationUser> _userManager { get; set; }
         private RoleManager<ApplicationRole> _roleManager { get; set; }
+        private IFunctionClaimRepository _functionClaimRepository { get; set; }
 
         public IdentityProfileService(
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            IOptions<IdentityOptions> optionsAccessor,
-            ApplicationDbContext applicationDbContext)
+            ApplicationDbContext applicationDbContext,
+            IFunctionClaimRepository functionClaimRepository)
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
             _roleManager = roleManager;
+            _functionClaimRepository = functionClaimRepository;
         }
 
         /// <summary>
@@ -45,21 +49,29 @@ namespace AGSIdentity.Services.ProfileService.Identity
                 var roleClaims = _roleManager.GetClaimsAsync(role).Result;
                 foreach(var roleClaim in roleClaims)
                 {
-                    Console.WriteLine("roleClaim:" + roleClaim);
-                    context.IssuedClaims.Add(new Claim(roleClaim.Type, roleClaim.Value));
+                    // if it is function claim, substitute the ID with the actual claim name
+                    // this enable authorization policy 
+                    if (roleClaim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant)
+                    {
+                        var functionClaim = _functionClaimRepository.Get(roleClaim.Value);
+                        if (functionClaim != null)
+                        {
+                            context.IssuedClaims.Add(new Claim(roleClaim.Type, functionClaim.Name));
+                        }
+                    }else
+                    {
+                        context.IssuedClaims.Add(new Claim(roleClaim.Type, roleClaim.Value));
+                    }
+                    
                 }
+
+                // add group
                 context.IssuedClaims.Add(new Claim(JwtClaimTypes.Role, roleName));
             }
 
-            Console.WriteLine("context.IssuedClaims");
-            foreach(var claim in context.IssuedClaims){
-                Console.WriteLine($"{claim.Type} : {claim.Value}");
-            }
 
-            Console.WriteLine("context.Subject.Claims");
-            foreach(var claim in context.Subject.Claims){
-                Console.WriteLine($"{claim.Type} : {claim.Value}");
-            }
+            context.IssuedClaims.Add(new Claim(JwtClaimTypes.Name, user.UserName));
+            context.IssuedClaims.Add(new Claim(JwtClaimTypes.Email, user.Email));
 
             return Task.CompletedTask;
         }

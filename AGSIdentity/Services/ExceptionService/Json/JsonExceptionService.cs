@@ -5,14 +5,14 @@ using AGSIdentity.Models.ExceptionModels;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace AGSIdentity.Services.ExceptionFactory.Json
+namespace AGSIdentity.Services.ExceptionService.Json
 {
-    public class JsonExceptionFactory : IExceptionFactory
+    public class JsonExceptionService : IExceptionService
     {
         private IConfiguration _configuration { get; set; }
         private Dictionary<ErrorCodeEnum, string> _erors { get; set; }
 
-        public JsonExceptionFactory(IConfiguration configuration)
+        public JsonExceptionService(IConfiguration configuration)
         {
             _configuration = configuration;
 

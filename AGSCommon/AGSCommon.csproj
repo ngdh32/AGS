@@ -8,5 +8,6 @@
     <Folder Include="Models\" />
     <Folder Include="Models\DataModels\" />
     <Folder Include="Models\DataModels\AGSIdentity\" />
+    <Folder Include="CommonConstant\" />
   </ItemGroup>
 </Project>

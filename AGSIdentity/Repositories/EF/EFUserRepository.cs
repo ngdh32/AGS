@@ -4,6 +4,11 @@ using AGSIdentity.Models;
 using AGSCommon.Models.DataModels.AGSIdentity;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using AGSIdentity.Models.EntityModels.EF;
+using Microsoft.Extensions.Configuration;
+using AGSIdentity.Models.EntityModels;
+using System.Security.Claims;
+using IdentityModel;
 
 namespace AGSIdentity.Repositories.EF
 {
@@ -11,28 +16,54 @@ namespace AGSIdentity.Repositories.EF
     {
         private ApplicationDbContext _applicationDbContext { get; set; }
         private UserManager<ApplicationUser> _userManager { get; set; }
+        private RoleManager<ApplicationRole> _roleManager { get; set; }
+        private IConfiguration _configuration { get; set; }
 
-        public EFUserRepository(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
+        public EFUserRepository(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
+            _roleManager = roleManager;
+            _configuration = configuration;
         }
 
-        public AGSUser Get(string id)
+        public AGSUserEntity Get(string id)
         {
             var selected = _userManager.FindByIdAsync(id).Result;
-            var result = selected.GetAGSUser();
-            return result;
+            if (selected != null)
+            {
+                var result = new AGSUserEntity()
+                {
+                    Id = selected.Id,
+                    Email = selected.Email,
+                    Username = selected.UserName,
+                    Password = selected.PasswordHash,
+                    GroupIds = new List<string>()
+                };
+
+                // get the associated groups
+                var groupIds = this.GetGroupIdsByUser(id);
+                if (groupIds != null)
+                {
+                    result.GroupIds = groupIds;
+                }
+
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public List<AGSUser> GetAll()
+        public List<string> GetAll()
         {
-            var users = new List<AGSUser>();
+            var result = new List<string>();
             foreach (var user in _applicationDbContext.Users)
             {
-                users.Add(user.GetAGSUser());
+                result.Add(user.Id);
             }
-            return users;
+            return result;
         }
 
         public void Delete(string id)
@@ -44,26 +75,126 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public void Create(AGSUser user)
+        public string Create(AGSUserEntity user)
         {
-            ApplicationUser _user = new ApplicationUser()
+            // creat the Identity User with the provided password
+            ApplicationUser appUser = new ApplicationUser()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = user.Id,
                 Email = user.Email,
                 UserName = user.Username,
-                NormalizedEmail = user.Username
+                NormalizedEmail = user.Email,
+                NormalizedUserName = user.Username,
+                SecurityStamp = user.Id
             };
 
+            _ = _userManager.CreateAsync(appUser, user.Password).Result;
 
-            _ = _userManager.CreateAsync(_user).Result;
+            _ = _userManager.AddClaimsAsync(appUser, new Claim[]{
+                                new Claim(JwtClaimTypes.Name, user.Username),
+                                new Claim(JwtClaimTypes.Email, user.Email)
+                            }).Result;
+
+            // update the associated groups
+            if (user.GroupIds != null)
+            {
+                foreach(var groupId in user.GroupIds)
+                {
+                    this.AddUserToGroup(user.Id, groupId);
+                }
+            }
+
+            return appUser.Id;
         }
 
-        public void Update(AGSUser user)
+        public void Update(AGSUserEntity user)
         {
             var selected = _userManager.FindByIdAsync(user.Id).Result;
-            selected.UserName = user.Username;
-            selected.Email = user.Email;
-            _ = _userManager.UpdateAsync(selected).Result;
+            if (selected != null)
+            {
+                selected.UserName = user.Username;
+                selected.Email = user.Email;
+                selected.NormalizedEmail = user.Email;
+                selected.NormalizedUserName = user.Username;
+
+                // change the password
+                var resetPasswordToken = _userManager.GeneratePasswordResetTokenAsync(selected).Result;
+                _ = _userManager.ResetPasswordAsync(selected, resetPasswordToken, user.Password).Result;
+
+                _ = _userManager.UpdateAsync(selected).Result;
+
+                // remove all existing claims associated with user
+                var existingClaims = _userManager.GetClaimsAsync(selected).Result;
+                if (existingClaims != null)
+                {
+                    _ = _userManager.RemoveClaimsAsync(selected, existingClaims).Result;
+                }
+
+                _ = _userManager.AddClaimsAsync(selected, new Claim[]{
+                                new Claim(JwtClaimTypes.Name, user.Username),
+                                new Claim(JwtClaimTypes.Email, user.Email)
+                            }).Result;
+
+
+                // remove all the existing associated groups
+                var existingGroupIds = this.GetGroupIdsByUser(selected.Id);
+                if (existingGroupIds != null)
+                {
+                    foreach(var existingGroupId in existingGroupIds)
+                    {
+                        this.RemoveUserFromGroup(selected.Id, existingGroupId);
+                    }
+                }
+
+
+                // add the new associated groups
+                if (user.GroupIds != null)
+                {
+                    foreach(var groupId in user.GroupIds)
+                    {
+                        this.AddUserToGroup(selected.Id, groupId);
+                    }
+                }
+            }
+        }
+
+        public List<string> GetGroupIdsByUser(string userId)
+        {
+            var result = new List<string>();
+            var selected = _userManager.FindByIdAsync(userId).Result;
+            if (selected != null)
+            {
+                var roleNames = _userManager.GetRolesAsync(selected).Result;
+                foreach(var roleName in roleNames)
+                {
+                    var role = _roleManager.FindByNameAsync(roleName).Result;
+                    if (role != null)
+                    {
+                        result.Add(role.Id);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public void AddUserToGroup(string userId, string groupId)
+        {
+            var selectedRole = _roleManager.FindByIdAsync(groupId).Result;
+            var selectedUser = _userManager.FindByIdAsync(userId).Result;
+            if (selectedRole != null && selectedUser != null)
+            {
+                _ = _userManager.AddToRoleAsync(selectedUser, selectedRole.Name).Result;
+            }
+        }
+
+        public void RemoveUserFromGroup(string userId, string groupId)
+        {
+            var selectedRole = _roleManager.FindByIdAsync(groupId).Result;
+            var selectedUser = _userManager.FindByIdAsync(userId).Result;
+            if (selectedRole != null && selectedUser != null)
+            {
+                _ = _userManager.RemoveFromRoleAsync(selectedUser, selectedRole.Name).Result;
+            }
         }
     }
 }

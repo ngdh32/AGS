@@ -6,8 +6,9 @@ using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
+using AGSIdentity.Models.EntityModels.EF;
 
-namespace AGSIdentity.Services.Auth.Identity
+namespace AGSIdentity.Services.AuthService.Identity
 {
     public class IdentityAuthService : IAuthService
     {

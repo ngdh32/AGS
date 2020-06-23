@@ -9,11 +9,6 @@ using System.Threading.Tasks;
 using AGSIdentity.Models;
 using AGSIdentity.Repositories;
 using AGSIdentity.Repositories.EF;
-using AGSIdentity.Services;
-using AGSIdentity.Services.Auth;
-using AGSIdentity.Services.Auth.Identity;
-using AGSIdentity.Services.ExceptionFactory;
-using AGSIdentity.Services.ExceptionFactory.Json;
 using AGSIdentity.Services.ProfileService.Identity;
 using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
@@ -34,6 +29,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Services;
+using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Services.ExceptionService;
+using AGSIdentity.Services.ExceptionService.Json;
+using AGSIdentity.Services.AuthService;
+using AGSIdentity.Services.AuthService.Identity;
 
 namespace AGSIdentity
 {
@@ -118,7 +118,7 @@ namespace AGSIdentity
             {
                 options.Authority = Configuration["auth_url"];
                 options.RequireHttpsMetadata = false;
-                options.Audience = AGSCommon.CommonConstant.AGSIdentityScopeConstant;
+                options.Audience = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant;
             });
             #endregion
 
@@ -126,12 +126,58 @@ namespace AGSIdentity
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            // Add API Versioning  
+            services.AddApiVersioning(config =>
+            {
+                // Specify the default API Version as 1.0
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                // If the client hasn't specified the API version in the request, use the default API version number 
+                config.AssumeDefaultVersionWhenUnspecified = true;
+            });
+
             // add repository object
-            
-            services.AddSingleton<IExceptionFactory, JsonExceptionFactory>();
+            services.AddSingleton<IExceptionService, JsonExceptionService>();
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();
             services.AddTransient<IRepository, EFRepository>();
+            services.AddTransient<IFunctionClaimRepository, EFFunctionClaimRepository>();
+            services.AddTransient<IGroupRepository, EFGroupRepository>();
+            services.AddTransient<IUserRepository, EFUserRepository>();
+            services.AddTransient<IMenuRepository, EFMenuRepository>();
+
+            // add authorization policy
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant, policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                });
+                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant, policy =>
+                {
+                    policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant);
+                    policy.RequireAuthenticatedUser();
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                });
+                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditPolicyConstant, policy =>
+                {
+                    policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditClaimConstant);
+                    policy.RequireAuthenticatedUser();
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                });
+                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant, policy =>
+                {
+                    policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant);
+                    policy.RequireAuthenticatedUser();
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                });
+                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant, policy =>
+                {
+                    policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant);
+                    policy.RequireAuthenticatedUser();
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -145,6 +191,9 @@ namespace AGSIdentity
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }else
+            {
+                app.UseExceptionHandler("/error");
             }
 
             app.UseHttpsRedirection();
@@ -218,6 +267,23 @@ namespace AGSIdentity
                     _ = roleManager.DeleteAsync(adminRole).Result;
                 }
 
+                if (applicationDbContext.Menus.Any())
+                {
+                    foreach(var menu in applicationDbContext.Menus)
+                    {
+                        applicationDbContext.Menus.Remove(menu);
+                    }
+                }
+
+                if (applicationDbContext.FunctionClaims.Any())
+                {
+                    foreach(var functionClaim in applicationDbContext.FunctionClaims)
+                    {
+                        applicationDbContext.FunctionClaims.Remove(functionClaim);
+                    }
+
+                }
+
                 applicationDbContext.SaveChanges();
 
                 if (configurationDbContext.Clients.Any())
@@ -249,15 +315,101 @@ namespace AGSIdentity
 
                 #endregion
 
+                #region add menu options to application DB context
+                FunctionClaim functionClaimMenuFC = new FunctionClaim()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimMenuClaimConstant
+                };
+
+                Menu functionClaimMenu = new Menu()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = "Function Claim Admin",
+                    FunctionClaimId = functionClaimMenuFC.Id,
+                    Order = 1,
+                    ParentId = null
+                };
+
+                applicationDbContext.FunctionClaims.Add(functionClaimMenuFC);
+                applicationDbContext.Menus.Add(functionClaimMenu);
+
+
+                FunctionClaim menuMenuFC = new FunctionClaim()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuMenuClaimConstant
+                };
+
+                Menu menuMenu = new Menu()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = "Menu Admin",
+                    FunctionClaimId = menuMenuFC.Id,
+                    Order = 1,
+                    ParentId = null
+                };
+
+                applicationDbContext.FunctionClaims.Add(menuMenuFC);
+                applicationDbContext.Menus.Add(menuMenu);
+
+                FunctionClaim userMenuFC = new FunctionClaim()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserMenuClaimConstant
+                };
+
+                Menu userMenu = new Menu()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = "User Admin",
+                    FunctionClaimId = userMenuFC.Id,
+                    Order = 1,
+                    ParentId = null
+                };
+
+                applicationDbContext.FunctionClaims.Add(userMenuFC);
+                applicationDbContext.Menus.Add(userMenu);
+
+
+                FunctionClaim groupMenuFC = new FunctionClaim()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupMenuClaimConstant
+                };
+
+                Menu groupMenu = new Menu()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = "Group Admin",
+                    FunctionClaimId = groupMenuFC.Id,
+                    Order = 1,
+                    ParentId = null
+                };
+
+                applicationDbContext.FunctionClaims.Add(groupMenuFC);
+                applicationDbContext.Menus.Add(groupMenu);
+
+                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant });
+
+                applicationDbContext.SaveChanges();
+
+                #endregion
+
 
                 #region initialize the users and roles of asp.net identity core
 
                 user = new ApplicationUser
                 {
-                    //Id = Guid.NewGuid().ToString(),
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
                     UserName = userName,
+                    NormalizedEmail = email,
+                    NormalizedUserName = userName,
                     Email = email,
-                    SecurityStamp = Guid.NewGuid().ToString() // need to add this !!!
+                    SecurityStamp = AGSCommon.CommonFunctions.GenerateId() // need to add this !!!
                 };
                 _ = userManager.CreateAsync(user, userPassword).Result;
                 user = userManager.FindByNameAsync(userName).Result;
@@ -274,7 +426,14 @@ namespace AGSIdentity
                 
                 _ = roleManager.CreateAsync(adminRole).Result;
                 adminRole = roleManager.FindByNameAsync(adminRole.Name).Result;
-                _ = roleManager.AddClaimAsync(adminRole, new Claim(AGSCommon.CommonConstant.FunctionClaimTypeConstant, "user_read")).Result;
+                if (applicationDbContext.FunctionClaims.Any())
+                {
+                    foreach (var functionClaim in applicationDbContext.FunctionClaims.ToList())
+                    {
+                        _ = roleManager.AddClaimAsync(adminRole, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, functionClaim.Id)).Result;
+                    }
+
+                }
                 _ = userManager.AddToRoleAsync(user, adminRole.Name).Result;
 
                 applicationDbContext.SaveChanges();

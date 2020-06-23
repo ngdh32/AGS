@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSIdentity.Models.EntityModels;
 
 namespace AGSIdentity.Repositories
 {
     public interface IFunctionClaimRepository
     {
-        AGSFunctionClaim Get(int id);
-        List<AGSFunctionClaim> GetAll();
-        void Delete(int id);
-        void Create(AGSFunctionClaim functionClaim);
-        void Update(AGSFunctionClaim functionClaim);
+        AGSFunctionClaimEntity Get(string id);
+        List<string> GetAll();
+        void Delete(string id);
+        // return newly inserted id
+        string Create(AGSFunctionClaimEntity functionClaim);
+        void Update(AGSFunctionClaimEntity functionClaim);
     }
 }

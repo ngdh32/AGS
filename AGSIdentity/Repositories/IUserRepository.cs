@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSIdentity.Models.EntityModels;
 
 namespace AGSIdentity.Repositories
 {
     public interface IUserRepository
     {
-        AGSUser  Get(string id);
-        List<AGSUser> GetAll();
+        AGSUserEntity Get(string id);
+        List<string> GetAll();
         void Delete(string id);
-        void Create(AGSUser  user);
-        void Update(AGSUser  user);
+        // return newly inserted id
+        string Create(AGSUserEntity user);
+        void Update(AGSUserEntity user);
+        //List<string> GetGroupIdsByUser(string userId);
+        //void AddUserToGroup(string userId, string groupId);
+        //void RemoveUserFromGroup(string userId, string groupId);
     }
 }

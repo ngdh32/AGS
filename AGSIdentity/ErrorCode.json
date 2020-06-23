@@ -1,4 +1,5 @@
 ﻿{
   "90000": "Invalid Username or password",
-  "90001":  "Invalid Redirect Url"
+  "90001": "Invalid Redirect Url",
+  "99999": "Unexpected Error"
 }

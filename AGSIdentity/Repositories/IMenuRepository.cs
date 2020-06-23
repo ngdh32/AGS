@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSIdentity.Models.EntityModels;
 
 namespace AGSIdentity.Repositories
 {
     public interface IMenuRepository
     {
-        AGSMenu  Get(int id);
-        List<AGSMenu> GetAll();
-        void Delete(int id);
-        void Create(AGSMenu  menu);
-        void Update(AGSMenu  menu);
+        AGSMenuEntity Get(string id);
+        List<string> GetAll();
+        void Delete(string id);
+        // return newly inserted id
+        string Create(AGSMenuEntity menu);
+        void Update(AGSMenuEntity menu);
+
+        //AGSMenuEntity GetParentMenu(string childMenuId);
+        //string GetFunctionClaimIdByMenuId(string menuId);
     }
 }

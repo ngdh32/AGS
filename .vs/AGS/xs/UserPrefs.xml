@@ -1,17 +1,14 @@
-﻿<Properties StartupConfiguration="AGSLaunchConfiguration">
+﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
-    <Files>
-      <File FileName="AGSIdentity/Repositories/EF/EFUserRepository.cs" Line="22" Column="10" />
-      <File FileName="AGSIdentity/appsettings.json" Line="7" Column="6" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
+            <Node name="AGS" selected="True" />
             <Node name="AGSIdentity" expanded="True">
-              <Node name="Properties" expanded="True" />
+              <Node name="Controllers" expanded="True" />
               <Node name="Repositories" expanded="True">
                 <Node name="EF" expanded="True" />
               </Node>
@@ -20,7 +17,6 @@
                   <Node name="Identity" expanded="True" />
                 </Node>
               </Node>
-              <Node name="appsettings.json" selected="True" />
             </Node>
           </Node>
         </State>

@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSIdentity.Models.EntityModels;
 
 namespace AGSIdentity.Repositories
 {
     public interface IGroupRepository
     {
-        AGSGroup  Get(string id);
-        List<AGSGroup> GetAll();
+        AGSGroupEntity Get(string id);
+        List<string> GetAll();
         void Delete(string id);
-        void Create(AGSGroup  group);
-        void Update(AGSGroup  group);
+        // return newly inserted id
+        string Create(AGSGroupEntity group);
+        void Update(AGSGroupEntity group);
+        //void AddFunctionClaimToGroup(string groupId, string functionClaimId);
+        //void RemoveFunctionClaimFromGroup(string groupId, string functionClaimId);
+        //List<string> GetFunctionClaimIdsByGroupId(string groupId);
     }
 }

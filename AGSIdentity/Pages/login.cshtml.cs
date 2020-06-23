@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AGSIdentity.Models.ViewModels.Login;
-using AGSIdentity.Services.Auth;
-using AGSIdentity.Services.ExceptionFactory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
+using AGSIdentity.Services.AuthService;
+using AGSIdentity.Services.ExceptionService;
 
 namespace AGSIdentity.Pages
 {
     public class loginModel : PageModel
     {
         private IAuthService _authService { get; set; }
-        private IExceptionFactory _exceptionFactory { get; set; }
+        private IExceptionService _exceptionService { get; set; }
         
 
         [BindProperty]
@@ -22,10 +22,10 @@ namespace AGSIdentity.Pages
         [BindProperty]
         public string errorMessage { get; set; }
 
-        public loginModel(IAuthService authService, IExceptionFactory exceptionFactory)
+        public loginModel(IAuthService authService, IExceptionService exceptionService)
         {
             _authService = authService;
-            _exceptionFactory = exceptionFactory;
+            _exceptionService = exceptionService;
         }
 
         public void OnGet()
@@ -41,7 +41,7 @@ namespace AGSIdentity.Pages
                 var loginResult = _authService.Login(loginInputModel);
                 if (!loginResult)
                 {
-                    throw _exceptionFactory.GetErrorByCode(ErrorCodeEnum.UsernameOrPasswordError);
+                    throw _exceptionService.GetErrorByCode(ErrorCodeEnum.UsernameOrPasswordError);
                 }
                 else
                 {   
@@ -56,7 +56,7 @@ namespace AGSIdentity.Pages
                     }
                     else
                     {
-                        throw _exceptionFactory.GetErrorByCode(ErrorCodeEnum.RedirectUrlError);
+                        throw _exceptionService.GetErrorByCode(ErrorCodeEnum.RedirectUrlError);
                     }
                 }
             }

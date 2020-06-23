@@ -18,9 +18,9 @@ namespace AGSIdentity
         {
             // add roles and role-related claims to identity resource
             var roleResource = new IdentityResource(
-                name: AGSCommon.CommonConstant.AGSFunctionScopeConstant,
+                name: AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionScopeConstant,
                 displayName: "User's roles and role-related claims",
-                claimTypes: new[] { AGSCommon.CommonConstant.FunctionClaimTypeConstant, JwtClaimTypes.Role });
+                claimTypes: new[] { AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, JwtClaimTypes.Role });
 
             return new IdentityResource[]
             {
@@ -36,18 +36,18 @@ namespace AGSIdentity
             return new List<ApiResource>
             {
                 new ApiResource{
-                    Name = AGSCommon.CommonConstant.AGSIdentityScopeConstant,
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant,
                     Scopes =
                     {
                         new Scope()
                         {
-                            Name = AGSCommon.CommonConstant.AGSIdentityScopeConstant,
+                            Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant,
                             DisplayName = "Full access to ags.identity",
                             UserClaims = {
                                 JwtClaimTypes.Id
                                ,JwtClaimTypes.Email
                                ,JwtClaimTypes.Profile
-                               ,AGSCommon.CommonConstant.AGSFunctionScopeConstant
+                               ,AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionScopeConstant
                             }
 
                         }
@@ -55,19 +55,19 @@ namespace AGSIdentity
                 }
                 ,
                 new ApiResource{
-                    Name = AGSCommon.CommonConstant.AGSDocumentScopeConstant,
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSDocumentScopeConstant,
 
                     Scopes =
                     {
                         new Scope()
                         {
-                            Name = AGSCommon.CommonConstant.AGSDocumentScopeConstant,
+                            Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSDocumentScopeConstant,
                             DisplayName = "Full access to ags.document",
                             UserClaims = {
                                 JwtClaimTypes.Name
                                ,JwtClaimTypes.Email
                                ,JwtClaimTypes.Profile
-                               ,AGSCommon.CommonConstant.AGSFunctionScopeConstant
+                               ,AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionScopeConstant
                             }
 
                         }
@@ -82,7 +82,7 @@ namespace AGSIdentity
             {
                 new Client
                 {
-                    ClientId = AGSCommon.CommonConstant.AGSClientIdConstant,
+                    ClientId = AGSCommon.CommonConstant.AGSIdentityConstant.AGSClientIdConstant,
 
                     // no interactive user, use the clientid/secret for authentication
                     AllowedGrantTypes = GrantTypes.Implicit,
@@ -103,12 +103,12 @@ namespace AGSIdentity
 
                     // scopes that client has access to
                     AllowedScopes = {
-                        AGSCommon.CommonConstant.AGSDocumentScopeConstant
-                        ,AGSCommon.CommonConstant.AGSIdentityScopeConstant
+                        AGSCommon.CommonConstant.AGSIdentityConstant.AGSDocumentScopeConstant
+                        ,AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant
                         ,IdentityServerConstants.StandardScopes.OpenId
                         ,IdentityServerConstants.StandardScopes.Profile
                         ,IdentityServerConstants.StandardScopes.Email
-                        ,AGSCommon.CommonConstant.AGSFunctionScopeConstant
+                        ,AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionScopeConstant
                     },
                     
                     AllowAccessTokensViaBrowser = true,

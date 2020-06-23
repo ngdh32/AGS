@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using AGSIdentity.Models.ViewModels.Login;
 
-namespace AGSIdentity.Services.Auth
+namespace AGSIdentity.Services.AuthService
 {
     public interface IAuthService
     {
@@ -14,6 +14,6 @@ namespace AGSIdentity.Services.Auth
 
         void Logout();
 
-        //ClaimsPrincipal GetCurrentUser();
+        ClaimsPrincipal GetCurrentUser();
     }
 }
