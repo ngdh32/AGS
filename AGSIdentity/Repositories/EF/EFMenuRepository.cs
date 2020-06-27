@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.AGSIdentity;
 using System.Linq;
 using AGSIdentity.Models.EntityModels.EF;
 using AGSIdentity.Models.EntityModels;
@@ -10,23 +10,16 @@ namespace AGSIdentity.Repositories.EF
 {
     public class EFMenuRepository : IMenuRepository
     {
-        private ApplicationDbContext _applicationDbContext { get; set; }
+        private EFApplicationDbContext _applicationDbContext { get; set; }
 
-        public EFMenuRepository(ApplicationDbContext applicationDbContext)
+        public EFMenuRepository(EFApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
 
         public string Create(AGSMenuEntity menu)
         {
-            var result = new Menu()
-            {
-                Id = menu.Id,
-                Name = menu.Name,
-                Order = menu.Order,
-                ParentId = menu.ParentId,
-                FunctionClaimId = menu.FunctionClaimId
-            };
+            var result = this.GetMenu(menu);
             _applicationDbContext.Menus.Add(result);
             return result.Id;
         }
@@ -49,15 +42,7 @@ namespace AGSIdentity.Repositories.EF
                             select x).FirstOrDefault();
             if (selected != null)
             {
-                var result = new AGSMenuEntity()
-                {
-                    Id  = selected.Id,
-                    Name = selected.Name,
-                    Order = selected.Order,
-                    ParentId = selected.ParentId,
-                    FunctionClaimId = selected.FunctionClaimId
-                };
-
+                var result = this.GetAGSMenuEntity(selected);
                 return result;
             }
             else
@@ -77,18 +62,20 @@ namespace AGSIdentity.Repositories.EF
             return result;
         }
 
-        public void Update(AGSMenuEntity menu)
+        public int Update(AGSMenuEntity menu)
         {
             var selected = (from x in _applicationDbContext.Menus
                             where x.Id == menu.Id
                             select x).FirstOrDefault();
             if (selected != null)
             {
-                selected.FunctionClaimId = menu.FunctionClaimId;
-                selected.Name = menu.Name;
-                selected.Order = menu.Order;
-                selected.ParentId = menu.ParentId;
+                selected = this.GetMenu(menu);
                 _applicationDbContext.Menus.Update(selected);
+
+                return 1;
+            }else
+            {
+                return 0;
             }
         }
 
@@ -104,15 +91,7 @@ namespace AGSIdentity.Repositories.EF
                                       select x).FirstOrDefault();
                 if (parentSelected != null)
                 {
-                    var result = new AGSMenuEntity()
-                    {
-                        Id = parentSelected.Id,
-                        Name = parentSelected.Name,
-                        Order = parentSelected.Order,
-                        FunctionClaimId = parentSelected.FunctionClaimId,
-                        ParentId = parentSelected.ParentId
-                    };
-
+                    var result = GetAGSMenuEntity(parentSelected);
                     return result;
                 }else
                 {
@@ -138,6 +117,58 @@ namespace AGSIdentity.Repositories.EF
             {
                 return null;
             }
+        }
+
+        public List<AGSMenuEntity> GetAllByParentId(string parentId)
+        {
+            var selected = (from x in _applicationDbContext.Menus
+                            where x.ParentId == parentId
+                            select x).ToList();
+            if (selected != null)
+            {
+                var result = new List<AGSMenuEntity>();
+                foreach(var menu in selected)
+                {
+                    var menuEntity = this.GetAGSMenuEntity(menu);
+                    result.Add(menuEntity);
+                }
+
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public AGSMenuEntity GetAGSMenuEntity(EFMenu menu)
+        {
+            var result = new AGSMenuEntity()
+            {
+                Id = menu.Id,
+                Name = menu.Name,
+                DisplayName = menu.DisplayName,
+                Order = menu.Order,
+                FunctionClaimId = menu.FunctionClaimId,
+                ParentId = menu.ParentId
+            };
+
+            return result;
+        }
+
+        public EFMenu GetMenu(AGSMenuEntity menuEntity)
+        {
+            var result = new EFMenu()
+            {
+                Id = menuEntity.Id,
+                Name = menuEntity.Name,
+                DisplayName = menuEntity.DisplayName,
+                Order = menuEntity.Order,
+                FunctionClaimId = menuEntity.FunctionClaimId,
+                ParentId = menuEntity.ParentId
+            };
+
+            return result;
         }
     }
 }

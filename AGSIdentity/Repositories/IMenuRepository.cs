@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSIdentity.Models.EntityModels;
+using AGSCommon.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
@@ -11,7 +11,9 @@ namespace AGSIdentity.Repositories
         void Delete(string id);
         // return newly inserted id
         string Create(AGSMenuEntity menu);
-        void Update(AGSMenuEntity menu);
+        // return how many records are updated.
+        int Update(AGSMenuEntity menu);
+        List<AGSMenuEntity> GetAllByParentId(string parentId);
 
         //AGSMenuEntity GetParentMenu(string childMenuId);
         //string GetFunctionClaimIdByMenuId(string menuId);

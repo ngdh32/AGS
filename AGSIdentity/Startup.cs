@@ -30,8 +30,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Services;
 using AGSIdentity.Models.EntityModels.EF;
-using AGSIdentity.Services.ExceptionService;
-using AGSIdentity.Services.ExceptionService.Json;
 using AGSIdentity.Services.AuthService;
 using AGSIdentity.Services.AuthService.Identity;
 
@@ -53,12 +51,12 @@ namespace AGSIdentity
 
             #region Setup Identity Server
             // use mysql to interact with customized identity db context
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<EFApplicationDbContext>(options =>
                 options.UseMySql(connectionString));
 
             // use customized identity user in identity & take application db context as the db for entity framework
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<EFApplicationUser, EFApplicationRole>()
+                .AddEntityFrameworkStores<EFApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             
@@ -97,7 +95,7 @@ namespace AGSIdentity
                     b.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                 options.EnableTokenCleanup = true;
             })
-            .AddAspNetIdentity<ApplicationUser>() // use asp.net identity user as the user of identity server
+            .AddAspNetIdentity<EFApplicationUser>() // use asp.net identity user as the user of identity server
             .AddSigningCredential(GetCertificate()) // use the certificate so that the token is still valid after application is rebooted
             .AddProfileService<IdentityProfileService>(); // add the service of customization of token
             #endregion
@@ -136,7 +134,6 @@ namespace AGSIdentity
             });
 
             // add repository object
-            services.AddSingleton<IExceptionService, JsonExceptionService>();
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();
             services.AddTransient<IRepository, EFRepository>();
@@ -243,9 +240,9 @@ namespace AGSIdentity
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-                var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<EFApplicationUser>>();
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<EFApplicationRole>>();
+                var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<EFApplicationDbContext>();
                 var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
 
@@ -316,84 +313,107 @@ namespace AGSIdentity
                 #endregion
 
                 #region add menu options to application DB context
-                FunctionClaim functionClaimMenuFC = new FunctionClaim()
+                EFFunctionClaim identityAdminMenuFC = new EFFunctionClaim()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityAdminMenuClaimConstant
+                };
+
+                EFMenu identityAdminMenu = new EFMenu()
+                {
+                    Id = AGSCommon.CommonFunctions.GenerateId(),
+                    Name = "identity_admin_menu",
+                    DisplayName = "Identity Admin",
+                    FunctionClaimId = identityAdminMenuFC.Id,
+                    Order = 1,
+                    ParentId = null
+                };
+
+                applicationDbContext.FunctionClaims.Add(identityAdminMenuFC);
+                applicationDbContext.Menus.Add(identityAdminMenu);
+
+                EFFunctionClaim functionClaimMenuFC = new EFFunctionClaim()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
                     Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimMenuClaimConstant
                 };
 
-                Menu functionClaimMenu = new Menu()
+                EFMenu functionClaimMenu = new EFMenu()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "Function Claim Admin",
+                    Name = "function_claim_admin",
+                    DisplayName = "Function Claim Admin",
                     FunctionClaimId = functionClaimMenuFC.Id,
                     Order = 1,
-                    ParentId = null
+                    ParentId = identityAdminMenu.Id
                 };
 
                 applicationDbContext.FunctionClaims.Add(functionClaimMenuFC);
                 applicationDbContext.Menus.Add(functionClaimMenu);
 
 
-                FunctionClaim menuMenuFC = new FunctionClaim()
+                EFFunctionClaim menuMenuFC = new EFFunctionClaim()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
                     Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuMenuClaimConstant
                 };
 
-                Menu menuMenu = new Menu()
+                EFMenu menuMenu = new EFMenu()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "Menu Admin",
+                    Name = "menu_admin",
+                    DisplayName = "Menu Admin",
                     FunctionClaimId = menuMenuFC.Id,
                     Order = 1,
-                    ParentId = null
+                    ParentId = identityAdminMenu.Id
                 };
 
                 applicationDbContext.FunctionClaims.Add(menuMenuFC);
                 applicationDbContext.Menus.Add(menuMenu);
 
-                FunctionClaim userMenuFC = new FunctionClaim()
+                EFFunctionClaim userMenuFC = new EFFunctionClaim()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
                     Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserMenuClaimConstant
                 };
 
-                Menu userMenu = new Menu()
+                EFMenu userMenu = new EFMenu()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "User Admin",
+                    Name = "user_admin",
+                    DisplayName = "User Admin",
                     FunctionClaimId = userMenuFC.Id,
                     Order = 1,
-                    ParentId = null
+                    ParentId = identityAdminMenu.Id
                 };
 
                 applicationDbContext.FunctionClaims.Add(userMenuFC);
                 applicationDbContext.Menus.Add(userMenu);
 
 
-                FunctionClaim groupMenuFC = new FunctionClaim()
+                EFFunctionClaim groupMenuFC = new EFFunctionClaim()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
                     Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupMenuClaimConstant
                 };
 
-                Menu groupMenu = new Menu()
+                EFMenu groupMenu = new EFMenu()
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "Group Admin",
+                    Name = "group_admin",
+                    DisplayName = "Group Admin",
                     FunctionClaimId = groupMenuFC.Id,
                     Order = 1,
-                    ParentId = null
+                    ParentId = identityAdminMenu.Id
                 };
 
                 applicationDbContext.FunctionClaims.Add(groupMenuFC);
                 applicationDbContext.Menus.Add(groupMenu);
 
-                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant });
-                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant });
-                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditClaimConstant });
-                applicationDbContext.FunctionClaims.Add(new FunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditClaimConstant });
+                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant });
 
                 applicationDbContext.SaveChanges();
 
@@ -402,7 +422,7 @@ namespace AGSIdentity
 
                 #region initialize the users and roles of asp.net identity core
 
-                user = new ApplicationUser
+                user = new EFApplicationUser
                 {
                     Id = AGSCommon.CommonFunctions.GenerateId(),
                     UserName = userName,
@@ -419,7 +439,7 @@ namespace AGSIdentity
                                 new Claim(JwtClaimTypes.Email, email)
                             }).Result;
 
-                adminRole = new ApplicationRole()
+                adminRole = new EFApplicationRole()
                 {
                     Name = adminName
                 };

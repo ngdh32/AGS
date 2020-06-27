@@ -13,11 +13,11 @@ namespace AGSIdentity.Services.AuthService.Identity
     public class IdentityAuthService : IAuthService
     {
         private IHttpContextAccessor _httpContextAccessor { get; set; }
-        private SignInManager<ApplicationUser> _signInManager { get; set; }
-        private UserManager<ApplicationUser> _userManager { get; set; }
+        private SignInManager<EFApplicationUser> _signInManager { get; set; }
+        private UserManager<EFApplicationUser> _userManager { get; set; }
         private IIdentityServerInteractionService _interactionService { get; set; }
 
-        public IdentityAuthService(IHttpContextAccessor httpContextAccessor, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IIdentityServerInteractionService interactionService)
+        public IdentityAuthService(IHttpContextAccessor httpContextAccessor, SignInManager<EFApplicationUser> signInManager, UserManager<EFApplicationUser> userManager, IIdentityServerInteractionService interactionService)
         {
             _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;

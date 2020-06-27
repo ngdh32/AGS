@@ -6,15 +6,26 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
-            <Node name="AGS" selected="True" />
+            <Node name="AGSCommon" expanded="True">
+              <Node name="CommonConstant" expanded="True" />
+            </Node>
             <Node name="AGSIdentity" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Repositories" expanded="True">
-                <Node name="EF" expanded="True" />
+              <Node name="Migrations" expanded="True">
+                <Node name="IdentityServer" expanded="True" />
               </Node>
-              <Node name="Services" expanded="True">
-                <Node name="ProfileService" expanded="True">
-                  <Node name="Identity" expanded="True" />
+              <Node name="appsettings.json" selected="True" />
+            </Node>
+            <Node name="AGSIdentity.Test" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="AGS" expanded="True">
+            <Node name="AGSIdentity.Test" expanded="True">
+              <Node name="AGSIdentity.Test" expanded="True">
+                <Node name="FunctionClaimBLLTest" expanded="True">
+                  <Node name="GetModel_ValidId_ReturnNonEmptyObject" selected="True" />
                 </Node>
               </Node>
             </Node>

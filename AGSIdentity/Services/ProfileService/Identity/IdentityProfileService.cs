@@ -15,15 +15,15 @@ namespace AGSIdentity.Services.ProfileService.Identity
 {
     public class IdentityProfileService : IProfileService
     {
-        private ApplicationDbContext _applicationDbContext { get; set; }
-        private UserManager<ApplicationUser> _userManager { get; set; }
-        private RoleManager<ApplicationRole> _roleManager { get; set; }
+        private EFApplicationDbContext _applicationDbContext { get; set; }
+        private UserManager<EFApplicationUser> _userManager { get; set; }
+        private RoleManager<EFApplicationRole> _roleManager { get; set; }
         private IFunctionClaimRepository _functionClaimRepository { get; set; }
 
         public IdentityProfileService(
-            UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
-            ApplicationDbContext applicationDbContext,
+            UserManager<EFApplicationUser> userManager,
+            RoleManager<EFApplicationRole> roleManager,
+            EFApplicationDbContext applicationDbContext,
             IFunctionClaimRepository functionClaimRepository)
         {
             _applicationDbContext = applicationDbContext;

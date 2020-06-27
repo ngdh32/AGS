@@ -8,14 +8,14 @@ namespace AGSIdentity.Repositories.EF
 {
     public class EFRepository : IRepository
     {
-        private ApplicationDbContext _applicationDbContext { get; set; }
+        private EFApplicationDbContext _applicationDbContext { get; set; }
         // make the repository accessible in public but can only be set by EFRepository class
         public IUserRepository _userRepository { get; private set; }
         public IGroupRepository _groupRepository { get; private set; }
         public IMenuRepository _menuRepository { get; private set; }
         public IFunctionClaimRepository _functionClaimRepository { get; private set; }
 
-        public EFRepository(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
+        public EFRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, IConfiguration configuration)
         {
             _applicationDbContext = applicationDbContext;
 

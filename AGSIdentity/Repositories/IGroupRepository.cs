@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSIdentity.Models.EntityModels;
+using AGSCommon.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
@@ -11,7 +11,8 @@ namespace AGSIdentity.Repositories
         void Delete(string id);
         // return newly inserted id
         string Create(AGSGroupEntity group);
-        void Update(AGSGroupEntity group);
+        // return how many records are updated.
+        int Update(AGSGroupEntity group);
         //void AddFunctionClaimToGroup(string groupId, string functionClaimId);
         //void RemoveFunctionClaimFromGroup(string groupId, string functionClaimId);
         //List<string> GetFunctionClaimIdsByGroupId(string groupId);

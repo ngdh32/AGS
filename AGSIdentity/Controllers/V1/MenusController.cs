@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.Common;
 using AGSIdentity.Models.EntityModels;
 using AGSIdentity.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ namespace AGSIdentity.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant)]
-    public class MenusController : ControllerBase , IBLLController<AGSMenu>
+    public class MenusController : ControllerBase , IBLLController<AGSMenuEntity>
     {
         private IRepository _repository { get; set; }
 
@@ -27,7 +28,7 @@ namespace AGSIdentity.Controllers.V1
         [HttpGet]
         public IActionResult Get()
         {
-            var result = new List<AGSMenu>();
+            var result = new List<AGSMenuEntity>();
             var menuIds = _repository.MenuRepository.GetAll();
             if (menuIds != null)
             {
@@ -41,7 +42,7 @@ namespace AGSIdentity.Controllers.V1
                 }
             }
 
-            return new JsonResult(result);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, result));
         }
 
 
@@ -53,7 +54,7 @@ namespace AGSIdentity.Controllers.V1
         public IActionResult Get(string id)
         {
             var result = GetModel(id);
-            return new JsonResult(result);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, result));
         }
 
 
@@ -63,11 +64,11 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="menu"></param>
         [HttpPost]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditPolicyConstant)]
-        public IActionResult Post([FromBody] AGSMenu menu)
+        public IActionResult Post([FromBody] AGSMenuEntity menu)
         {
-            var id = SaveOrUpdateModel(menu);
+            var id = SaveModel(menu);
             _repository.Save();
-            return Ok(id);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, id));
         }
 
         /// <summary>
@@ -77,14 +78,23 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="id"></param>
         [HttpPut("{id}")]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditPolicyConstant)]
-        public IActionResult Put([FromBody] AGSMenu menu, string id)
+        public IActionResult Put([FromBody] AGSMenuEntity menu, string id)
         {
             if (menu.Id == id)
             {
-                SaveOrUpdateModel(menu);
-                _repository.Save();
-                return Ok();
-            }else
+                var result = UpdateModel(menu);
+                if (result > 0)
+                {
+                    _repository.Save();
+                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
+                }
+                else
+                {
+                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.ModelNotFound));
+                }
+                
+            }
+            else
             {
                 return BadRequest();
             }
@@ -100,72 +110,62 @@ namespace AGSIdentity.Controllers.V1
         public IActionResult Delete(string id)
         {
             DeleteModel(id);
-            return Ok();
+            _repository.Save();
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
         }
 
-        public string SaveOrUpdateModel(AGSMenu model)
+        public int UpdateModel(AGSMenuEntity model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException();
             }
-            
-            var entity = new AGSMenuEntity()
-            {
-                Name = model.Name,
-                Order = model.Order,
-                FunctionClaimId = model.FunctionClaim?.Id,
-                ParentId = model.ParentMenu?.Id
-            };
 
-            if (model.Id == null)
+            if (string.IsNullOrEmpty(model.Id))
             {
-                model.Id = _repository.MenuRepository.Create(entity);
-            }else
-            {
-                entity.Id = model.Id;
-                _repository.MenuRepository.Update(entity);
+                throw new ArgumentException();
             }
 
-            return model.Id;
+            int result = _repository.MenuRepository.Update(model);
+            return result;
+        }
+
+        public string SaveModel(AGSMenuEntity model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!string.IsNullOrEmpty(model.Id))
+            {
+                throw new ArgumentException();
+            }
+
+            string entityId = _repository.MenuRepository.Create(model);
+
+            return entityId;
         }
 
         public void DeleteModel(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException();
+            }
+
             _repository.MenuRepository.Delete(id);
         }
 
-        public AGSMenu GetModel(string id)
+        public AGSMenuEntity GetModel(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException();
+            }
+
             var entity  = _repository.MenuRepository.Get(id);
-            if (entity != null)
-            {
-                var result = new AGSMenu()
-                {
-                    Id = entity.Id,
-                    Name = entity.Name,
-                    Order = entity.Order,
-                    ParentMenu = null,
-                    FunctionClaim = null
-                };
-
-                if (entity.ParentId != null)
-                {
-                    result.ParentMenu = GetModel(entity.ParentId);
-                }
-
-                if (entity.FunctionClaimId != null)
-                {
-                    FunctionClaimsController functionClaimsController = new FunctionClaimsController(_repository);
-                    result.FunctionClaim = functionClaimsController.GetModel(entity.FunctionClaimId);
-                }
-
-                return result;
-            }
-            else
-            {
-                return null;
-            }
+            return entity;
             
         }
 

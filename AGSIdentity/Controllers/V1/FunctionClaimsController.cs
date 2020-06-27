@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.Common;
 using AGSIdentity.Models.EntityModels;
-using AGSIdentity.Models.ExceptionModels;
 using AGSIdentity.Repositories;
 using AGSIdentity.Services.AuthService;
-using AGSIdentity.Services.ExceptionService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,7 +15,7 @@ namespace AGSIdentity.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant)]
-    public class FunctionClaimsController : ControllerBase , IBLLController<AGSFunctionClaim>
+    public class FunctionClaimsController : ControllerBase , IBLLController<AGSFunctionClaimEntity>
     {
         private IRepository _repository { get; set; }
 
@@ -31,7 +30,7 @@ namespace AGSIdentity.Controllers.V1
         [HttpGet]
         public IActionResult Get()
         {
-            var result = new List<AGSFunctionClaim>();
+            var result = new List<AGSFunctionClaimEntity>();
             var functionClaimIds = _repository.FunctionClaimRepository.GetAll();
             foreach(var functionClaimId in functionClaimIds)
             {
@@ -41,7 +40,7 @@ namespace AGSIdentity.Controllers.V1
                     result.Add(functionClaim);
                 }
             }
-            return new JsonResult(result);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, result));
         }
 
 
@@ -53,7 +52,7 @@ namespace AGSIdentity.Controllers.V1
         public IActionResult Get(string id)
         {
             var functionClaim = GetModel(id);
-            return new JsonResult(functionClaim); ;
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, functionClaim));
         }
 
 
@@ -63,11 +62,11 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="functionClaim"></param>
         [HttpPost]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant)]
-        public IActionResult Post([FromBody]  AGSFunctionClaim functionClaim)
+        public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
         {
-            var id = SaveOrUpdateModel(functionClaim);
+            var id = SaveModel(functionClaim);
             _repository.Save();
-            return Ok(id);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, id));
         }
 
         /// <summary>
@@ -77,13 +76,21 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="id"></param>
         [HttpPut("{id}")]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant)]
-        public IActionResult Put([FromBody] AGSFunctionClaim functionClaim, string id)
+        public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim, string id)
         {
             if (functionClaim.Id == id)
             {
-                SaveOrUpdateModel(functionClaim);
-                _repository.Save();
-                return Ok();
+                var result = UpdateModel(functionClaim);
+                if (result > 0)
+                {
+                    _repository.Save();
+                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
+                }
+                else
+                {
+                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.ModelNotFound));
+                }
+                
             }
             else
             {
@@ -102,54 +109,64 @@ namespace AGSIdentity.Controllers.V1
         {
             DeleteModel(id);
             _repository.Save();
-            return Ok();
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
         }
 
 
         #region BLL
-        public AGSFunctionClaim GetModel(string id)
+        public AGSFunctionClaimEntity GetModel(string id)
         {
-            var entity = _repository.FunctionClaimRepository.Get(id);
-            if (entity != null)
+            if (string.IsNullOrEmpty(id))
             {
-                var result = new AGSFunctionClaim()
-                {
-                    Id = entity.Id,
-                    Name = entity.Name
-                };
-                return result;
-            }else
-            {
-                return null;
+                throw new ArgumentNullException();
             }
-            
+
+            var entity = _repository.FunctionClaimRepository.Get(id);
+            return entity;
+
         }
 
-        public string SaveOrUpdateModel(AGSFunctionClaim functionClaim)
+        public int UpdateModel(AGSFunctionClaimEntity functionClaim)
         {
             if (functionClaim == null)
             {
                 throw new ArgumentNullException();
             }
 
-            var entity = new AGSFunctionClaimEntity()
+            if (string.IsNullOrEmpty(functionClaim.Id))
             {
-                Name = functionClaim.Name
-            };
-            
-            if (functionClaim.Id != null)
-            {
-                _repository.FunctionClaimRepository.Update(entity);
-            }else
-            {
-                entity.Id = functionClaim.Id;
-                functionClaim.Id = _repository.FunctionClaimRepository.Create(entity);
+                throw new ArgumentException();
             }
-            return functionClaim.Id;
+
+            
+            int result = _repository.FunctionClaimRepository.Update(functionClaim);
+            return result;
+        }
+
+        public string SaveModel(AGSFunctionClaimEntity functionClaim)
+        {
+            if (functionClaim == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!string.IsNullOrEmpty(functionClaim.Id))
+            {
+                throw new ArgumentException();
+            }
+
+            
+            string entityId = _repository.FunctionClaimRepository.Create(functionClaim);
+            return entityId;
         }
 
         public void DeleteModel(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException();
+            }
+
             _repository.FunctionClaimRepository.Delete(id);
         }
 

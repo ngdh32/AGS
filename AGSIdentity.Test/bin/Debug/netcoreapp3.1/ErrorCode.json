@@ -1,0 +1,6 @@
+﻿{
+  "90000": "Invalid Username or password",
+  "90001": "Invalid Redirect Url",
+  "90002": "Model cannot be found",
+  "99999": "Unexpected Error"
+}

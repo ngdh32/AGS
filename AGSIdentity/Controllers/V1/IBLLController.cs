@@ -1,5 +1,5 @@
 ﻿using System;
-using AGSIdentity.Models.EntityModels;
+using AGSCommon.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Controllers.V1
 {
@@ -8,9 +8,11 @@ namespace AGSIdentity.Controllers.V1
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IBLLController<T1>
-        where T1 : AGSCommon.Models.DataModels.AGSIdentity.AGSIdentityDataModel
+        where T1 : AGSIdentityEntity
     {
-        string SaveOrUpdateModel(T1 model);
+        string SaveModel(T1 model);
+
+        int UpdateModel(T1 model); 
 
         void DeleteModel(string id);
 

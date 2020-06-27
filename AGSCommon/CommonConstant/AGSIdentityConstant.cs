@@ -15,6 +15,8 @@ namespace AGSCommon.CommonConstant
 
         public const string AGSPolicyConstant = "ags_identity_auth_policy";
 
+        public const string AGSIdentityAdminMenuClaimConstant = "ags_identity_admin_menu";
+
         public const string AGSMenuEditPolicyConstant  = "ags_identity_menu_policy";
         public const string AGSMenuEditClaimConstant  = "ags_identity_menu_edit";
         public const string AGSMenuMenuClaimConstant  = "ags_identity_menu_menu";

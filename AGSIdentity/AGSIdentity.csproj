@@ -31,10 +31,7 @@
     <Folder Include="Services\" />
     <Folder Include="Services\AuthService\Identity\" />
     <Folder Include="Repositories\EF\" />
-    <Folder Include="Models\ExceptionModels\" />
     <Folder Include="Services\AuthService\" />
-    <Folder Include="Services\ExceptionService\" />
-    <Folder Include="Services\ExceptionService\Json\" />
     <Folder Include="Services\ProfileService\" />
     <Folder Include="Services\ProfileService\Identity\" />
     <Folder Include="Controllers\" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.AGSIdentity;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using AGSIdentity.Models.EntityModels.EF;
@@ -14,12 +14,12 @@ namespace AGSIdentity.Repositories.EF
 {
     public class EFUserRepository : IUserRepository
     {
-        private ApplicationDbContext _applicationDbContext { get; set; }
-        private UserManager<ApplicationUser> _userManager { get; set; }
-        private RoleManager<ApplicationRole> _roleManager { get; set; }
+        private EFApplicationDbContext _applicationDbContext { get; set; }
+        private UserManager<EFApplicationUser> _userManager { get; set; }
+        private RoleManager<EFApplicationRole> _roleManager { get; set; }
         private IConfiguration _configuration { get; set; }
 
-        public EFUserRepository(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
+        public EFUserRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, IConfiguration configuration)
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
@@ -32,22 +32,7 @@ namespace AGSIdentity.Repositories.EF
             var selected = _userManager.FindByIdAsync(id).Result;
             if (selected != null)
             {
-                var result = new AGSUserEntity()
-                {
-                    Id = selected.Id,
-                    Email = selected.Email,
-                    Username = selected.UserName,
-                    Password = selected.PasswordHash,
-                    GroupIds = new List<string>()
-                };
-
-                // get the associated groups
-                var groupIds = this.GetGroupIdsByUser(id);
-                if (groupIds != null)
-                {
-                    result.GroupIds = groupIds;
-                }
-
+                var result = GetAGSUserEntity(selected);
                 return result;
             }
             else
@@ -78,15 +63,7 @@ namespace AGSIdentity.Repositories.EF
         public string Create(AGSUserEntity user)
         {
             // creat the Identity User with the provided password
-            ApplicationUser appUser = new ApplicationUser()
-            {
-                Id = user.Id,
-                Email = user.Email,
-                UserName = user.Username,
-                NormalizedEmail = user.Email,
-                NormalizedUserName = user.Username,
-                SecurityStamp = user.Id
-            };
+            EFApplicationUser appUser = GetApplicationUser(user);
 
             _ = _userManager.CreateAsync(appUser, user.Password).Result;
 
@@ -107,15 +84,12 @@ namespace AGSIdentity.Repositories.EF
             return appUser.Id;
         }
 
-        public void Update(AGSUserEntity user)
+        public int Update(AGSUserEntity user)
         {
             var selected = _userManager.FindByIdAsync(user.Id).Result;
             if (selected != null)
             {
-                selected.UserName = user.Username;
-                selected.Email = user.Email;
-                selected.NormalizedEmail = user.Email;
-                selected.NormalizedUserName = user.Username;
+                selected = GetApplicationUser(user);
 
                 // change the password
                 var resetPasswordToken = _userManager.GeneratePasswordResetTokenAsync(selected).Result;
@@ -155,6 +129,12 @@ namespace AGSIdentity.Repositories.EF
                         this.AddUserToGroup(selected.Id, groupId);
                     }
                 }
+
+                return 1;
+            }
+            else
+            {
+                return 0;
             }
         }
 
@@ -195,6 +175,42 @@ namespace AGSIdentity.Repositories.EF
             {
                 _ = _userManager.RemoveFromRoleAsync(selectedUser, selectedRole.Name).Result;
             }
+        }
+
+        public EFApplicationUser GetApplicationUser(AGSUserEntity userEntity)
+        {
+            var result = new EFApplicationUser()
+            {
+                Id = userEntity.Id,
+                UserName = userEntity.Username,
+                NormalizedUserName = userEntity.Username,
+                Email = userEntity.Email,
+                NormalizedEmail = userEntity.Email,
+                SecurityStamp = userEntity.Id
+            };
+
+            return result;
+        }
+
+        public AGSUserEntity GetAGSUserEntity(EFApplicationUser user)
+        {
+            var result = new AGSUserEntity()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Password = user.PasswordHash,
+                Username = user.UserName,
+                GroupIds = new List<string>()
+            };
+
+            // get the associated groups
+            var groupIds = this.GetGroupIdsByUser(user.Id);
+            if (groupIds != null)
+            {
+                result.GroupIds = groupIds;
+            }
+
+            return result;
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AGSCommon.Models.DataModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.AGSIdentity;
+using AGSCommon.Models.EntityModels.Common;
 using AGSIdentity.Models.EntityModels;
 using AGSIdentity.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,7 @@ namespace AGSIdentity.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant)]
-    public class UsersController : ControllerBase , IBLLController<AGSUser>
+    public class UsersController : ControllerBase , IBLLController<AGSUserEntity>
     {
         private IRepository _repository { get; set; }
 
@@ -24,7 +25,7 @@ namespace AGSIdentity.Controllers.V1
 
         [HttpGet]
         public IActionResult Get() {
-            var result = new List<AGSUser>();
+            var result = new List<AGSUserEntity>();
             var userIds = _repository.UserRepository.GetAll();
             if (userIds != null)
             {
@@ -38,70 +39,46 @@ namespace AGSIdentity.Controllers.V1
                 }
             }
 
-            return new JsonResult(result);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, result));
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
             var user = GetModel(id);
-            return new JsonResult(user);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, user));
         }
 
 
-        [HttpGet("{id}/menus")]
-        public IActionResult GetUserMenus(string id)
-        {
-            var result = new List<AGSMenu>();
-            var user = GetModel(id);
-            var menuIds = _repository.MenuRepository.GetAll();
-            MenusController menusController = new MenusController(_repository);
-            if (menuIds != null)
-            {
-                foreach (var menuId in menuIds)
-                {
-                    var menu = menusController.GetModel(menuId);
-                    if (menu != null)
-                    {
-                        foreach (var group in user.Groups)
-                        {
-                            if (group.FunctionClaims.Exists(x => x.Id == menu.FunctionClaim.Id))
-                            {
-                                if (menu != null)
-                                {
-                                    result.Add(menu);
-                                }
-                            }
-                        }
-                    }
-                    
-                }
-            }
-            
-            return new JsonResult(result);
-        }
 
         [HttpPost]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
-        public IActionResult Post([FromBody] AGSUser user)
+        public IActionResult Post([FromBody] AGSUserEntity user)
         {
-            var id = SaveOrUpdateModel(user);
+            var id = SaveModel(user);
             _repository.Save();
-            return new JsonResult(id);
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, id));
         }
 
         [HttpPut("{id}")]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
-        public IActionResult Put([FromBody] AGSUser user, string id) {
+        public IActionResult Put([FromBody] AGSUserEntity user, string id) {
             if (user.Id != id)
             {
                 return BadRequest();
             }
             else
             {
-                SaveOrUpdateModel(user);
-                _repository.Save();
-                return Ok();
+                int result = UpdateModel(user);
+                if (result > 0)
+                {
+                    _repository.Save();
+                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
+                }
+                else
+                {
+                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.ModelNotFound));
+                }
             }
 
         }
@@ -111,69 +88,62 @@ namespace AGSIdentity.Controllers.V1
         public IActionResult Delete(string id) {
             DeleteModel(id);
             _repository.Save();
-            return Ok();
+            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
         }
 
-        public string SaveOrUpdateModel(AGSUser model)
+        public int UpdateModel(AGSUserEntity model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException();
             }
 
-            var entity = new AGSUserEntity()
+            if (string.IsNullOrEmpty(model.Id))
             {
-                Username = model.Username,
-                Email = model.Email,
-                Password = model.Password,
-                GroupIds = model.Groups?.Select(x => x.Id)?.ToList() ?? new List<string>()
-            };
-
-            if (model.Id == null)
-            {
-                model.Id = _repository.UserRepository.Create(entity);
-            }else
-            {
-                entity.Id = model.Id;
-                _repository.UserRepository.Update(entity);
+                throw new ArgumentException();
             }
 
-            return model.Id;
+            
+            var result = _repository.UserRepository.Update(model);
+            return result;
+        }
+
+        public string SaveModel(AGSUserEntity model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!string.IsNullOrEmpty(model.Id))
+            {
+                throw new ArgumentException();
+            }
+
+            string entityId = _repository.UserRepository.Create(model);
+
+            return entityId;
         }
 
         public void DeleteModel(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException();
+            }
+
             _repository.UserRepository.Delete(id);
         }
 
-        public AGSUser GetModel(string id)
+        public AGSUserEntity GetModel(string id)
         {
-            var selected = _repository.UserRepository.Get(id);
-            if (selected != null)
+            if (string.IsNullOrEmpty(id))
             {
-                var result = new AGSUser()
-                {
-                    Id = selected.Id,
-                    Email = selected.Email,
-                    Username = selected.Username,
-                    Groups = new List<AGSGroup>()
-                };
-                
-
-                GroupsController groupsController = new GroupsController(_repository);
-                if (selected.GroupIds != null)
-                {
-                    foreach(var groupId in selected.GroupIds)
-                    {
-                        result.Groups.Add(groupsController.GetModel(groupId));
-                    }
-                }
-
-                return result;
-            }else
-            {
-                return null;
+                throw new ArgumentNullException();
             }
+
+            var selected = _repository.UserRepository.Get(id);
+            return selected;
         }
     }
 }
