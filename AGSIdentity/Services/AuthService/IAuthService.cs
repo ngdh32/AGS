@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 using AGSIdentity.Models.ViewModels.Login;
+using IdentityServer4.Models;
 
 namespace AGSIdentity.Services.AuthService
 {
@@ -8,7 +9,7 @@ namespace AGSIdentity.Services.AuthService
     {
         bool Login(LoginInputModel loginInputModel);
 
-        bool CheckIfInLoginRequest(string redirectUrl);
+        AuthorizationRequest GetClientInfoInAuthoriationRequest(string redirectUrl);
 
         string GetRedirectUrl();
 

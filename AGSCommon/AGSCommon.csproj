@@ -10,5 +10,7 @@
     <Folder Include="Models\EntityModels\AGSIdentity\" />
     <Folder Include="CommonConstant\" />
     <Folder Include="Models\EntityModels\Common\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Models\ViewModels\AGSIdentity\" />
   </ItemGroup>
 </Project>

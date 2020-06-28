@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using AGSIdentity.Models.EntityModels;
 using System.Security.Claims;
 using IdentityModel;
+using AGSCommon.Models.ViewModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories.EF
 {
@@ -60,7 +61,7 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public string Create(AGSUserEntity user)
+        public string Create(AGSUserWithPasswordModel user)
         {
             // creat the Identity User with the provided password
             EFApplicationUser appUser = GetApplicationUser(user);
@@ -84,7 +85,7 @@ namespace AGSIdentity.Repositories.EF
             return appUser.Id;
         }
 
-        public int Update(AGSUserEntity user)
+        public int Update(AGSUserWithPasswordModel user)
         {
             var selected = _userManager.FindByIdAsync(user.Id).Result;
             if (selected != null)
@@ -198,7 +199,6 @@ namespace AGSIdentity.Repositories.EF
             {
                 Id = user.Id,
                 Email = user.Email,
-                Password = user.PasswordHash,
                 Username = user.UserName,
                 GroupIds = new List<string>()
             };

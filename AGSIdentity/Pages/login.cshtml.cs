@@ -45,7 +45,7 @@ namespace AGSIdentity.Pages
                     var redirectUrl = _authService.GetRedirectUrl();
 
                     // check if the redirect url is valid for security issue
-                    if (_authService.CheckIfInLoginRequest(redirectUrl))
+                    if (_authService.GetClientInfoInAuthoriationRequest(redirectUrl) != null)
                     {
                         Console.WriteLine("redirect url valid!");
                         // redirect the request to the identity server service and continue the process

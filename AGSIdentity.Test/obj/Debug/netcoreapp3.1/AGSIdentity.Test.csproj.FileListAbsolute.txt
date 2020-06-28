@@ -2,7 +2,6 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSIdentity.Views.pdb
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/appsettings.json
-/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/ErrorCode.json
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.runner.reporters.netcoreapp10.dll

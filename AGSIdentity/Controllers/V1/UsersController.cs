@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AGSCommon.Models.EntityModels.AGSIdentity;
 using AGSCommon.Models.EntityModels.Common;
+using AGSCommon.Models.ViewModels.AGSIdentity;
 using AGSIdentity.Models.EntityModels;
 using AGSIdentity.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +15,7 @@ namespace AGSIdentity.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant)]
-    public class UsersController : ControllerBase , IBLLController<AGSUserEntity>
+    public class UsersController : ControllerBase
     {
         private IRepository _repository { get; set; }
 
@@ -53,7 +54,7 @@ namespace AGSIdentity.Controllers.V1
 
         [HttpPost]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
-        public IActionResult Post([FromBody] AGSUserEntity user)
+        public IActionResult Post([FromBody] AGSUserWithPasswordModel user)
         {
             var id = SaveModel(user);
             _repository.Save();
@@ -62,7 +63,7 @@ namespace AGSIdentity.Controllers.V1
 
         [HttpPut("{id}")]
         [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
-        public IActionResult Put([FromBody] AGSUserEntity user, string id) {
+        public IActionResult Put([FromBody] AGSUserWithPasswordModel user, string id) {
             if (user.Id != id)
             {
                 return BadRequest();
@@ -91,7 +92,7 @@ namespace AGSIdentity.Controllers.V1
             return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
         }
 
-        public int UpdateModel(AGSUserEntity model)
+        public int UpdateModel(AGSUserWithPasswordModel model)
         {
             if (model == null)
             {
@@ -108,7 +109,7 @@ namespace AGSIdentity.Controllers.V1
             return result;
         }
 
-        public string SaveModel(AGSUserEntity model)
+        public string SaveModel(AGSUserWithPasswordModel model)
         {
             if (model == null)
             {

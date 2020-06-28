@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 using AGSIdentity.Models.EntityModels.EF;
+using IdentityServer4.Models;
 
 namespace AGSIdentity.Services.AuthService.Identity
 {
@@ -63,25 +64,26 @@ namespace AGSIdentity.Services.AuthService.Identity
 
         public string GetRedirectUrl(){
             var redirectUrl =  _httpContextAccessor.HttpContext.Request.Query["ReturnUrl"].ToString();
-            redirectUrl = WebUtility.UrlDecode(redirectUrl);
-            return redirectUrl;
-        }
-
-        public bool CheckIfInLoginRequest(string redirectUrl)
-        {
-            var context = _interactionService.GetAuthorizationContextAsync(redirectUrl).Result;
-            if (context != null)
+            if (string.IsNullOrEmpty(redirectUrl))
             {
-                return true;
+                redirectUrl = WebUtility.UrlDecode(redirectUrl);
+                return redirectUrl;
             }else
             {
-                return false;
+                return redirectUrl;
             }
+            
+        }
+
+        public AuthorizationRequest GetClientInfoInAuthoriationRequest(string redirectUrl)
+        {
+            var context = _interactionService.GetAuthorizationContextAsync(redirectUrl).Result;
+            return null;
         }
 
         public void Logout()
         {
-            throw new NotImplementedException();
+            _signInManager.SignOutAsync().Wait();
         }
     }
 }

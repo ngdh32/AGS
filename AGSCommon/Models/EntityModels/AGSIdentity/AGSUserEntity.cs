@@ -12,8 +12,6 @@ namespace AGSCommon.Models.EntityModels.AGSIdentity
 
         public string Email { get; set; }
 
-        public string Password { get; set; }
-
         public List<string> GroupIds { get; set; } = new List<string>();
 
         public AGSUserEntity()

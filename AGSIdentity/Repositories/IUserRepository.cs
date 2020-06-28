@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSCommon.Models.EntityModels.AGSIdentity;
+using AGSCommon.Models.ViewModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
@@ -10,9 +11,9 @@ namespace AGSIdentity.Repositories
         List<string> GetAll();
         void Delete(string id);
         // return newly inserted id
-        string Create(AGSUserEntity user);
+        string Create(AGSUserWithPasswordModel user);
         // return how many records are updated.
-        int Update(AGSUserEntity user);
+        int Update(AGSUserWithPasswordModel user);
         //List<string> GetGroupIdsByUser(string userId);
         //void AddUserToGroup(string userId, string groupId);
         //void RemoveUserFromGroup(string userId, string groupId);

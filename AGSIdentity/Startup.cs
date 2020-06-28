@@ -13,7 +13,6 @@ using AGSIdentity.Services.ProfileService.Identity;
 using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
-//using AGSIdentity.Services.Identity;
 using IdentityServer4.EntityFramework.Stores;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -83,6 +82,7 @@ namespace AGSIdentity
             {
                 // set up the login page url
                 options.UserInteraction.LoginUrl = "/login";
+                options.UserInteraction.LogoutUrl = "/logout";
             })
             .AddConfigurationStore(options =>
             {
