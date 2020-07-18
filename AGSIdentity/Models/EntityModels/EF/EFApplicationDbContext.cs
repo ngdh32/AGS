@@ -9,8 +9,8 @@ namespace AGSIdentity.Models.EntityModels.EF
     {
         public EFApplicationDbContext(DbContextOptions<EFApplicationDbContext> options) : base(options) { }
 
-        public DbSet<EFMenu> Menus { get; set; }
-
         public DbSet<EFFunctionClaim> FunctionClaims { get; set; }
+
+        public DbSet<EFConfigValue> ConfigValues { get; set; }
     }
 }

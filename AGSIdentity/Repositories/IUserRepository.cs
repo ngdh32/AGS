@@ -11,11 +11,14 @@ namespace AGSIdentity.Repositories
         List<string> GetAll();
         void Delete(string id);
         // return newly inserted id
-        string Create(AGSUserWithPasswordModel user);
+        string Create(AGSUserEntity user);
         // return how many records are updated.
-        int Update(AGSUserWithPasswordModel user);
-        //List<string> GetGroupIdsByUser(string userId);
-        //void AddUserToGroup(string userId, string groupId);
-        //void RemoveUserFromGroup(string userId, string groupId);
+        int Update(AGSUserEntity user);
+
+
+        bool ValidatePassword(string userId, string password);
+        bool ResetPassword(string userId, string defaultPasswordHash);
+        bool ChangePassword(string userId, string defaultPassword);
+        
     }
 }

@@ -1,6 +1,10 @@
 /AGS/bin
 /AGSDocument/bin
 /AGSIdentity/bin
+/AGSIdentity/Migrations
 /AGS/obj
 /AGSDocument/obj
 /AGSIdentity/obj
+/AGSIdentity/bin
+/AGSCommon/bin
+/AGSCommon/obj

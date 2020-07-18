@@ -66,7 +66,7 @@ namespace AGSIdentity.Controllers.V1
         {
             var id = SaveModel(functionClaim);
             _repository.Save();
-            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done, id));
+            return AGSResponseFactory.GetAGSResponseJsonResult(id);
         }
 
         /// <summary>
@@ -81,16 +81,8 @@ namespace AGSIdentity.Controllers.V1
             if (functionClaim.Id == id)
             {
                 var result = UpdateModel(functionClaim);
-                if (result > 0)
-                {
-                    _repository.Save();
-                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
-                }
-                else
-                {
-                    return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.ModelNotFound));
-                }
-                
+                _repository.Save();
+                return AGSResponseFactory.GetAGSResponseJsonResult();
             }
             else
             {
@@ -109,7 +101,7 @@ namespace AGSIdentity.Controllers.V1
         {
             DeleteModel(id);
             _repository.Save();
-            return new JsonResult(new AGSResponse(AGSResponse.ResponseCodeEnum.Done));
+            return AGSResponseFactory.GetAGSResponseJsonResult();
         }
 
 
@@ -123,7 +115,6 @@ namespace AGSIdentity.Controllers.V1
 
             var entity = _repository.FunctionClaimRepository.Get(id);
             return entity;
-
         }
 
         public int UpdateModel(AGSFunctionClaimEntity functionClaim)
@@ -140,7 +131,14 @@ namespace AGSIdentity.Controllers.V1
 
             
             int result = _repository.FunctionClaimRepository.Update(functionClaim);
-            return result;
+            if (result > 0)
+            {
+                return result;
+            }
+            else
+            {
+                throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
+            }
         }
 
         public string SaveModel(AGSFunctionClaimEntity functionClaim)

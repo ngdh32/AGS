@@ -3,11 +3,15 @@ using AGSCommon.Models.EntityModels.AGSIdentity;
 
 namespace AGSCommon.Models.ViewModels.AGSIdentity
 {
-    public class AGSUserWithPasswordModel : AGSUserEntity
+    public class ChangeUserPasswordViewModel
     {
-        public string Password { get; set; }
+        public string UserId { get; set; }
 
-        public AGSUserWithPasswordModel()
+        public string OldPassword { get; set; }
+
+        public string NewPassword { get; set; }
+
+        public ChangeUserPasswordViewModel()
         {
         }
     }

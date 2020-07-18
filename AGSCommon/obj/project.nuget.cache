@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MGgOo3ZuQRNVaIhqq6Km+ySdJwyX5oGcFQ5FCZ0NgvuQWbqC9k7k7osAldXSW0l7B4BQorspiSHBpSmH1rToFA==",
+  "dgSpecHash": "QdzNKJkYwH3Ek8qep2xec1UNFjosL77DdCtHfFpH304K7liE0KJ+1DWq1IX7umKXuqSrQJY8+1xFTgBGa2yBXg==",
   "success": true,
   "projectFilePath": "/Users/ngdh32/Desktop/AGS_git/AGSCommon/AGSCommon.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/ngdh32/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

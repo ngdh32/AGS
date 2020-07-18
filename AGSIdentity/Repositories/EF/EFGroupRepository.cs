@@ -25,7 +25,8 @@ namespace AGSIdentity.Repositories.EF
         public string Create(AGSGroupEntity group)
         {
             // create a new role in ASP.NET identity core
-            var role = GetApplicationRole(group);
+            var role = new EFApplicationRole();
+            UpdateApplicationRole(group, role);
             _ = _roleManager.CreateAsync(role).Result;
 
             // update the associated Function Claims
@@ -82,7 +83,7 @@ namespace AGSIdentity.Repositories.EF
             if (selected != null)
             {
                 // update the group info
-                selected = GetApplicationRole(group);
+                UpdateApplicationRole(group, selected);
                 _ = _roleManager.UpdateAsync(selected).Result;
 
                 // remove all the existing associated function claims
@@ -169,17 +170,13 @@ namespace AGSIdentity.Repositories.EF
             return result;
         }
 
-        public EFApplicationRole GetApplicationRole(AGSGroupEntity groupEntity)
+        public void UpdateApplicationRole(AGSGroupEntity groupEntity, EFApplicationRole efApplicationRole)
         {
-            var result = new EFApplicationRole()
-            {
-                Id = groupEntity.Id,
-                Name = groupEntity.Name,
-                NormalizedName = groupEntity.Name,
-                ConcurrencyStamp = AGSCommon.CommonFunctions.GenerateId()
-            };
-
-            return result;
+            efApplicationRole.Id = groupEntity.Id;
+            efApplicationRole.Name = groupEntity.Name;
+            efApplicationRole.NormalizedName = groupEntity.Name;
+            efApplicationRole.ConcurrencyStamp = AGSCommon.CommonFunctions.GenerateId();
         }
+
     }
 }

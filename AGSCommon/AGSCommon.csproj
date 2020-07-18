@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <Folder Include="Models\" />
     <Folder Include="Models\EntityModels\" />
     <Folder Include="Models\EntityModels\AGSIdentity\" />
@@ -12,5 +13,19 @@
     <Folder Include="Models\EntityModels\Common\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Models\ViewModels\AGSIdentity\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\AGSIdentity\" />
+    <Folder Include="Repositories\AGSIdentity\FunctionClaim\" />
+    <Folder Include="Repositories\AGSIdentity\User\" />
+    <Folder Include="Repositories\AGSIdentity\Group\" />
+    <Folder Include="Repositories\AGSIdentity\User\EF\" />
+    <Folder Include="Repositories\AGSIdentity\User\API\" />
+    <Folder Include="Repositories\AGSIdentity\Group\EF\" />
+    <Folder Include="Repositories\AGSIdentity\Group\API\" />
+    <Folder Include="Repositories\AGSIdentity\FunctionClaim\EF\" />
+    <Folder Include="Repositories\AGSIdentity\FunctionClaim\API\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 </Project>

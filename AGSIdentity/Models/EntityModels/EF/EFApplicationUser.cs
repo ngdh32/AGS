@@ -7,6 +7,10 @@ namespace AGSIdentity.Models.EntityModels.EF
 {
     public class EFApplicationUser : IdentityUser
     {
-        
+        public string First_Name { get; set; }
+
+        public string Last_Name { get; set; }
+
+        public string Title { get; set; }
     }
 }

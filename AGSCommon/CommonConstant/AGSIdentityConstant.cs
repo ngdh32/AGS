@@ -17,10 +17,6 @@ namespace AGSCommon.CommonConstant
 
         public const string AGSIdentityAdminMenuClaimConstant = "ags_identity_admin_menu";
 
-        public const string AGSMenuEditPolicyConstant  = "ags_identity_menu_policy";
-        public const string AGSMenuEditClaimConstant  = "ags_identity_menu_edit";
-        public const string AGSMenuMenuClaimConstant  = "ags_identity_menu_menu";
-
         public const string AGSFunctionClaimEditPolicyConstant  = "ags_identity_functionClaim_policy";
         public const string AGSFunctionClaimEditClaimConstant  = "ags_identity_functionClaim_edit";
         public const string AGSFunctionClaimMenuClaimConstant  = "ags_identity_functionClaim_menu";
@@ -32,5 +28,10 @@ namespace AGSCommon.CommonConstant
         public const string AGSUserEditPolicyConstant  = "ags_identity_user_policy";
         public const string AGSUserEditClaimConstant  = "ags_identity_user_edit";
         public const string AGSUserMenuClaimConstant  = "ags_identity_user_menu";
+
+        public const string AGSConfigEditPolicyConstant = "ags_identity_config_policy";
+        public const string AGSConfigEditClaimConstant = "ags_identity_config_edit";
+        public const string AGSConfigMenuClaimConstant = "ags_identity_config_menu";
+        public const string AGSUserDefaultPasswordConfigKey = "ags_identity_default_password";
     }
 }

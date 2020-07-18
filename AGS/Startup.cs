@@ -13,6 +13,17 @@ using AGS.Data;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using AGS.Services.AGS.Menu;
+using AGS.Services.AGS.Menu.AGS;
+using AGS.Repositories.Menu;
+using AGS.Repositories.Menu.Json;
+using AGS.Services.AGS.Localization;
+using AGS.Services.AGS.Localization.Json;
+using AGS.Services.AGSIdentity;
+using AGS.Services.AGSIdentity.API;
 
 namespace AGS
 {
@@ -72,6 +83,16 @@ namespace AGS
 
             // add httpcontextaccessor so that blazor component can access httpcontext
             services.AddHttpContextAccessor();
+
+            services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+            services.AddSingleton<IMenuRepository, JsonMenuRepository>();
+            services.AddTransient<IMenuService, AGSMenuService>();
+            services.AddTransient<IAGSIdentityService, APIAGSIdentityService>();
+
+            services.AddHttpClient(AGSCommon.CommonConstant.AGSConstant.ags_identity_httpclient_name, c =>
+            {
+                c.BaseAddress = new Uri(Configuration["ags_identity_api_url"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,6 +110,7 @@ namespace AGS
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

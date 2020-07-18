@@ -62,6 +62,12 @@ namespace AGSIdentity.Migrations.Application.EFApplicationDb
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("First_Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Last_Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -88,6 +94,9 @@ namespace AGSIdentity.Migrations.Application.EFApplicationDb
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -107,10 +116,30 @@ namespace AGSIdentity.Migrations.Application.EFApplicationDb
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("AGSIdentity.Models.EntityModels.EF.EFConfigValue", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsSecure")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("ConfigValues");
+                });
+
             modelBuilder.Entity("AGSIdentity.Models.EntityModels.EF.EFFunctionClaim", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -119,32 +148,6 @@ namespace AGSIdentity.Migrations.Application.EFApplicationDb
                     b.HasKey("Id");
 
                     b.ToTable("FunctionClaims");
-                });
-
-            modelBuilder.Entity("AGSIdentity.Models.EntityModels.EF.EFMenu", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("DisplayName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("FunctionClaimId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ParentId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

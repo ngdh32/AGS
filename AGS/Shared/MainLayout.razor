@@ -1,15 +1,51 @@
 ﻿@inherits LayoutComponentBase
+@using AGS.Services.AGS.Localization;
+@using Microsoft.AspNetCore.Http;
+@using AGS.Models.ViewModels.Common;
+@using Microsoft.Extensions.Configuration;
+@inject IHttpContextAccessor _httpContextAccessor
+@inject ILocalizationService _localizer
+@inject IJSRuntime _JSRuntime
+@inject IConfiguration _configuration 
 
-<div class="sidebar">
-    <NavMenu />
-</div>
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+<CascadingValue Value="appStateContainer">
+    <div>
+        <Navbar OnLangChangeCallback="@OnLangChange"></Navbar>
     </div>
-
-    <div class="content px-4">
-        @Body
+    <div class="main">
+        <div class="sidenav bg-light">
+            <NavMenu />
+        </div>
+        <div class="container">
+            @Body
+        </div>
     </div>
-</div>
+</CascadingValue>
+
+@code {
+    public AppStateContainer appStateContainer { get; set; } = new AppStateContainer();
+
+    protected void OnLangChange(string lang)
+    {
+        appStateContainer.Lang = lang;
+        _JSRuntime.InvokeVoidAsync("CommonFunction.SetCookie", AGSCommon.CommonConstant.AGSConstant.localization_lang_cookie_name, lang,  AGSCommon.CommonConstant.AGSConstant.localization_lang_cookie_expiryDays);
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(AGSCommon.CommonConstant.AGSConstant.localization_lang_cookie_name, out var lang_cookie);
+        if (string.IsNullOrEmpty(lang_cookie))
+        {
+            appStateContainer.Lang = _configuration["default_lang"];
+        }
+        else
+        {
+            appStateContainer.Lang = lang_cookie;
+        }
+
+
+        base.OnInitialized();
+    }
+}

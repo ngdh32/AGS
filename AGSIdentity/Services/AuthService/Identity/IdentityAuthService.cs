@@ -62,23 +62,36 @@ namespace AGSIdentity.Services.AuthService.Identity
 
         }
 
-        public string GetRedirectUrl(){
-            var redirectUrl =  _httpContextAccessor.HttpContext.Request.Query["ReturnUrl"].ToString();
+        public LogoutRequest GetLogoutContext()
+        {
+            var logoutid = _httpContextAccessor.HttpContext.Request.Query["logoutId"].ToString();
+            if (string.IsNullOrEmpty(logoutid))
+            {
+                logoutid = WebUtility.UrlDecode(logoutid);
+            }
+
+            var context = _interactionService.GetLogoutContextAsync(logoutid).Result;
+            return context;
+        }
+
+        public string GetRedriectUrl()
+        {
+            var redirectUrl = _httpContextAccessor.HttpContext.Request.Query["ReturnUrl"].ToString();
             if (string.IsNullOrEmpty(redirectUrl))
             {
                 redirectUrl = WebUtility.UrlDecode(redirectUrl);
-                return redirectUrl;
-            }else
+            }
+
+            var context = _interactionService.GetAuthorizationContextAsync(redirectUrl).Result;
+            if (context != null)
             {
                 return redirectUrl;
             }
+            else
+            {
+                return null;
+            }
             
-        }
-
-        public AuthorizationRequest GetClientInfoInAuthoriationRequest(string redirectUrl)
-        {
-            var context = _interactionService.GetAuthorizationContextAsync(redirectUrl).Result;
-            return null;
         }
 
         public void Logout()

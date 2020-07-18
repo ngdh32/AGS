@@ -1,0 +1,169 @@
+﻿@page "/agsidentity/users"
+@using AGS.Services.AGSIdentity;
+@using AGSCommon.Models.EntityModels.AGSIdentity;
+@using AGS.Services.AGS.Localization;
+@using AGS.Models.ViewModels.Common;
+@using AGSCommon.Models.EntityModels.Common;
+@inject IAGSIdentityService _AGSIdentityService
+@inject ILocalizationService _localizer
+@inject NavigationManager NavManager
+
+<div>
+    <div style="display: inline-block;">
+        <h3>@_localizer.GetLocalizedString("ags_identity_user_admin_header", _appStateContainer.Lang)</h3>
+    </div>
+    <button class="btn btn-primary" style="float: right;" @onclick="OnAddClick">@_localizer.GetLocalizedString("ags_button_add", _appStateContainer.Lang)</button>
+</div>
+
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_user_admin_table_header_name", _appStateContainer.Lang)</th>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_user_admin_table_header_email", _appStateContainer.Lang)</th>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_user_admin_table_header_firstname", _appStateContainer.Lang)</th>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_user_admin_table_header_lastname", _appStateContainer.Lang)</th>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_user_admin_table_header_title", _appStateContainer.Lang)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="table-hover">
+        @if (AGSUsers != null)
+        {
+            @foreach (var agsUser in AGSUsers)
+            {
+                <tr>
+                    <td>
+                        <a href="#" @onclick:preventDefault @onclick="@(e => OnEditClick(agsUser.Id))">
+                            @agsUser.Username
+                        </a>
+                    </td>
+                    <td>
+                        @agsUser.Email
+                    </td>
+                    <td>
+                        @agsUser.First_Name
+                    </td>
+                    <td>
+                        @agsUser.Last_Name
+                    </td>
+                    <td>
+                        @agsUser.Title
+                    </td>
+                    <td>
+                        <a @onclick="@(e => OnDeleteClick(agsUser.Id, agsUser.Username))" href="#" @onclick:preventDefault>
+                            @_localizer.GetLocalizedString("ags_identity_user_admin_table_delete_button_label", _appStateContainer.Lang)
+                        </a>
+                    </td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
+
+<div class="modal fade @EditModalClass" style="display: @EditModalDisplay;" id="UserEditModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <UsersEdit OnCallbackCloseEditModal="CallbackCloseEditModal" IsCreate="@IsEditModalCreate" UserId="@SelectedUserId"></UsersEdit>
+    </div>
+</div>
+
+<div class="modal fade @DeleteModalClass" style="display: @DeleteModalDisplay;" id="UserDeleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <DeleteModal ToBeDeleteId="@SelectedDeleteUserId"
+                 DeleteConfirmMessage="@(_localizer.GetLocalizedString("ags_identity_user_admin_delete_confirm_dialog_info", _appStateContainer.Lang)+":"+SelectedDeleteUsername+"?")"
+                 DeleteMethod="_AGSIdentityService.DeleteAGSUserEntity"
+                 OnCallbackCloseDeleteModal="CallbackCloseDeleteModal"></DeleteModal>
+</div>
+
+@code {
+    [CascadingParameter]
+    public AppStateContainer _appStateContainer { get; set; }
+
+    private string SelectedUserId { get; set; }
+    private bool IsEditModalCreate => string.IsNullOrEmpty(SelectedUserId) ? true : false;
+    private bool ShowEditModal { get; set; } = false;
+    private string EditModalClass => ShowEditModal ? "show" : "";
+    private string EditModalDisplay => ShowEditModal ? "block" : "none";
+
+    private string SelectedDeleteUserId { get; set; } = "";
+    private string SelectedDeleteUsername { get; set; } = "";
+    private bool ShowDeleteModal { get; set; } = false;
+    private string DeleteModalClass => ShowDeleteModal ? "show" : "";
+    private string DeleteModalDisplay => ShowDeleteModal ? "block" : "none";
+
+    private List<AGSUserEntity> AGSUsers { get; set; }
+    private string ErrorMessage { get; set; }
+
+    protected void CallbackCloseEditModal(bool reloadData)
+    {
+        SelectedUserId = "";
+        ShowEditModal = false;
+        if (reloadData)
+        {
+            FetchData();
+        }
+        //StateHasChanged();
+    }
+
+    protected void FetchData()
+    {
+        try
+        {
+            var result = _AGSIdentityService.GetAGSUserEntities();
+            AGSUsers = result;
+        }
+        catch (AGSException ex)
+        {
+            if (ex.responseCode == AGSResponse.ResponseCodeEnum.TokenExpiredError)
+            {
+                NavManager.NavigateTo("/logout");
+            }
+            else
+            {
+                ErrorMessage = ex.responseCode.ToString();
+            }
+
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
+    protected void OnDeleteClick(string userId, string username)
+    {
+        SelectedDeleteUserId = userId;
+        SelectedDeleteUsername = username;
+        ShowDeleteModal = true;
+    }
+
+    protected void CallbackCloseDeleteModal(bool isDelete)
+    {
+        if (isDelete)
+        {
+            FetchData();
+        }
+        SelectedDeleteUserId = "";
+        SelectedDeleteUsername = "";
+        ShowDeleteModal = false;
+    }
+
+    protected override void OnInitialized()
+    {
+        FetchData();
+
+        base.OnInitialized();
+    }
+
+    protected void OnEditClick(string userId)
+    {
+        SelectedUserId = userId;
+        ShowEditModal = true;
+    }
+
+    protected void OnAddClick()
+    {
+        SelectedUserId = "";
+        ShowEditModal = true;
+    }
+}

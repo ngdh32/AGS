@@ -1,0 +1,98 @@
+﻿@typeparam TItem
+
+<div class="AutoCompleteSelectContainer form-control">
+    @foreach (var selectedItem in SelectedItems)
+    {
+    <button type="button" class="btn btn-primary AutoCompleteSelect-badge">
+        @(GetValueFromTextShowProperty(selectedItem)) <span aria-hidden="true" @onclick="@(e => RemoveItemFromList(selectedItem))">&times;</span>
+    </button>
+    }
+    <div>
+        <input type="text" class="AutoCompleteSelect-input" @onblur="@(e => { ShowAvailableItemList = false; })" @onfocus="@(e => { ShowAvailableItemList = true; })" @bind-value:event="oninput" @bind-value="TxtSearch" />
+        @if (ShowAvailableItemList)
+        {
+            <div class="card AutoCompleteSelect-Resultlist">
+                <div class="list-group list-group-flush">
+                    @foreach (var searchItem in SearchItemsResult)
+                    {
+                    <a href="" @onclick:preventDefault class="list-group-item list-group-item-action" @onmousedown="@(e => AddItemToList(searchItem))">
+                        @(GetValueFromTextShowProperty(searchItem))
+                    </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public List<TItem> SelectedItems { get; set; }
+
+    [Parameter]
+    public List<TItem> AvailableItems { get; set; }
+
+    [Parameter]
+    public Func<TItem, string, bool> SearchFunc { get;set; }
+
+    [Parameter]
+    public Func<TItem, TItem, bool> MatchFunc { get; set; }
+
+    [Parameter]
+    public string TextShowProperty { get; set; }
+
+    [Parameter]
+    public EventCallback<List<TItem>> OnCallBackReturnSelectedItems { get; set; }
+
+    public string TxtSearch { get; set; }
+
+    public bool ShowAvailableItemList
+    {
+        get; set;
+    } = false;
+
+    public List<TItem> SearchItemsResult
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(TxtSearch))
+            {
+                return AvailableItems;
+            }
+            else
+            {
+                return AvailableItems.FindAll(x => SearchFunc(x, TxtSearch)).ToList(); ;
+            }
+        }
+    }
+
+    protected void RemoveItemFromList(TItem selectedItem)
+    {
+        var item = SelectedItems.Find(x => MatchFunc(x, selectedItem));
+        SelectedItems.Remove(item);
+        OnCallBackReturnSelectedItems.InvokeAsync(SelectedItems);
+    }
+
+    protected void AddItemToList(TItem selectedItem)
+    {
+        var selected = AvailableItems.Find(x => MatchFunc(x, selectedItem));
+        if (selected != null)
+        {
+            var isExist = SelectedItems.Exists(x => MatchFunc(x, selectedItem));
+            if (!isExist)
+            {
+                SelectedItems.Add(selected);
+            }
+        }
+        OnCallBackReturnSelectedItems.InvokeAsync(SelectedItems);
+        TxtSearch = "";
+        ShowAvailableItemList = false;
+    }
+
+    protected string GetValueFromTextShowProperty(object Item)
+    {
+        return Item.GetType().GetProperty(TextShowProperty).GetValue(Item, null)?.ToString() ?? "";
+    }
+
+}

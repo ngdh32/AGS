@@ -9,9 +9,9 @@ namespace AGSIdentity.Services.AuthService
     {
         bool Login(LoginInputModel loginInputModel);
 
-        AuthorizationRequest GetClientInfoInAuthoriationRequest(string redirectUrl);
+        string GetRedriectUrl();
 
-        string GetRedirectUrl();
+        LogoutRequest GetLogoutContext();
 
         void Logout();
 

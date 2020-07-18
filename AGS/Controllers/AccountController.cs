@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace AGS.Controllers
 {
@@ -19,6 +20,12 @@ namespace AGS.Controllers
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 scheme);
+        }
+
+        [HttpGet("logout")]
+        public IActionResult SignOut()
+        {
+            return new SignOutResult(new[] { "oidc", "Cookies" });
         }
 
         [Authorize]

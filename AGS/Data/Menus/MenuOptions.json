@@ -1,0 +1,35 @@
+﻿[
+  {
+    "Id": "identity_admin",
+    "LabelKey": "menu_identity_admin_label",
+    "FunctionClaim": "ags_identity_admin_menu",
+    "Url": "",
+    "IconUrl": "",
+    "ChildrenMenus": [
+      {
+        "Id": "functionClaim_admin",
+        "LabelKey": "menu_functionClaim_admin_label",
+        "FunctionClaim": "ags_identity_functionClaim_menu",
+        "Url": "agsidentity/functionclaims",
+        "IconUrl": "",
+        "ChildrenMenus": []
+      },
+      {
+        "Id": "group_admin",
+        "LabelKey": "menu_group_admin_label",
+        "FunctionClaim": "ags_identity_group_menu",
+        "Url": "agsidentity/groups",
+        "IconUrl": "",
+        "ChildrenMenus": []
+      },
+      {
+        "Id": "user_admin",
+        "LabelKey": "menu_user_admin_label",
+        "FunctionClaim": "ags_identity_user_menu",
+        "Url": "agsidentity/users",
+        "IconUrl": "",
+        "ChildrenMenus": []
+      }
+    ]
+  }
+]

@@ -58,7 +58,8 @@ namespace AGSIdentity.Repositories.EF
 
         public string Create(AGSFunctionClaimEntity functionClaim)
         {
-            var result = GetFunctionClaim(functionClaim);
+            var result = new EFFunctionClaim();
+            UpdateFunctionClaim(functionClaim, result);
             _applicationDbContext.FunctionClaims.Add(result);
             return result.Id;
 
@@ -71,7 +72,7 @@ namespace AGSIdentity.Repositories.EF
                             select x).FirstOrDefault();
             if (selected != null)
             {
-                selected = GetFunctionClaim(functionClaim);
+                UpdateFunctionClaim(functionClaim, selected);
                 _applicationDbContext.FunctionClaims.Update(selected);
                 return 1;
             }else
@@ -86,21 +87,18 @@ namespace AGSIdentity.Repositories.EF
             var result = new AGSFunctionClaimEntity()
             {
                 Id = functionClaim.Id,
-                Name = functionClaim.Name
+                Name = functionClaim.Name,
+                Description = functionClaim.Description
             };
 
             return result;
         }
 
-        public EFFunctionClaim GetFunctionClaim(AGSFunctionClaimEntity functionClaimEntity)
+        public void UpdateFunctionClaim(AGSFunctionClaimEntity functionClaimEntity, EFFunctionClaim efFunctionClaim)
         {
-            var result = new EFFunctionClaim()
-            {
-                Id = functionClaimEntity.Id,
-                Name = functionClaimEntity.Name
-            };
-
-            return result;
+            efFunctionClaim.Id = functionClaimEntity.Id;
+            efFunctionClaim.Name = functionClaimEntity.Name;
+            efFunctionClaim.Description = functionClaimEntity.Description;
         }
     }
 }

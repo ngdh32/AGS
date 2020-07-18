@@ -8,6 +8,8 @@ namespace AGSCommon.Models.EntityModels.AGSIdentity
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public AGSFunctionClaimEntity()
         {
         }

@@ -1,0 +1,61 @@
+﻿@using AGSCommon.Models.EntityModels.Common;
+@using AGS.Services.AGS.Localization;
+@using AGS.Models.ViewModels.Common;
+@inject ILocalizationService _localizer
+
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <p>@DeleteConfirmMessage</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @onclick="OnDeleteCancel">@_localizer.GetLocalizedString("ags_button_cancel", _appStateContainer.Lang)</button>
+            <button type="button" class="btn btn-primary" @onclick="OnDeleteConfirm">@_localizer.GetLocalizedString("ags_button_delete", _appStateContainer.Lang)</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [CascadingParameter]
+    public AppStateContainer _appStateContainer { get; set; }
+
+    [Parameter]
+    public string ToBeDeleteId { get; set; }
+
+    [Parameter]
+    public string DeleteConfirmMessage { get; set; }
+
+    public string ErrorMessage { get; set; }
+
+    [Parameter]
+    public Func<string, bool> DeleteMethod { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnCallbackCloseDeleteModal { get; set; }
+
+    public void OnDeleteCancel()
+    {
+        OnCallbackCloseDeleteModal.InvokeAsync(false);
+    }
+
+    public void OnDeleteConfirm()
+    {
+        try
+        {
+            DeleteMethod(ToBeDeleteId);
+            OnCallbackCloseDeleteModal.InvokeAsync(true);
+        }
+        catch (AGSException ex)
+        {
+            ErrorMessage = ex.responseCode.ToString();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+
+    }
+
+}

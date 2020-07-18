@@ -1,0 +1,62 @@
+﻿@page "/agsidentity/functionClaims"
+@using AGS.Services.AGSIdentity;
+@using AGSCommon.Models.EntityModels.AGSIdentity;
+@using AGS.Services.AGS.Localization;
+@using AGS.Models.ViewModels.Common;
+@inject IAGSIdentityService _AGSIdentityService
+@inject ILocalizationService _localizer
+
+<h3>@_localizer.GetLocalizedString("ags_identity_functionclaim_admin_header", _appStateContainer.Lang)</h3>
+<p class="text-danger">@ErrorMessage</p>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_functionclaim_admin_table_header_name", _appStateContainer.Lang)</th>
+            <th scope="col">@_localizer.GetLocalizedString("ags_identity_functionclaim_admin_table_header_description", _appStateContainer.Lang)</th>
+        </tr>
+    </thead>
+    <tbody class="table-hover">
+        @if (AGSFunctionClaims != null)
+        {
+            @foreach (var functionClaim in AGSFunctionClaims)
+            {
+                <tr>
+                    <td>
+                        @functionClaim.Name
+                    </td>
+                    <td>
+                        @functionClaim.Description
+                    </td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+    [CascadingParameter]
+    public AppStateContainer _appStateContainer { get; set; }
+
+    private List<AGSFunctionClaimEntity> AGSFunctionClaims { get; set; }
+    private string ErrorMessage { get; set; }
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            var result = _AGSIdentityService.GetFunctionClaimEntities();
+            AGSFunctionClaims = result;
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+
+        base.OnInitialized();
+    }
+
+
+}

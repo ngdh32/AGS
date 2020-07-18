@@ -5,7 +5,7 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace AGSIdentity
+namespace AGSIdentity.Data.EF
 {
     public class IdentityServerConfig
     {

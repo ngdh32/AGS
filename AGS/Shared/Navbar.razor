@@ -1,0 +1,36 @@
+﻿@using AGS.Services.AGS.Localization;
+@using AGS.Models.ViewModels.Common;
+@inject ILocalizationService _localizer
+
+<nav class="navbar navbar-light">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <NavLink class="navbar-brand" href="/">
+                <span>@_localizer.GetLocalizedString("navbar_header_website_name", _appStateContainer.Lang)</span>
+            </NavLink>
+        </div>
+        <div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary" @onclick="@(e => OnLangButtonClicked(AGSCommon.CommonConstant.AGSConstant.localization_lang_enus))">Eng</button>
+                <button type="button" class="btn btn-secondary" @onclick="@(e => OnLangButtonClicked(AGSCommon.CommonConstant.AGSConstant.localization_lang_zhhk))">中</button>
+            </div>
+        </div>
+        <a class="navbar-text" href="/logout">
+            @_localizer.GetLocalizedString("ags_logout_label", _appStateContainer.Lang)
+        </a>
+    </div>
+</nav>
+
+@code {
+    [CascadingParameter]
+    public AppStateContainer _appStateContainer { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnLangChangeCallback { get; set; }
+
+    public void OnLangButtonClicked(string lang)
+    {
+        OnLangChangeCallback.InvokeAsync(lang);
+    }
+
+}

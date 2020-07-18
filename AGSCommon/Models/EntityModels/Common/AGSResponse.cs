@@ -3,9 +3,15 @@ namespace AGSCommon.Models.EntityModels.Common
 {
     public class AGSResponse
     {
+
         public ResponseCodeEnum Code { get; set; }
 
         public object Data { get; set; }
+
+        public AGSResponse()
+        {
+
+        }
 
         public AGSResponse(ResponseCodeEnum responseCode)
         {
@@ -25,6 +31,12 @@ namespace AGSCommon.Models.EntityModels.Common
             UsernameOrPasswordError = 90000,
             RedirectUrlError = 90001,
             ModelNotFound = 90002,
+            DefaultPasswordNotFound = 90003,
+            NoPermissionError = 90004,
+            TokenExpiredError = 90005,
+
+
+
             UnknownError = 99999
         }
     }

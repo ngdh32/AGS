@@ -27,7 +27,7 @@ namespace AGSIdentity.Pages
 
         public void OnGet()
         {
-
+            
         }
 
 
@@ -41,11 +41,9 @@ namespace AGSIdentity.Pages
                     errorMessage = "Username or password invalid";
                 }
                 else
-                {   
-                    var redirectUrl = _authService.GetRedirectUrl();
-
-                    // check if the redirect url is valid for security issue
-                    if (_authService.GetClientInfoInAuthoriationRequest(redirectUrl) != null)
+                {
+                    var redirectUrl = _authService.GetRedriectUrl();
+                    if (!string.IsNullOrEmpty(redirectUrl))
                     {
                         Console.WriteLine("redirect url valid!");
                         // redirect the request to the identity server service and continue the process
@@ -53,7 +51,7 @@ namespace AGSIdentity.Pages
                     }
                     else
                     {
-                        errorMessage = "Redirect Url Error";
+                        errorMessage = "It is not a valid login request";
                     }
                 }
             }

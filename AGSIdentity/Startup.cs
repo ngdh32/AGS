@@ -31,6 +31,8 @@ using IdentityServer4.Services;
 using AGSIdentity.Models.EntityModels.EF;
 using AGSIdentity.Services.AuthService;
 using AGSIdentity.Services.AuthService.Identity;
+using AGSIdentity.Data;
+using AGSIdentity.Data.EF;
 
 namespace AGSIdentity
 {
@@ -140,7 +142,9 @@ namespace AGSIdentity
             services.AddTransient<IFunctionClaimRepository, EFFunctionClaimRepository>();
             services.AddTransient<IGroupRepository, EFGroupRepository>();
             services.AddTransient<IUserRepository, EFUserRepository>();
-            services.AddTransient<IMenuRepository, EFMenuRepository>();
+
+            // for data initialization
+            services.AddTransient<IDataSeed, EFDataSeed>();
 
             // add authorization policy
             services.AddAuthorization(options =>
@@ -156,12 +160,6 @@ namespace AGSIdentity
                     policy.RequireAuthenticatedUser();
                     policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                 });
-                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditPolicyConstant, policy =>
-                {
-                    policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditClaimConstant);
-                    policy.RequireAuthenticatedUser();
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                });
                 options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant, policy =>
                 {
                     policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant);
@@ -171,6 +169,12 @@ namespace AGSIdentity
                 options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant, policy =>
                 {
                     policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant);
+                    policy.RequireAuthenticatedUser();
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                });
+                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditPolicyConstant, policy =>
+                {
+                    policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant);
                     policy.RequireAuthenticatedUser();
                     policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                 });
@@ -240,261 +244,16 @@ namespace AGSIdentity
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<EFApplicationUser>>();
-                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<EFApplicationRole>>();
-                var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<EFApplicationDbContext>();
-                var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                //var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<EFApplicationUser>>();
+                //var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<EFApplicationRole>>();
+                //var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<EFApplicationDbContext>();
+                //var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
-
-                #region remove all users, clients and api resources in db
-                var userName = Configuration["default_user_name"];
-                var email = Configuration["default_user_email"];
-                var userPassword = Configuration["default_user_password"];
-                var adminName = "admin";
-
-                var user = userManager.FindByNameAsync(userName).Result;
-                if (user != null)
-                {
-                    _ = userManager.DeleteAsync(user).Result;
-                }
-
-                var adminRole = roleManager.FindByNameAsync(adminName).Result;
-                if (adminRole != null)
-                {
-                    _ = roleManager.DeleteAsync(adminRole).Result;
-                }
-
-                if (applicationDbContext.Menus.Any())
-                {
-                    foreach(var menu in applicationDbContext.Menus)
-                    {
-                        applicationDbContext.Menus.Remove(menu);
-                    }
-                }
-
-                if (applicationDbContext.FunctionClaims.Any())
-                {
-                    foreach(var functionClaim in applicationDbContext.FunctionClaims)
-                    {
-                        applicationDbContext.FunctionClaims.Remove(functionClaim);
-                    }
-
-                }
-
-                applicationDbContext.SaveChanges();
-
-                if (configurationDbContext.Clients.Any())
-                {
-                    foreach(var client in configurationDbContext.Clients)
-                    {
-                        configurationDbContext.Clients.Remove(client);
-                    }
-                }
-
-                if (configurationDbContext.IdentityResources.Any())
-                {
-                    foreach (var IdentityResource in configurationDbContext.IdentityResources)
-                    {
-                        configurationDbContext.IdentityResources.Remove(IdentityResource);
-                    }
-                }
-
-                if (configurationDbContext.ApiResources.Any())
-                {
-                    foreach (var ApiResource in configurationDbContext.ApiResources)
-                    {
-                        configurationDbContext.ApiResources.Remove(ApiResource);
-                    }
-                    
-                }
-
-                configurationDbContext.SaveChanges();
-
-                #endregion
-
-                #region add menu options to application DB context
-                EFFunctionClaim identityAdminMenuFC = new EFFunctionClaim()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityAdminMenuClaimConstant
-                };
-
-                EFMenu identityAdminMenu = new EFMenu()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "identity_admin_menu",
-                    DisplayName = "Identity Admin",
-                    FunctionClaimId = identityAdminMenuFC.Id,
-                    Order = 1,
-                    ParentId = null
-                };
-
-                applicationDbContext.FunctionClaims.Add(identityAdminMenuFC);
-                applicationDbContext.Menus.Add(identityAdminMenu);
-
-                EFFunctionClaim functionClaimMenuFC = new EFFunctionClaim()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimMenuClaimConstant
-                };
-
-                EFMenu functionClaimMenu = new EFMenu()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "function_claim_admin",
-                    DisplayName = "Function Claim Admin",
-                    FunctionClaimId = functionClaimMenuFC.Id,
-                    Order = 1,
-                    ParentId = identityAdminMenu.Id
-                };
-
-                applicationDbContext.FunctionClaims.Add(functionClaimMenuFC);
-                applicationDbContext.Menus.Add(functionClaimMenu);
-
-
-                EFFunctionClaim menuMenuFC = new EFFunctionClaim()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuMenuClaimConstant
-                };
-
-                EFMenu menuMenu = new EFMenu()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "menu_admin",
-                    DisplayName = "Menu Admin",
-                    FunctionClaimId = menuMenuFC.Id,
-                    Order = 1,
-                    ParentId = identityAdminMenu.Id
-                };
-
-                applicationDbContext.FunctionClaims.Add(menuMenuFC);
-                applicationDbContext.Menus.Add(menuMenu);
-
-                EFFunctionClaim userMenuFC = new EFFunctionClaim()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserMenuClaimConstant
-                };
-
-                EFMenu userMenu = new EFMenu()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "user_admin",
-                    DisplayName = "User Admin",
-                    FunctionClaimId = userMenuFC.Id,
-                    Order = 1,
-                    ParentId = identityAdminMenu.Id
-                };
-
-                applicationDbContext.FunctionClaims.Add(userMenuFC);
-                applicationDbContext.Menus.Add(userMenu);
-
-
-                EFFunctionClaim groupMenuFC = new EFFunctionClaim()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupMenuClaimConstant
-                };
-
-                EFMenu groupMenu = new EFMenu()
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    Name = "group_admin",
-                    DisplayName = "Group Admin",
-                    FunctionClaimId = groupMenuFC.Id,
-                    Order = 1,
-                    ParentId = identityAdminMenu.Id
-                };
-
-                applicationDbContext.FunctionClaims.Add(groupMenuFC);
-                applicationDbContext.Menus.Add(groupMenu);
-
-                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant });
-                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant });
-                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSMenuEditClaimConstant });
-                applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant });
-
-                applicationDbContext.SaveChanges();
-
-                #endregion
-
-
-                #region initialize the users and roles of asp.net identity core
-
-                user = new EFApplicationUser
-                {
-                    Id = AGSCommon.CommonFunctions.GenerateId(),
-                    UserName = userName,
-                    NormalizedEmail = email,
-                    NormalizedUserName = userName,
-                    Email = email,
-                    SecurityStamp = AGSCommon.CommonFunctions.GenerateId() // need to add this !!!
-                };
-                _ = userManager.CreateAsync(user, userPassword).Result;
-                user = userManager.FindByNameAsync(userName).Result;
-
-                _ = userManager.AddClaimsAsync(user, new Claim[]{
-                                new Claim(JwtClaimTypes.Name, userName),
-                                new Claim(JwtClaimTypes.Email, email)
-                            }).Result;
-
-                adminRole = new EFApplicationRole()
-                {
-                    Name = adminName
-                };
-                
-                _ = roleManager.CreateAsync(adminRole).Result;
-                adminRole = roleManager.FindByNameAsync(adminRole.Name).Result;
-                if (applicationDbContext.FunctionClaims.Any())
-                {
-                    foreach (var functionClaim in applicationDbContext.FunctionClaims.ToList())
-                    {
-                        _ = roleManager.AddClaimAsync(adminRole, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, functionClaim.Id)).Result;
-                    }
-
-                }
-                _ = userManager.AddToRoleAsync(user, adminRole.Name).Result;
-
-                applicationDbContext.SaveChanges();
-                #endregion
-
-
-                #region initialize the identity and api resources in identity server 
-                IdentityServerConfig identityServerConfig = new IdentityServerConfig();
-
-                
-                //configurationDbContext.Database.Migrate();
-                if (!configurationDbContext.Clients.Any())
-                {
-                    foreach (var client in identityServerConfig.GetClients())
-                    {
-                        configurationDbContext.Clients.Add(client.ToEntity());
-                    }
-                    configurationDbContext.SaveChanges();
-                }
-
-                if (!configurationDbContext.IdentityResources.Any())
-                {
-                    foreach (var resource in identityServerConfig.GetIdentityResources())
-                    {
-                        configurationDbContext.IdentityResources.Add(resource.ToEntity());
-                    }
-                    configurationDbContext.SaveChanges();
-                }
-
-                if (!configurationDbContext.ApiResources.Any())
-                {
-                    foreach (var resource in identityServerConfig.GetApis())
-                    {
-                        configurationDbContext.ApiResources.Add(resource.ToEntity());
-                    }
-                    configurationDbContext.SaveChanges();
-                }
-
-                
-
-                #endregion
+                var dataSeed = serviceScope.ServiceProvider.GetRequiredService<IDataSeed>();
+                dataSeed.RemoveApplicationData();
+                dataSeed.RemoveAuthenticationServerData();
+                dataSeed.InitializeApplicationData();
+                dataSeed.InitializeAuthenticationServer();
             }
         }
     }

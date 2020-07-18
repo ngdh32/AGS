@@ -38,6 +38,8 @@
     <Folder Include="Controllers\V1\" />
     <Folder Include="Models\EntityModels\" />
     <Folder Include="Models\EntityModels\EF\" />
+    <Folder Include="Data\" />
+    <Folder Include="Data\EF\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AGSCommon\AGSCommon.csproj">

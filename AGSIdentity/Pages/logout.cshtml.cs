@@ -19,22 +19,25 @@ namespace AGSIdentity.Pages
 
         public void OnGet()
         {
+
+        }
+
+        public void OnPost()
+        {
             try
             {
                 // logout
                 _authService.Logout();
 
-                // if redirect url is provided, then redirect the browser to it. Otherwise, go back to login page
-                var redirectUrl = _authService.GetRedirectUrl();
-                if (redirectUrl != null) {
-                    var clientInfo = _authService.GetClientInfoInAuthoriationRequest(redirectUrl);
-                    if (clientInfo != null)
-                    {
-                        Response.Redirect(redirectUrl);
-                    }
+                
+                var clientInfo = _authService.GetLogoutContext();
+                if (clientInfo != null)
+                {
+                    Response.Redirect(clientInfo.PostLogoutRedirectUri);
                 }
 
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
 
             }

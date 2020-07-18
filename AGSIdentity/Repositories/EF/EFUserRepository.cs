@@ -18,14 +18,16 @@ namespace AGSIdentity.Repositories.EF
         private EFApplicationDbContext _applicationDbContext { get; set; }
         private UserManager<EFApplicationUser> _userManager { get; set; }
         private RoleManager<EFApplicationRole> _roleManager { get; set; }
+        private SignInManager<EFApplicationUser> _signInManager { get; set; }
         private IConfiguration _configuration { get; set; }
 
-        public EFUserRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, IConfiguration configuration)
+        public EFUserRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, IConfiguration configuration, SignInManager<EFApplicationUser> signInManager)
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _signInManager = signInManager;
         }
 
         public AGSUserEntity Get(string id)
@@ -61,12 +63,15 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public string Create(AGSUserWithPasswordModel user)
+        public string Create(AGSUserEntity user)
         {
             // creat the Identity User with the provided password
-            EFApplicationUser appUser = GetApplicationUser(user);
+            EFApplicationUser appUser = new EFApplicationUser();
+            UpdateEFApplicationUser(user, appUser);
+                
 
-            _ = _userManager.CreateAsync(appUser, user.Password).Result;
+            // set the default password for the newly created user
+            _ = _userManager.CreateAsync(appUser).Result;
 
             _ = _userManager.AddClaimsAsync(appUser, new Claim[]{
                                 new Claim(JwtClaimTypes.Name, user.Username),
@@ -85,16 +90,12 @@ namespace AGSIdentity.Repositories.EF
             return appUser.Id;
         }
 
-        public int Update(AGSUserWithPasswordModel user)
+        public int Update(AGSUserEntity user)
         {
             var selected = _userManager.FindByIdAsync(user.Id).Result;
             if (selected != null)
             {
-                selected = GetApplicationUser(user);
-
-                // change the password
-                var resetPasswordToken = _userManager.GeneratePasswordResetTokenAsync(selected).Result;
-                _ = _userManager.ResetPasswordAsync(selected, resetPasswordToken, user.Password).Result;
+                UpdateEFApplicationUser(user, selected);
 
                 _ = _userManager.UpdateAsync(selected).Result;
 
@@ -178,19 +179,17 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public EFApplicationUser GetApplicationUser(AGSUserEntity userEntity)
+        public void UpdateEFApplicationUser(AGSUserEntity userEntity, EFApplicationUser efApplicationUser)
         {
-            var result = new EFApplicationUser()
-            {
-                Id = userEntity.Id,
-                UserName = userEntity.Username,
-                NormalizedUserName = userEntity.Username,
-                Email = userEntity.Email,
-                NormalizedEmail = userEntity.Email,
-                SecurityStamp = userEntity.Id
-            };
-
-            return result;
+            efApplicationUser.Id = userEntity.Id;
+            efApplicationUser.UserName = userEntity.Username;
+            efApplicationUser.NormalizedUserName = userEntity.Username;
+            efApplicationUser.Email = userEntity.Email;
+            efApplicationUser.NormalizedEmail = userEntity.Email;
+            efApplicationUser.SecurityStamp = userEntity.Id;
+            efApplicationUser.First_Name = userEntity.First_Name;
+            efApplicationUser.Last_Name = userEntity.Last_Name;
+            efApplicationUser.Title = userEntity.Title;
         }
 
         public AGSUserEntity GetAGSUserEntity(EFApplicationUser user)
@@ -200,6 +199,9 @@ namespace AGSIdentity.Repositories.EF
                 Id = user.Id,
                 Email = user.Email,
                 Username = user.UserName,
+                First_Name = user.First_Name,
+                Last_Name = user.Last_Name,
+                Title = user.Title,
                 GroupIds = new List<string>()
             };
 
@@ -211,6 +213,49 @@ namespace AGSIdentity.Repositories.EF
             }
 
             return result;
+        }
+
+        public bool ValidatePassword(string userId, string password)
+        {
+            var selected = _userManager.FindByIdAsync(userId).Result;
+            if (selected != null)
+            {
+                var result = _signInManager.CheckPasswordSignInAsync(selected, password, false).Result;
+                return result.Succeeded;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ResetPassword(string userId, string defaultPasswordHash)
+        {
+            var selected = _userManager.FindByIdAsync(userId).Result;
+            if (selected != null)
+            {
+                selected.PasswordHash = defaultPasswordHash;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ChangePassword(string userId, string newPassword)
+        {
+            var selected = _userManager.FindByIdAsync(userId).Result;
+            if (selected != null)
+            {
+                var hashedPassword = _userManager.PasswordHasher.HashPassword(selected, newPassword);
+                selected.PasswordHash = hashedPassword;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
