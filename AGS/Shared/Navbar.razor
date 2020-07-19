@@ -9,15 +9,17 @@
                 <span>@_localizer.GetLocalizedString("navbar_header_website_name", _appStateContainer.Lang)</span>
             </NavLink>
         </div>
-        <div>
-            <div class="btn-group" role="group">
+        <div class="form-inline">
+            <div class="btn-group btnLangGroup" role="group">
                 <button type="button" class="btn btn-secondary" @onclick="@(e => OnLangButtonClicked(AGSCommon.CommonConstant.AGSConstant.localization_lang_enus))">Eng</button>
                 <button type="button" class="btn btn-secondary" @onclick="@(e => OnLangButtonClicked(AGSCommon.CommonConstant.AGSConstant.localization_lang_zhhk))">中</button>
             </div>
+            <div>
+                <a class="navbar-text" href="/logout">
+                    @_localizer.GetLocalizedString("ags_logout_label", _appStateContainer.Lang)
+                </a>
+            </div>
         </div>
-        <a class="navbar-text" href="/logout">
-            @_localizer.GetLocalizedString("ags_logout_label", _appStateContainer.Lang)
-        </a>
     </div>
 </nav>
 

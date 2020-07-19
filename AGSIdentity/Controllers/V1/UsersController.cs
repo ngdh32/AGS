@@ -64,7 +64,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpPost]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
         public IActionResult Post([FromBody] AGSUserEntity user)
         {
             var id = SaveModel(user);
@@ -73,7 +73,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
         public IActionResult Put([FromBody] AGSUserEntity user, string id) {
             if (user.Id != id)
             {
@@ -89,7 +89,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
         public IActionResult Delete(string id) {
             DeleteModel(id);
             _repository.Save();
@@ -97,7 +97,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpDelete("{id}/resetpw")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
         public IActionResult ResetPW(string id)
         {
             var result = ResetPassword(id);
@@ -106,7 +106,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpDelete("{id}/changepw")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
         public IActionResult ChangePW([FromBody] ChangeUserPasswordViewModel changeUserPasswordView, string id)
         {
             if (changeUserPasswordView.UserId == id)
@@ -132,15 +132,33 @@ namespace AGSIdentity.Controllers.V1
             }
 
             
-            var result = _repository.UserRepository.Update(model);
-            if (result > 0)
+            var selected = _repository.UserRepository.Get(model.Id);
+            if (selected != null)
             {
-                return result;
+                // Not allow to change admin username
+                if (selected.Username == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName)
+                {
+                    if (model.Username != AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName)
+                    {
+                        throw new ArgumentException();
+                    }
+                }else
+                // Not allow to change the username to admin
+                {
+                    if (model.Username == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName)
+                    {
+                        throw new ArgumentException();
+                    }
+                }
             }
             else
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
             }
+
+
+            var result = _repository.UserRepository.Update(model);
+            return result;
         }
 
         public string SaveModel(AGSUserEntity model)
@@ -155,6 +173,12 @@ namespace AGSIdentity.Controllers.V1
                 model.Id = AGSCommon.CommonFunctions.GenerateId();
             }
 
+            // Not allow to create admin
+            if (model.Username == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName)
+            {
+                throw new ArgumentException();
+            }
+
             string entityId = _repository.UserRepository.Create(model);
             _repository.UserRepository.ResetPassword(entityId, _configuration["default_user_password"]);
 
@@ -166,6 +190,16 @@ namespace AGSIdentity.Controllers.V1
             if (string.IsNullOrEmpty(id))
             {
                 throw new ArgumentNullException();
+            }
+
+            // Not allow to delete admin
+            var selected = _repository.UserRepository.Get(id);
+            if (selected != null)
+            {
+                if (selected.Username == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName)
+                {
+                    throw new ArgumentException();
+                }
             }
 
             _repository.UserRepository.Delete(id);

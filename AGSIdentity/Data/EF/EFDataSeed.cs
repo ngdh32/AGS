@@ -79,10 +79,11 @@ namespace AGSIdentity.Data.EF
 
             
 
-            var userName = _configuration["default_user_name"];
-            var email = _configuration["default_user_email"];
+            var userName = AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
+            var email = _configuration["defau" +
+                "lt_user_email"];
             var userPassword = _configuration["default_user_password"];
-            var adminName = "admin";
+            var adminName = AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
 
             var user = new EFApplicationUser
             {

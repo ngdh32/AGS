@@ -3,6 +3,8 @@ namespace AGSCommon.CommonConstant
 {
     public class AGSIdentityConstant
     {
+        public const string AGSAdminName = "admin";
+
         public const string FunctionClaimTypeConstant = "Function";
 
         public const string AGSClientIdConstant  = "AGS";
@@ -14,6 +16,7 @@ namespace AGSCommon.CommonConstant
         public const string AGSFunctionScopeConstant  = "roles";
 
         public const string AGSPolicyConstant = "ags_identity_auth_policy";
+        public const string AGSAdminPolicyConstant = "ags_identity_auth_admin_policy";
 
         public const string AGSIdentityAdminMenuClaimConstant = "ags_identity_admin_menu";
 
@@ -33,5 +36,7 @@ namespace AGSCommon.CommonConstant
         public const string AGSConfigEditClaimConstant = "ags_identity_config_edit";
         public const string AGSConfigMenuClaimConstant = "ags_identity_config_menu";
         public const string AGSUserDefaultPasswordConfigKey = "ags_identity_default_password";
+
+        
     }
 }

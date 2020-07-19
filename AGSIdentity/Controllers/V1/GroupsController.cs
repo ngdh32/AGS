@@ -99,7 +99,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="group"></param>
         [HttpPost]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant))]
         public IActionResult Post([FromBody] AGSGroupEntity group)
         {
             var id = SaveModel(group);
@@ -115,7 +115,7 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="group"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant))]
         public IActionResult Put([FromBody] AGSGroupEntity group, string id)
         {
             if (group.Id == id)
@@ -137,7 +137,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant))]
         public IActionResult Delete(string id)
         {
             DeleteModel(id);

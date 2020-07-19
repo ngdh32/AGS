@@ -1,7 +1,7 @@
 ﻿@using AGS.Models.ViewModels.Common;
 @using AGS.Services.AGS.Localization;
 @inject ILocalizationService _localizer
-
+@inject NavigationManager _navigationManager
 
 
 
@@ -9,12 +9,11 @@
 {
     <a data-toggle="collapse" @onclick="ToggleNavMenu" href="#">
         <div>
-
             @_localizer.GetLocalizedString(menuOption.LabelKey, _appStateContainer.Lang)
             <i class="fa @ArrowClass " style="float: right;"></i>
         </div>
     </a>
-    <div class="@NavMenuCssClass" id="@(menuOption.LabelKey + "_menu_collapse")">
+    <div class="list-group-item flex-column align-items-start collapse @NavMenuCssClass" id="@(menuOption.LabelKey + "_menu_collapse")">
         @foreach (var childMenu in menuOption.ChildrenMenus)
         {
             <NavMenuOption level="@(level + 1)" menuOption=@childMenu />
@@ -31,13 +30,11 @@ else
 
 
 @code {
-    private string base_list_group_classlist = "list-group-item flex-column align-items-start collapse ";
-
     private string ArrowClass => collapseNavMenu ? "fa-chevron-down" : "fa-chevron-up";
 
     private bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => base_list_group_classlist + (!collapseNavMenu ?  "show" : "");
+    private string NavMenuCssClass => !collapseNavMenu ? "show" : "";
 
     [Parameter]
     public MenuOption menuOption { get; set; }
@@ -55,7 +52,8 @@ else
 
     protected override void OnInitialized()
     {
-        Console.WriteLine("MenuOption called:" + DateTime.Now);
+        collapseNavMenu = !_navigationManager.Uri.Contains(menuOption.Url);
+        
         base.OnInitialized();
     }
 }

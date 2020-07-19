@@ -10,6 +10,7 @@
             <p>@DeleteConfirmMessage</p>
         </div>
         <div class="modal-footer">
+            <span class="text-danger">@ErrorMessage</span>
             <button type="button" class="btn btn-secondary" @onclick="OnDeleteCancel">@_localizer.GetLocalizedString("ags_button_cancel", _appStateContainer.Lang)</button>
             <button type="button" class="btn btn-primary" @onclick="OnDeleteConfirm">@_localizer.GetLocalizedString("ags_button_delete", _appStateContainer.Lang)</button>
         </div>

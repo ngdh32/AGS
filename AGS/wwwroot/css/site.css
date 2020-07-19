@@ -26,27 +26,15 @@ body{
     background-color: inherit !important;
 }
 
-.GroupBadgeContainer.form-control{
-    display: flex;
-    flex-direction: row;
-    height: auto;
-    align-items: baseline;
-    flex-wrap:wrap;
+.navigationbar .form-inline {
+    flex-flow: row nowrap;
+    width: 12%;
 }
 
-.GroupBadgeContainer .group-badge{
-    margin:1%;
+.navigationbar .btnLangGroup {
+    margin-left: 5%;
+    margin-right: 5%;
 }
-
-.GroupBadgeContainer #txtGroups {
-    padding: 5%;
-    border: none;
-}
-
-.GroupBadgeContainer .GroupsList{
-    position: absolute;
-}
-
 
 
 .AutoCompleteSelectContainer.form-control {

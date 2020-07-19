@@ -61,7 +61,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="functionClaim"></param>
         [HttpPost]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant))]
         public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
         {
             var id = SaveModel(functionClaim);
@@ -75,7 +75,7 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="functionClaim"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant))]
         public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim, string id)
         {
             if (functionClaim.Id == id)
@@ -96,7 +96,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant)]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant))]
         public IActionResult DeleteAPI(string id)
         {
             DeleteModel(id);
