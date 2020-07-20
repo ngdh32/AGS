@@ -1,15 +1,82 @@
 ﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/Shared/DeleteModal.razor">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/Services/AGSIdentity/API/APIAGSIdentityService.cs">
     <Files>
-      <File FileName="AGS/Shared/MainLayout.razor" Line="27" Column="14" />
-      <File FileName="AGS/wwwroot/css/site.css" />
-      <File FileName="AGSIdentity/Startup.cs" />
-      <File FileName="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" />
-      <File FileName="AGS/Program.cs" Line="12" Column="14" />
-      <File FileName="AGS/Shared/DeleteModal.razor" Line="13" Column="59" />
+      <File FileName="AGS/Shared/AutoCompleteSelectControl.razor" Line="18" Column="15" />
+      <File FileName="AGS/wwwroot/css/site.css" Line="54" Column="21" />
+      <File FileName="AGS/Services/AGSIdentity/API/APIAGSIdentityService.cs" Line="118" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AGS" expanded="True">
+            <Node name="AGS" expanded="True">
+              <Node name="Data" expanded="True">
+                <Node name="Localization" expanded="True" />
+                <Node name="Menus" expanded="True" />
+              </Node>
+              <Node name="Pages" expanded="True">
+                <Node name="AGSIdentity" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True">
+                <Node name="AGS" expanded="True">
+                  <Node name="CurrentUser" expanded="True">
+                    <Node name="HttpContext" expanded="True" />
+                  </Node>
+                  <Node name="Localization" expanded="True">
+                    <Node name="Json" expanded="True" />
+                  </Node>
+                  <Node name="Menu" expanded="True" />
+                </Node>
+                <Node name="AGSIdentity" expanded="True">
+                  <Node name="API" expanded="True">
+                    <Node name="APIAGSIdentityService.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Shared" expanded="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="css" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="AGSCommon" expanded="True">
+              <Node name="Models" expanded="True">
+                <Node name="ViewModels" expanded="True">
+                  <Node name="AGSIdentity" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+            <Node name="AGSDocument" expanded="True" />
+            <Node name="AGSIdentity" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="V1" expanded="True" />
+              </Node>
+              <Node name="Data" expanded="True">
+                <Node name="EF" expanded="True" />
+              </Node>
+              <Node name="Models" expanded="True">
+                <Node name="EntityModels" expanded="True" />
+              </Node>
+              <Node name="Pages" expanded="True">
+                <Node name="login.cshtml" expanded="True" />
+              </Node>
+              <Node name="Repositories" expanded="True">
+                <Node name="EF" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True">
+                <Node name="AuthService" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
+                <Node name="ProfileService" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.AGSIdentity.Test PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.AGSDocument PreferredExecutionTarget="/Applications/Safari.app" />
@@ -18,8 +85,7 @@
   <Debugger.DebugSourceFolders />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="110" column="1" />
-      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Repositories/EF/EFUserRepository.cs" relfile="AGSIdentity/Repositories/EF/EFUserRepository.cs" line="69" column="1" />
+      <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="113" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>

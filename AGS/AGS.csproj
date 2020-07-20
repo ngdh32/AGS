@@ -35,6 +35,8 @@
     <Folder Include="Pages\AGSIdentity\" />
     <Folder Include="Services\AGSIdentity\API\" />
     <Folder Include="wwwroot\JS\" />
+    <Folder Include="Services\AGS\CurrentUser\" />
+    <Folder Include="Services\AGS\CurrentUser\HttpContext\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\Data\Menus\AGS.Data.Menus.MenuOptions.en-US" />

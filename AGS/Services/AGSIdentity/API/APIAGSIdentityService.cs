@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authentication;
 using System.Text;
+using AGSCommon.Models.ViewModels.AGSIdentity;
 
 namespace AGS.Services.AGSIdentity.API
 {
@@ -179,6 +180,16 @@ namespace AGS.Services.AGSIdentity.API
 
             var responseMessage = client.PostAsync($"groups", data).Result;
             return HandleHttpResponse<string>(responseMessage, ResponseDataType.PrimitiveType);
+        }
+
+        public bool ChangePassword(ChangeUserPasswordViewModel changeUserPasswordViewModel)
+        {
+            using var client = GetAGSIdentityClient();
+            var json = JsonConvert.SerializeObject(changeUserPasswordViewModel);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var responseMessage = client.PostAsync($"users/{changeUserPasswordViewModel.UserId}/changepw", data).Result;
+            return HandleHttpResponse<bool>(responseMessage, ResponseDataType.PrimitiveType);
         }
 
         public enum ResponseDataType

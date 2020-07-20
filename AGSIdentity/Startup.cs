@@ -33,6 +33,7 @@ using AGSIdentity.Services.AuthService;
 using AGSIdentity.Services.AuthService.Identity;
 using AGSIdentity.Data;
 using AGSIdentity.Data.EF;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace AGSIdentity
 {
@@ -103,6 +104,8 @@ namespace AGSIdentity
             #endregion
 
             #region Setup JWT Bearer Authentication
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             // add authentication using bearer 
             services.AddAuthentication(options =>
             {

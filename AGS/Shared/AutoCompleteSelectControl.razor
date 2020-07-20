@@ -7,22 +7,19 @@
         @(GetValueFromTextShowProperty(selectedItem)) <span aria-hidden="true" @onclick="@(e => RemoveItemFromList(selectedItem))">&times;</span>
     </button>
     }
-    <div>
-        <input type="text" class="AutoCompleteSelect-input" @onblur="@(e => { ShowAvailableItemList = false; })" @onfocus="@(e => { ShowAvailableItemList = true; })" @bind-value:event="oninput" @bind-value="TxtSearch" />
-        @if (ShowAvailableItemList)
-        {
-            <div class="card AutoCompleteSelect-Resultlist">
-                <div class="list-group list-group-flush">
-                    @foreach (var searchItem in SearchItemsResult)
-                    {
-                    <a href="" @onclick:preventDefault class="list-group-item list-group-item-action" @onmousedown="@(e => AddItemToList(searchItem))">
-                        @(GetValueFromTextShowProperty(searchItem))
-                    </a>
-                    }
-                </div>
-            </div>
-        }
+<div>
+    <div class="dropdown">
+        <input class="btn form-control dropdown-toggle AutoCompleteSelect-input" type="text" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @bind-value:event="oninput" @bind-value="TxtSearch"/>
+        <div class="dropdown-menu AutoCimepleteSelect-Resultlist" aria-labelledby="dropdownMenuButton">
+            @foreach (var searchItem in SearchItemsResult)
+            {
+                <a href="" @onclick:preventDefault class="dropdown-item" @onmousedown="@(e => AddItemToList(searchItem))">
+                    @(GetValueFromTextShowProperty(searchItem))
+                </a>
+            }
+        </div>
     </div>
+</div>
 </div>
 
 

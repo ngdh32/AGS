@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSCommon.Models.EntityModels.AGSIdentity;
+using AGSCommon.Models.ViewModels.AGSIdentity;
 
 namespace AGS.Services.AGSIdentity
 {
@@ -31,5 +32,7 @@ namespace AGS.Services.AGSIdentity
         string AddAGSUserEntity(AGSUserEntity userEntity);
 
         string AddAGSGroupEntity(AGSGroupEntity groupEntity);
+
+        bool ChangePassword(ChangeUserPasswordViewModel changeUserPasswordViewModel);
     }
 }

@@ -9,6 +9,7 @@ using AGSIdentity.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using AGSIdentity.Services.AuthService;
 
 namespace AGSIdentity.Controllers.V1
 {
@@ -20,11 +21,13 @@ namespace AGSIdentity.Controllers.V1
     {
         private IRepository _repository { get; set; }
         private IConfiguration _configuration { get; set; }
+        private IAuthService _authService { get; set; }
 
-        public UsersController(IRepository repository, IConfiguration configuration)
+        public UsersController(IRepository repository, IConfiguration configuration, IAuthService authService)
         {
             _repository = repository;
             _configuration = configuration;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -96,27 +99,27 @@ namespace AGSIdentity.Controllers.V1
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
 
-        [HttpDelete("{id}/resetpw")]
+        [HttpPost("{id}/resetpw")]
         [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
         public IActionResult ResetPW(string id)
         {
             var result = ResetPassword(id);
+            _repository.Save();
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
 
-        [HttpDelete("{id}/changepw")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
+        [HttpPost("{id}/changepw")]
         public IActionResult ChangePW([FromBody] ChangeUserPasswordViewModel changeUserPasswordView, string id)
         {
-            if (changeUserPasswordView.UserId == id)
-            {
-                var result = ChangePassword(changeUserPasswordView);
-                return AGSResponseFactory.GetAGSResponseJsonResult(result);
-            }else
+            if (changeUserPasswordView.UserId != id)
             {
                 return BadRequest();
             }
+
+            var result = ChangePassword(changeUserPasswordView);
+            _repository.Save();
+            return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         public int UpdateModel(AGSUserEntity model)
@@ -274,6 +277,11 @@ namespace AGSIdentity.Controllers.V1
             if (string.IsNullOrEmpty(changeUserPasswordView.NewPassword))
             {
                 throw new ArgumentNullException();
+            }
+
+            if (changeUserPasswordView.UserId != _authService.GetCurrentUserId())
+            {
+                throw new ArgumentException();
             }
 
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net;
 using AGSIdentity.Models.EntityModels.EF;
 using IdentityServer4.Models;
+using System.Linq;
 
 namespace AGSIdentity.Services.AuthService.Identity
 {
@@ -92,6 +93,14 @@ namespace AGSIdentity.Services.AuthService.Identity
                 return null;
             }
             
+        }
+
+
+        public string GetCurrentUserId()
+        {
+            var result = "";
+            result = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault()?.Value ?? "";
+            return result;
         }
 
         public void Logout()

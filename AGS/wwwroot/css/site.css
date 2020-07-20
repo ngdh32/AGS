@@ -49,11 +49,13 @@ body{
     margin: 1%;
 }
 
-.AutoCompleteSelectContainer .AutoCompleteSelect-input{
+.AutoCompleteSelectContainer .AutoCompleteSelect-input {
     padding: 5%;
-    border: none;
+    text-align: left;
 }
 
 .AutoCompleteSelectContainer .AutoCompleteSelect-Resultlist {
-    position: absolute;
+    
+    height: 200px;
+    overflow: auto;
 }

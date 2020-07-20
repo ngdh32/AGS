@@ -24,6 +24,8 @@ using AGS.Services.AGS.Localization;
 using AGS.Services.AGS.Localization.Json;
 using AGS.Services.AGSIdentity;
 using AGS.Services.AGSIdentity.API;
+using AGS.Services.AGS.CurrentUser.HttpContext;
+using AGS.Services.AGS.CurrentUser;
 
 namespace AGS
 {
@@ -88,6 +90,7 @@ namespace AGS
             services.AddSingleton<IMenuRepository, JsonMenuRepository>();
             services.AddTransient<IMenuService, AGSMenuService>();
             services.AddTransient<IAGSIdentityService, APIAGSIdentityService>();
+            services.AddTransient<ICurrentUserService, HttpContextCurrentUserService>();
 
             services.AddHttpClient(AGSCommon.CommonConstant.AGSConstant.ags_identity_httpclient_name, c =>
             {

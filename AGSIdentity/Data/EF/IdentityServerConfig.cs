@@ -45,6 +45,7 @@ namespace AGSIdentity.Data.EF
                             DisplayName = "Full access to ags.identity",
                             UserClaims = {
                                 JwtClaimTypes.Id
+                               ,JwtClaimTypes.Subject
                                ,JwtClaimTypes.Email
                                ,JwtClaimTypes.Profile
                                ,AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionScopeConstant

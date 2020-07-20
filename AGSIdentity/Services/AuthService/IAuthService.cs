@@ -16,5 +16,7 @@ namespace AGSIdentity.Services.AuthService
         void Logout();
 
         ClaimsPrincipal GetCurrentUser();
+
+        string GetCurrentUserId();
     }
 }

@@ -29,6 +29,14 @@
         "Url": "agsidentity/users",
         "IconUrl": "",
         "ChildrenMenus": []
+      },
+      {
+        "Id": "change_password",
+        "LabelKey": "menu_change_password_label",
+        "FunctionClaim": "",
+        "Url": "agsidentity/changepassword",
+        "IconUrl": "",
+        "ChildrenMenus": []
       }
     ]
   }

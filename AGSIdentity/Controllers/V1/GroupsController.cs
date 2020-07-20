@@ -5,6 +5,7 @@ using AGSCommon.Models.EntityModels.AGSIdentity;
 using AGSCommon.Models.EntityModels.Common;
 using AGSIdentity.Models.EntityModels;
 using AGSIdentity.Repositories;
+using AGSIdentity.Services.AuthService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,12 +19,14 @@ namespace AGSIdentity.Controllers.V1
     public class GroupsController : ControllerBase , IBLLController<AGSGroupEntity>
     {
         private IRepository _repository { get; set; }
-        public IConfiguration _configuration { get; set; }
+        private IConfiguration _configuration { get; set; }
+        private IAuthService _authService { get; set; }
 
-        public GroupsController(IRepository repository, IConfiguration configuration)
+        public GroupsController(IRepository repository, IConfiguration configuration, IAuthService authService)
         {
             _repository = repository;
             _configuration = configuration;
+            _authService = authService;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace AGSIdentity.Controllers.V1
         public IActionResult GetAllUsersinGroup(string id) {
             List<AGSUserEntity> result = new List<AGSUserEntity>();
             var userIds = _repository.UserRepository.GetAll();
-            UsersController usersController = new UsersController(_repository, _configuration);
+            UsersController usersController = new UsersController(_repository, _configuration, _authService);
             foreach(var userId in userIds)
             {
                 var user = _repository.UserRepository.Get(userId);

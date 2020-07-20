@@ -35,7 +35,7 @@ namespace AGS.Services.AGS.Localization.Json
         {
             if (string.IsNullOrEmpty(labelKey))
             {
-                throw new ArgumentNullException();
+                return "";
             }
 
             if (string.IsNullOrEmpty(locale))

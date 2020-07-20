@@ -40,7 +40,8 @@ namespace AGS.Services.AGS.Menu.AGS
         public MenuOption GetMenuOptions(MenuOption menuOption, List<Claim> functionClaimEntities)
         {
             if (functionClaimEntities.Exists(x => x.Value == menuOption.FunctionClaim
-                && x.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant))
+                && x.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant) ||
+                string.IsNullOrEmpty(menuOption.FunctionClaim))
             {
                 if (menuOption.ChildrenMenus == null)
                 {
