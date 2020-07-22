@@ -34,6 +34,7 @@ using AGSIdentity.Services.AuthService.Identity;
 using AGSIdentity.Data;
 using AGSIdentity.Data.EF;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace AGSIdentity
 {
@@ -49,12 +50,18 @@ namespace AGSIdentity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // this is for ef migration file generation
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             string connectionString = Configuration.GetConnectionString("Database");
 
             #region Setup Identity Server
+            string database_type = Configuration["database_provider"];
+            EFRepository.DatabaseTypeEnum databaseType = EFRepository.GetDatabaseTypeEnum(database_type);
+
             // use mysql to interact with customized identity db context
             services.AddDbContext<EFApplicationDbContext>(options =>
-                options.UseMySql(connectionString));
+                SetupEFProvider(databaseType, connectionString, migrationsAssembly, options));
 
             // use customized identity user in identity & take application db context as the db for entity framework
             services.AddIdentity<EFApplicationUser, EFApplicationRole>()
@@ -75,8 +82,7 @@ namespace AGSIdentity
                 
             });
 
-            // this is for ef migration file generation
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            
 
             // Add identity server for OAuth 2.0
             services.AddTransient<IProfileService, IdentityProfileService>(); // customized IProfile servoce
@@ -89,13 +95,11 @@ namespace AGSIdentity
             })
             .AddConfigurationStore(options =>
             {
-                options.ConfigureDbContext = b =>
-                    b.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                options.ConfigureDbContext = b => SetupEFProvider(databaseType, connectionString, migrationsAssembly, b);
             })
             .AddOperationalStore(options =>
             {
-                options.ConfigureDbContext = b =>
-                    b.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                options.ConfigureDbContext = b => SetupEFProvider(databaseType, connectionString, migrationsAssembly, b);
                 options.EnableTokenCleanup = true;
             })
             .AddAspNetIdentity<EFApplicationUser>() // use asp.net identity user as the user of identity server
@@ -285,6 +289,21 @@ namespace AGSIdentity
                 dataSeed.RemoveAuthenticationServerData();
                 dataSeed.InitializeApplicationData();
                 dataSeed.InitializeAuthenticationServer();
+            }
+        }
+
+        private void SetupEFProvider(EFRepository.DatabaseTypeEnum databaseTypeEnum, string connectionString, string migrationsAssembly, DbContextOptionsBuilder contextOptionBuilder)
+        {
+            switch (databaseTypeEnum)
+            {
+                case EFRepository.DatabaseTypeEnum.mysql:
+                    contextOptionBuilder.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                    break;
+                case EFRepository.DatabaseTypeEnum.mssql:
+                    contextOptionBuilder.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                    break;
+                default:
+                    throw new ArgumentException();
             }
         }
     }

@@ -66,5 +66,29 @@ namespace AGSIdentity.Repositories.EF
         {
             _applicationDbContext.Dispose();
         }
+
+        public static DatabaseTypeEnum GetDatabaseTypeEnum(string database_type)
+        {
+            if (string.IsNullOrEmpty(database_type))
+            {
+                throw new ArgumentNullException();
+            }
+
+            switch (database_type.ToUpper())
+            {
+                case "MSSQL":
+                    return DatabaseTypeEnum.mssql;
+                case "MYSQL":
+                    return DatabaseTypeEnum.mysql;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public enum DatabaseTypeEnum
+        {
+            mssql,
+            mysql
+        }
     }
 }
