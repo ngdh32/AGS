@@ -1,15 +1,15 @@
-﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|Default">
+﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="AGS/Services/AGS/CurrentUser/HttpContext/HttpContextCurrentUserService.cs">
     <Files>
       <File FileName="AGS/Shared/MainLayout.razor" Line="6" Column="1" />
-      <File FileName="AGS/Shared/NavMenu.razor" Line="27" Column="107" />
+      <File FileName="AGS/Shared/NavMenu.razor" Line="27" Column="96" />
       <File FileName="AGS/Startup.cs" Line="93" Column="51" />
       <File FileName="AGS/Services/AGS/CurrentUser/ICurrentUserService.cs" Line="13" Column="26" />
       <File FileName="AGS/Pages/_Host.cshtml" Line="3" Column="34" />
       <File FileName="AGSIdentity/appsettings.json" Line="24" Column="28" />
-      <File FileName="AGS/Services/AGS/CurrentUser/HttpContext/HttpContextCurrentUserService.cs" Line="33" Column="170" />
+      <File FileName="AGS/Services/AGS/CurrentUser/HttpContext/HttpContextCurrentUserService.cs" Line="33" Column="134" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -30,6 +30,9 @@
                 </Node>
               </Node>
               <Node name="Shared" expanded="True" />
+            </Node>
+            <Node name="AGSCommon" expanded="True">
+              <Node name="CommonConstant" expanded="True" />
             </Node>
             <Node name="AGSIdentity" expanded="True">
               <Node name="Data" expanded="True">
