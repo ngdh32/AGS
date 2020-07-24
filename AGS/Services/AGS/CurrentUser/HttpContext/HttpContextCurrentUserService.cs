@@ -32,7 +32,7 @@ namespace AGS.Services.AGS.CurrentUser.HttpContext
         {
             if (_httpContextAccessor.HttpContext == null)
             {
-                return "":
+                return "";
             }
 
             _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(AGSCommon.CommonConstant.AGSConstant.localization_lang_cookie_name, out var lang_cookie);
