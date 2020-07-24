@@ -90,7 +90,7 @@ namespace AGS
             services.AddSingleton<IMenuRepository, JsonMenuRepository>();
             services.AddTransient<IMenuService, AGSMenuService>();
             services.AddTransient<IAGSIdentityService, APIAGSIdentityService>();
-            services.AddTransient<ICurrentUserService, HttpContextCurrentUserService>();
+            services.AddScoped<ICurrentUserService, HttpContextCurrentUserService>();
 
             services.AddHttpClient(AGSCommon.CommonConstant.AGSConstant.ags_identity_httpclient_name, c =>
             {

@@ -2,6 +2,7 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSIdentity.Views.pdb
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/mono_crash.1cfb5decbf.0.json
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.runner.reporters.netcoreapp10.dll
@@ -28,9 +29,11 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.dll
@@ -44,6 +47,7 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Options.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Primitives.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
@@ -64,8 +68,11 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Pomelo.EntityFrameworkCore.MySql.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/Pomelo.JsonObject.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.abstractions.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.assert.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/xunit.core.dll
@@ -135,6 +142,14 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.TestPlatform.CrossPlatEngine.resources.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSCommon.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSIdentity.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSIdentity.pdb

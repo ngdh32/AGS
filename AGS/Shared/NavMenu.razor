@@ -2,32 +2,32 @@
 @using AGS.Services.AGS.Menu;
 @using AGS.Models.ViewModels.Common;
 @using System.Security.Claims;
-@using Microsoft.AspNetCore.Http
+@using AGS.Services.AGS.CurrentUser;
+@inject ICurrentUserService _currentUserService
 @inject IMenuService _menuService
-@inject IHttpContextAccessor _httpContextAccessor
 @inject AuthenticationStateProvider _authenticationStateProvide
 
-    <div class="list-group">
-        @if (MenuOptions != null && MenuOptions.Count > 0)
-        {   
-            <div class="list-group-item flex-column align-items-start">
+<div class="list-group">
+    @if (MenuOptions != null && MenuOptions.Count > 0)
+    {
+        <div class="list-group-item flex-column align-items-start">
             @foreach (var parentMenu in MenuOptions)
             {
                 <NavMenuOption level="1" menuOption=@parentMenu />
             }
-            </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<MenuOption> MenuOptions
     {
         get
         {
-            var result = _menuService.GetMenuOptions(_httpContextAccessor.HttpContext.User.Claims.ToList());
+            var result = _menuService.GetMenuOptions(_currentUserService.GetCurrentUserClaims());
             return result;
         }
     }
 
-    
+
 }

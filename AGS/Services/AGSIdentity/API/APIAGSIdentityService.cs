@@ -9,18 +9,19 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authentication;
 using System.Text;
 using AGSCommon.Models.ViewModels.AGSIdentity;
+using AGS.Services.AGS.CurrentUser;
 
 namespace AGS.Services.AGSIdentity.API
 {
     public class APIAGSIdentityService : IAGSIdentityService
     {
         private readonly IHttpClientFactory _clientFactory;
-        private IHttpContextAccessor _httpContextAccessor { get; set; }
+        private ICurrentUserService _currentUserService { get; set; }
 
-        public APIAGSIdentityService(IHttpClientFactory clientFactory, IHttpContextAccessor httpContextAccessor)
+        public APIAGSIdentityService(IHttpClientFactory clientFactory, ICurrentUserService currentUserService)
         {
             _clientFactory = clientFactory;
-            _httpContextAccessor = httpContextAccessor;
+            _currentUserService = currentUserService;
         }
 
         public List<AGSFunctionClaimEntity> GetFunctionClaimEntities()
@@ -40,7 +41,7 @@ namespace AGS.Services.AGSIdentity.API
         private HttpClient GetAGSIdentityClient()
         {
             var result = _clientFactory.CreateClient(AGSCommon.CommonConstant.AGSConstant.ags_identity_httpclient_name);
-            var accessToken = _httpContextAccessor.HttpContext.GetTokenAsync("access_token").Result;
+            var accessToken = _currentUserService.GetAccessToken();
             result.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             return result;
         }
