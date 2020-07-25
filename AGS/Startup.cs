@@ -88,9 +88,9 @@ namespace AGS
 
             services.AddSingleton<ILocalizationService, JsonLocalizationService>();
             services.AddSingleton<IMenuRepository, JsonMenuRepository>();
-            services.AddTransient<IMenuService, AGSMenuService>();
-            services.AddTransient<IAGSIdentityService, APIAGSIdentityService>();
             services.AddScoped<ICurrentUserService, HttpContextCurrentUserService>();
+            services.AddScoped<IAGSIdentityService, APIAGSIdentityService>();
+            services.AddScoped<IMenuService, AGSMenuService>();
 
             services.AddHttpClient(AGSCommon.CommonConstant.AGSConstant.ags_identity_httpclient_name, c =>
             {

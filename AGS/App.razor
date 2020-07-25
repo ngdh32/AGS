@@ -1,4 +1,10 @@
-﻿<CascadingAuthenticationState>
+﻿@using AGS.Services.AGS.CurrentUser;
+@using Microsoft.AspNetCore.Http;
+@using System.Security.Claims;
+@using AGS.Models.ViewModels.Common;
+@inject ICurrentUserService _currentUserService
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
             <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -10,3 +16,30 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public string AccessToken { get; set; }
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    [Parameter]
+    public string Lang { get; set; }
+
+    [Parameter]
+    public string UserClaimText { get; set; }
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override void OnInitialized()
+    {
+        _currentUserService.SetupInitialState(AccessToken,UserId,Lang, InitialAppStateModel.UserClaimTextDeserialize(UserClaimText));
+        base.OnInitialized();
+    }
+}

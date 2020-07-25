@@ -20,14 +20,15 @@
 </div>
 
 @code {
-    private List<MenuOption> MenuOptions
+
+    private List<MenuOption> MenuOptions { get; set; }
+
+
+    protected override void OnInitialized()
     {
-        get
-        {
-            var result = _menuService.GetMenuOptions(_currentUserService.GetCurrentUserClaims());
-            return result;
-        }
+        var result = _menuService.GetMenuOptions(_currentUserService.GetCurrentUserClaims());
+        MenuOptions = result;
+
+        base.OnInitialized();
     }
-
-
 }

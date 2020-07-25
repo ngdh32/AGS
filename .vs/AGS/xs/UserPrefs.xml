@@ -1,57 +1,11 @@
 ﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/Services/AGS/CurrentUser/HttpContext/HttpContextCurrentUserService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
     <Files>
-      <File FileName="AGS/Shared/MainLayout.razor" Line="6" Column="1" />
-      <File FileName="AGS/Shared/NavMenu.razor" Line="27" Column="96" />
-      <File FileName="AGS/Startup.cs" Line="93" Column="51" />
-      <File FileName="AGS/Services/AGS/CurrentUser/ICurrentUserService.cs" Line="13" Column="26" />
-      <File FileName="AGS/Pages/_Host.cshtml" Line="3" Column="34" />
-      <File FileName="AGSIdentity/appsettings.json" Line="24" Column="28" />
-      <File FileName="AGS/Services/AGS/CurrentUser/HttpContext/HttpContextCurrentUserService.cs" Line="33" Column="134" />
+      <File FileName="AGSIdentity/Data/EF/IdentityServerConfig.cs" Line="10" Column="18" />
+      <File FileName="AGSIdentity/appsettings.json" Line="26" Column="43" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="AGS" expanded="True">
-            <Node name="AGS" expanded="True">
-              <Node name="Pages" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="AGS" expanded="True">
-                  <Node name="CurrentUser" expanded="True">
-                    <Node name="HttpContext" expanded="True">
-                      <Node name="HttpContextCurrentUserService.cs" selected="True" />
-                    </Node>
-                  </Node>
-                </Node>
-                <Node name="AGSIdentity" expanded="True">
-                  <Node name="API" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Shared" expanded="True" />
-            </Node>
-            <Node name="AGSCommon" expanded="True">
-              <Node name="CommonConstant" expanded="True" />
-            </Node>
-            <Node name="AGSIdentity" expanded="True">
-              <Node name="Data" expanded="True">
-                <Node name="EF" expanded="True" />
-              </Node>
-              <Node name="Repositories" expanded="True">
-                <Node name="EF" expanded="True" />
-              </Node>
-              <Node name="Services" expanded="True">
-                <Node name="AuthService" expanded="True">
-                  <Node name="Identity" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="appsettings.json" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.AGSIdentity.Test PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.AGSDocument PreferredExecutionTarget="/Applications/Safari.app" />
