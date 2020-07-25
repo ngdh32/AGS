@@ -9,9 +9,11 @@ namespace AGSIdentity.Data.EF
 {
     public class IdentityServerConfig
     {
-        public IdentityServerConfig()
+        private IConfiguration _configuration { get; set; }
+
+        public IdentityServerConfig(IConfiguration configuration)
         {
-            
+            _configuration = configuration;
         }
 
         public IEnumerable<IdentityResource> GetIdentityResources()
@@ -89,17 +91,17 @@ namespace AGSIdentity.Data.EF
                     AllowedGrantTypes = GrantTypes.Implicit,
                     RequireConsent = false,
                     RedirectUris = {
-                        "https://localhost:5008/signin-oidc"
+                        _configuration["ags_web_url"] +  "signin-oidc"
                     },
                     PostLogoutRedirectUris =
                     {
-                        "https://localhost:5008/signout-callback-oidc"
+                        _configuration["ags_web_url"] +  "signout-callback-oidc"
                     },
 
                     // secret for authentication
                     ClientSecrets =
                     {
-                        new Secret("115500".Sha256())
+                        new Secret(_configuration["ags_web_secret"].Sha256())
                     },
 
                     // scopes that client has access to

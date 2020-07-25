@@ -229,12 +229,12 @@ namespace AGSIdentity.Repositories.EF
             }
         }
 
-        public bool ResetPassword(string userId, string defaultPasswordHash)
+        public bool ResetPassword(string userId, string defaultPassword)
         {
             var selected = _userManager.FindByIdAsync(userId).Result;
             if (selected != null)
             {
-                selected.PasswordHash = defaultPasswordHash;
+                selected.PasswordHash = _userManager.PasswordHasher.HashPassword(selected, defaultPassword);
                 return true;
             }
             else

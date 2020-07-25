@@ -1,11 +1,29 @@
 ﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/appsettings.staging.json">
     <Files>
-      <File FileName="AGSIdentity/Data/EF/IdentityServerConfig.cs" Line="10" Column="18" />
-      <File FileName="AGSIdentity/appsettings.json" Line="26" Column="43" />
+      <File FileName="AGSIdentity/appsettings.staging.json" Line="20" Column="36" />
+      <File FileName="AGSIdentity/appsettings.json" Line="1" Column="1" />
+      <File FileName="AGS/appsettings.json" Line="11" Column="21" />
+      <File FileName="AGS/appsettings.staging.json" Line="1" Column="2" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AGS" expanded="True">
+            <Node name="AGS" expanded="True">
+              <Node name="appsettings.json" expanded="True">
+                <Node name="appsettings.staging.json" selected="True" />
+              </Node>
+            </Node>
+            <Node name="AGSIdentity" expanded="True">
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.AGSIdentity.Test PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.AGSDocument PreferredExecutionTarget="/Applications/Safari.app" />

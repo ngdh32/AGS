@@ -95,12 +95,11 @@ namespace AGSIdentity.Data.EF
                 Last_Name = "Ng",
                 Title = "Developer",
                 SecurityStamp = AGSCommon.CommonFunctions.GenerateId(), // need to add this !!!
-                PasswordHash = userPassword
             };
-            //_ = _userManager.CreateAsync(user, userPassword).Result;
+            _ = _userManager.CreateAsync(user, userPassword).Result;
             //user = _userManager.FindByNameAsync(userName).Result;
 
-            _applicationDbContext.Users.Add(user);
+            //_applicationDbContext.Users.Add(user);
             _applicationDbContext.SaveChanges();
 
             _ = _userManager.AddClaimsAsync(user, new Claim[]{
@@ -146,7 +145,7 @@ namespace AGSIdentity.Data.EF
 
         public void InitializeAuthenticationServer()
         {
-            IdentityServerConfig identityServerConfig = new IdentityServerConfig();
+            IdentityServerConfig identityServerConfig = new IdentityServerConfig(_configuration);
 
             //configurationDbContext.Database.Migrate();
             if (!_configurationDbContext.Clients.Any())
