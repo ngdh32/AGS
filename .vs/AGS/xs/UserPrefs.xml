@@ -1,12 +1,11 @@
 ﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/appsettings.staging.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/appsettings.production.json">
     <Files>
-      <File FileName="AGSIdentity/appsettings.staging.json" Line="20" Column="36" />
-      <File FileName="AGSIdentity/appsettings.json" Line="1" Column="1" />
-      <File FileName="AGS/appsettings.json" Line="11" Column="21" />
-      <File FileName="AGS/appsettings.staging.json" Line="1" Column="2" />
+      <File FileName="AGSIdentity/appsettings.production.json" Line="16" Column="17" />
+      <File FileName="AGS/appsettings.production.json" Line="1" Column="1" />
+      <File FileName="AGS/appsettings.staging.json" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +13,7 @@
           <Node name="AGS" expanded="True">
             <Node name="AGS" expanded="True">
               <Node name="appsettings.json" expanded="True">
-                <Node name="appsettings.staging.json" selected="True" />
+                <Node name="appsettings.production.json" selected="True" />
               </Node>
             </Node>
             <Node name="AGSIdentity" expanded="True">
