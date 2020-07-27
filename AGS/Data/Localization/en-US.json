@@ -5,6 +5,7 @@
   "menu_user_admin_label": "User Admin",
   "menu_change_password_label": "Change Password",
   "navbar_header_website_name": "AGS",
+  "asg_home_greeting": "Welcome",
   "ags_identity_functionclaim_admin_header": "Function Claim Admin",
   "ags_identity_functionclaim_admin_table_header_name": "Function Claim Name",
   "ags_identity_functionclaim_admin_table_header_description": "Description",

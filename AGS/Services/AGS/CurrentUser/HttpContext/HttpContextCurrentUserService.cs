@@ -15,6 +15,7 @@ namespace AGS.Services.AGS.CurrentUser.HttpContext
         private string UserId { get; set; }
         private string Lang { get; set; }
         private List<Claim> UserClaims { get; set; }
+        private string Username { get; set; }
 
         public HttpContextCurrentUserService()
         {
@@ -40,12 +41,18 @@ namespace AGS.Services.AGS.CurrentUser.HttpContext
             return UserClaims;
         }
 
-        public void SetupInitialState(string accessToken, string userId, string currentLang, List<Claim> userClaims)
+        public void SetupInitialState(string username, string accessToken, string userId, string currentLang, List<Claim> userClaims)
         {
             AccessToken = accessToken;
             UserClaims = userClaims;
             UserId = userId;
             Lang = currentLang;
+            Username = username;
+        }
+
+        public string GetCurrentUsername()
+        {
+            return Username;
         }
     }
 }

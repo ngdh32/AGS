@@ -30,6 +30,8 @@
     [Parameter]
     public string UserClaimText { get; set; }
 
+    [Parameter]
+    public string Username { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -39,7 +41,7 @@
 
     protected override void OnInitialized()
     {
-        _currentUserService.SetupInitialState(AccessToken,UserId,Lang, InitialAppStateModel.UserClaimTextDeserialize(UserClaimText));
+        _currentUserService.SetupInitialState(Username, AccessToken, UserId,Lang, InitialAppStateModel.UserClaimTextDeserialize(UserClaimText));
         base.OnInitialized();
     }
 }

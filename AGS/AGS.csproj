@@ -44,5 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="appsettings.staging" />
+    <Content Remove="wwwroot\favicon.ico" />
   </ItemGroup>
 </Project>

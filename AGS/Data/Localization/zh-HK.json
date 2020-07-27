@@ -5,6 +5,7 @@
   "menu_user_admin_label": "用户管理",
   "menu_change_password_label": "密碼更改",
   "navbar_header_website_name": "AGS",
+  "asg_home_greeting": "歡迎",
   "ags_identity_functionclaim_admin_header": "功能管理",
   "ags_identity_functionclaim_admin_table_header_name": "功能",
   "ags_identity_functionclaim_admin_table_header_description": "描述",

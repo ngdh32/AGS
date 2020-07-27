@@ -17,6 +17,8 @@ namespace AGS.Models.ViewModels.Common
 
         public string UserClaimText { get; set; }
 
+        public string Username { get; set; }
+
         public const string TypeValueSeperator = "%|%";
 
         public const string EntitySeperator = "%+%";
@@ -44,6 +46,7 @@ namespace AGS.Models.ViewModels.Common
                 {
                     UserClaimText = UserClaimText.Substring(0, UserClaimText.Length - EntitySeperator.Length);
                 }
+                this.Username = httpContext.User?.Claims?.Where(x => x.Type == "name").FirstOrDefault()?.Value ?? "";
             }
 
         }
