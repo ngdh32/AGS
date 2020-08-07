@@ -1,34 +1,23 @@
 ﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Pages/login.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGS/Pages/_Host.cshtml">
     <Files>
-      <File FileName="AGS/Pages/Index.razor" Line="8" Column="112" />
-      <File FileName="AGS/Shared/MainLayout.razor" Line="3" Column="34" />
-      <File FileName="AGS/Data/Localization/en-US.json" Line="7" Column="39" />
-      <File FileName="AGS/Data/Localization/zh-HK.json" Line="8" Column="27" />
-      <File FileName="AGS/Startup.cs" Line="11" Column="36" />
-      <File FileName="AGS/Services/AGS/CurrentUser/HttpContext/HttpContextCurrentUserService.cs" Line="50" Column="1" />
-      <File FileName="AGS/Pages/_Host.cshtml.cs" Line="17" Column="52" />
-      <File FileName="AGS/Models/ViewModels/Common/InitialAppStateModel.cs" Line="49" Column="85" />
-      <File FileName="AGSIdentity/Pages/login.cshtml" Line="16" Column="53" />
+      <File FileName="AGS/Pages/_Host.cshtml" Line="28" Column="61" />
+      <File FileName="AGSIdentity/Pages/login.cshtml" Line="17" Column="61" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
             <Node name="AGS" expanded="True">
-              <Node name="Models" expanded="True">
-                <Node name="ViewModels" expanded="True">
-                  <Node name="Common" expanded="True" />
-                </Node>
+              <Node name="Pages" expanded="True">
+                <Node name="_Host.cshtml" selected="True" />
               </Node>
               <Node name="wwwroot" expanded="True" />
             </Node>
             <Node name="AGSIdentity" expanded="True">
-              <Node name="Pages" expanded="True">
-                <Node name="login.cshtml" selected="True" />
-              </Node>
+              <Node name="Pages" expanded="True" />
               <Node name="wwwroot" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
             </Node>
