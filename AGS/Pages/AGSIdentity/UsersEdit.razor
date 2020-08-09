@@ -3,8 +3,10 @@
 @using AGS.Services.AGS.Localization;
 @using AGSCommon.Models.EntityModels.Common;
 @using AGS.Models.ViewModels.Common;
+@using AGS.Services.AGS;
 @inject IAGSIdentityService _AGSIdentityService
 @inject ILocalizationService _localizer
+@inject NavigationManager NavManager
 
 <div class="modal-content">
     <div class="modal-header">
@@ -37,29 +39,27 @@
             </div>
             <div class="form-group">
                 <label for="txtGroups">@_localizer.GetLocalizedString("ags_identity_user_edit_form_groups", _appStateContainer.Lang)</label>
-                <AutoCompleteSelectControl
-                    SelectedItems="@GroupEntities"
-                    AvailableItems="@AvailableGroups"
-                    TextShowProperty="@OptionShowTextProperty"
-                    SearchFunc="AutoCompleteSelectSearchFunction"
-                    MatchFunc="AutoCompleteSelectMatchFunction"
-                    OnCallBackReturnSelectedItems="(Action<List<AGSGroupEntity>>)SetBackSelectedGroups">
+                <AutoCompleteSelectControl SelectedItems="@GroupEntities"
+                                           AvailableItems="@AvailableGroups"
+                                           TextShowProperty="@OptionShowTextProperty"
+                                           SearchFunc="AutoCompleteSelectSearchFunction"
+                                           MatchFunc="AutoCompleteSelectMatchFunction"
+                                           OnCallBackReturnSelectedItems="(Action<List<AGSGroupEntity>>)SetBackSelectedGroups">
                 </AutoCompleteSelectControl>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <span class="text-danger">@ErrorMessage</span>
-        <button type="button" class="btn btn-secondary" @onclick="CloseEditModal">@_localizer.GetLocalizedString("ags_button_cancel", _appStateContainer.Lang)</button>
-        <button type="button" class="btn btn-primary" @onclick="OnSaveClick">@_localizer.GetLocalizedString("ags_button_save", _appStateContainer.Lang)</button>
+        <span class="text-danger">@_localizer.GetLocalizedString(ErrorMessage, _appStateContainer.Lang)</span>
+        <button type="button" disabled="@isProcessing" class="btn btn-secondary @(isProcessing? "btn-disabled" : "")" @onclick="CloseEditModal">@_localizer.GetLocalizedString("ags_button_cancel", _appStateContainer.Lang)</button>
+        <button type="button" disabled="@isProcessing" class="btn btn-primary @(isProcessing? "btn-disabled" : "")" @onclick="OnSaveClick">@_localizer.GetLocalizedString("ags_button_save", _appStateContainer.Lang)</button>
     </div>
 </div>
 
-@code {
-    [CascadingParameter]
+@code { [CascadingParameter]
     public AppStateContainer _appStateContainer { get; set; }
 
-    public string ErrorMessage { get; set; }
+    public string ErrorMessage = "";
 
     [Parameter]
     public string UserId { get; set; }
@@ -90,7 +90,9 @@
 
     public string OptionShowTextProperty = "Name";
 
-    protected void OnSaveClick()
+    private bool isProcessing { get; set; } = false;
+
+    protected async Task OnSaveClick()
     {
         UserEntity.Username = Username;
         UserEntity.Email = Email;
@@ -100,29 +102,45 @@
         UserEntity.GroupIds = GroupEntities.Select(x => x.Id).ToList();
         try
         {
+            isProcessing = true; await Task.Delay(1); // give the Thread some time to change UI
+            await Task.Delay(1);
             var result = false;
             if (IsCreate)
             {
-                result = !string.IsNullOrEmpty(_AGSIdentityService.AddAGSUserEntity(UserEntity));
+                result = !string.IsNullOrEmpty(await _AGSIdentityService.AddAGSUserEntity(UserEntity));
             }
             else
             {
-                result = _AGSIdentityService.UpdateAGSUserEntity(UserEntity);
+                result = await _AGSIdentityService.UpdateAGSUserEntity(UserEntity);
             }
 
 
             if (result)
             {
-                OnCallbackCloseEditModal.InvokeAsync(true);
+                await OnCallbackCloseEditModal.InvokeAsync(true);
+            }
+        }
+        catch (AggregateException ex)
+        {
+            foreach (var e in ex.Flatten().InnerExceptions)
+            {
+                if (e is AGSException)
+                {
+                    CommonFunctions.HandleAGSResponseError(((AGSException)e).responseCode, NavManager, ref ErrorMessage);
+                }
             }
         }
         catch (AGSException ex)
         {
-            ErrorMessage = ex.responseCode.ToString();
+            CommonFunctions.HandleAGSResponseError(ex.responseCode, NavManager, ref ErrorMessage);
         }
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
+        }
+        finally
+        {
+            isProcessing = false;
         }
 
     }
@@ -134,36 +152,49 @@
 
     protected override void OnParametersSet()
     {
-        // initialize all form control
-        ErrorMessage = "";
-        Username = "";
-        Email = "";
-        First_Name = "";
-        Last_Name = "";
-        Title = "";
-        GroupEntities = new List<AGSGroupEntity>();
-
-
-        AvailableGroups = _AGSIdentityService.GetAGSGroupEntities();
-
-        if (!string.IsNullOrEmpty(UserId))
+        try
         {
-            GroupEntities = _AGSIdentityService.GetUserGroups(UserId);
-            UserEntity = _AGSIdentityService.GetAGSUserEntity(UserId);
-            Username = UserEntity.Username;
-            Email = UserEntity.Email;
-            First_Name = UserEntity.First_Name;
-            Last_Name = UserEntity.Last_Name;
-            Title = UserEntity.Title;
-        }
-        else
-        {
-            UserEntity = new AGSUserEntity()
+            // initialize all form control
+            ErrorMessage = "";
+            Username = "";
+            Email = "";
+            First_Name = "";
+            Last_Name = "";
+            Title = "";
+            GroupEntities = new List<AGSGroupEntity>();
+
+
+            AvailableGroups = _AGSIdentityService.GetAGSGroupEntities().Result;
+
+            if (!string.IsNullOrEmpty(UserId))
             {
-                Id = ""
-            };
-        }
+                GroupEntities = _AGSIdentityService.GetUserGroups(UserId).Result;
+                UserEntity = _AGSIdentityService.GetAGSUserEntity(UserId).Result;
+                Username = UserEntity.Username;
+                Email = UserEntity.Email;
+                First_Name = UserEntity.First_Name;
+                Last_Name = UserEntity.Last_Name;
+                Title = UserEntity.Title;
+            }
+            else
+            {
+                UserEntity = new AGSUserEntity()
+                {
+                    Id = ""
+                };
+            }
 
+
+
+        }
+        catch (AGSException ex)
+        {
+            CommonFunctions.HandleAGSResponseError(ex.responseCode, NavManager, ref ErrorMessage);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
 
         base.OnParametersSet();
     }
@@ -181,6 +212,4 @@
     public bool AutoCompleteSelectMatchFunction(AGSGroupEntity groupEntity1, AGSGroupEntity groupEntity2)
     {
         return groupEntity1.Id == groupEntity2.Id;
-    }
-
-}
+    } }

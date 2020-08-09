@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using AGSCommon.Models.EntityModels.Common;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -60,6 +61,11 @@ namespace AGS.Services.AGS.Localization.Json
                 return labelKey;
             }
             
+        }
+
+        public string GetLocalizedError(string responseCode, string locale = "en-US")
+        {
+            return GetLocalizedString("ags_error_" + responseCode, locale);
         }
     }
 }

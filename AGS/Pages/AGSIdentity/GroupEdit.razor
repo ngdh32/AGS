@@ -3,46 +3,46 @@
 @using AGS.Services.AGS.Localization;
 @using AGSCommon.Models.EntityModels.Common;
 @using AGS.Models.ViewModels.Common;
+@using AGS.Services.AGS;
 @inject IAGSIdentityService _AGSIdentityService
 @inject ILocalizationService _localizer
+@inject NavigationManager NavManager
 
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">@(IsCreate ? _localizer.GetLocalizedString("ags_identity_group_create_header", _appStateContainer.Lang) : (_localizer.GetLocalizedString("ags_identity_group_edit_header", _appStateContainer.Lang) + ":" + GroupEntity?.Name))</h5>
-            <button type="button" class="close" @onclick="CloseEditModal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="txtGroupname">@_localizer.GetLocalizedString("ags_identity_group_admin_table_name", _appStateContainer.Lang)</label>
-                    <input type="text" class="form-control" id="txtGroupname" @bind="Groupname">
-                </div>
-                <div class="form-group">
-                    <label for="txtFunctionClaims">@_localizer.GetLocalizedString("ags_identity_group_edit_form_functionClaims", _appStateContainer.Lang)</label>
-                    <AutoCompleteSelectControl SelectedItems="@FunctionClaims"
-                                               AvailableItems="@AvailableFunctionClaims"
-                                               TextShowProperty="@OptionShowTextProperty"
-                                               SearchFunc="AutoCompleteSelectSearchFunction"
-                                               MatchFunc="AutoCompleteSelectMatchFunction"
-                                               OnCallBackReturnSelectedItems="(Action<List<AGSFunctionClaimEntity>>)SetBackSelectedFunctionClaims">
-                    </AutoCompleteSelectControl>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <span class="text-danger">@ErrorMessage</span>
-            <button type="button" class="btn btn-secondary" @onclick="CloseEditModal">@_localizer.GetLocalizedString("ags_button_cancel", _appStateContainer.Lang)</button>
-            <button type="button" class="btn btn-primary" @onclick="OnSaveClick">@_localizer.GetLocalizedString("ags_button_save", _appStateContainer.Lang)</button>
-        </div>
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">@(IsCreate ? _localizer.GetLocalizedString("ags_identity_group_create_header", _appStateContainer.Lang) : (_localizer.GetLocalizedString("ags_identity_group_edit_header", _appStateContainer.Lang) + ":" + GroupEntity?.Name))</h5>
+        <button type="button" class="close" @onclick="CloseEditModal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-
-@code {
-    [CascadingParameter]
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="txtGroupname">@_localizer.GetLocalizedString("ags_identity_group_admin_table_name", _appStateContainer.Lang)</label>
+                <input type="text" class="form-control" id="txtGroupname" @bind="Groupname">
+            </div>
+            <div class="form-group">
+                <label for="txtFunctionClaims">@_localizer.GetLocalizedString("ags_identity_group_edit_form_functionClaims", _appStateContainer.Lang)</label>
+                <AutoCompleteSelectControl SelectedItems="@FunctionClaims"
+                                           AvailableItems="@AvailableFunctionClaims"
+                                           TextShowProperty="@OptionShowTextProperty"
+                                           SearchFunc="AutoCompleteSelectSearchFunction"
+                                           MatchFunc="AutoCompleteSelectMatchFunction"
+                                           OnCallBackReturnSelectedItems="(Action<List<AGSFunctionClaimEntity>>)SetBackSelectedFunctionClaims">
+                </AutoCompleteSelectControl>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <span class="text-danger">@_localizer.GetLocalizedString(ErrorMessage, _appStateContainer.Lang)</span>
+        <button type="button" disabled="@isProcessing" class="btn btn-secondary" @onclick="CloseEditModal">@_localizer.GetLocalizedString("ags_button_cancel", _appStateContainer.Lang)</button>
+        <button type="button" disabled="@isProcessing" class="btn btn-primary" @onclick="OnSaveClick">@_localizer.GetLocalizedString("ags_button_save", _appStateContainer.Lang)</button>
+    </div>
+</div>
+@code { [CascadingParameter]
     public AppStateContainer _appStateContainer { get; set; }
 
-    public string ErrorMessage { get; set; }
+    public string ErrorMessage = "";
 
     [Parameter]
     public EventCallback<bool> OnCallbackCloseEditModal { get; set; }
@@ -63,6 +63,8 @@
 
     public string OptionShowTextProperty { get; set; } = "Name";
 
+    private bool isProcessing { get; set; } = false;
+
     protected override void OnParametersSet()
     {
         // initialize all form control
@@ -71,12 +73,12 @@
         FunctionClaims = new List<AGSFunctionClaimEntity>();
 
 
-        AvailableFunctionClaims = _AGSIdentityService.GetFunctionClaimEntities();
+        AvailableFunctionClaims = _AGSIdentityService.GetFunctionClaimEntities().Result;
 
         if (!string.IsNullOrEmpty(GroupId))
         {
-            FunctionClaims = _AGSIdentityService.GetGroupFunctionClaims(GroupId);
-            GroupEntity = _AGSIdentityService.GetAGSGroupEntity(GroupId);
+            FunctionClaims = _AGSIdentityService.GetGroupFunctionClaims(GroupId).Result;
+            GroupEntity = _AGSIdentityService.GetAGSGroupEntity(GroupId).Result;
             Groupname = GroupEntity.Name;
         }
         else
@@ -91,20 +93,29 @@
         base.OnParametersSet();
     }
 
-    protected void OnSaveClick()
+    async Task OnSaveClick()
     {
+        if (string.IsNullOrEmpty(Groupname))
+        {
+            ErrorMessage = "Group name is mandatory";
+            return;
+        }
+
         GroupEntity.Name = Groupname;
         GroupEntity.FunctionClaimIds = FunctionClaims.Select(x => x.Id).ToList();
         try
         {
+            isProcessing = true; await Task.Delay(1); // give the Thread some time to change UI
+
             var result = false;
             if (IsCreate)
             {
-                result = !string.IsNullOrEmpty(_AGSIdentityService.AddAGSGroupEntity(GroupEntity));
+                string newId = await _AGSIdentityService.AddAGSGroupEntity(GroupEntity);
+                result = !string.IsNullOrEmpty(newId);
             }
             else
             {
-                result = _AGSIdentityService.UpdateAGSGroupEntity(GroupEntity);
+                result = await _AGSIdentityService.UpdateAGSGroupEntity(GroupEntity);
             }
 
 
@@ -113,13 +124,27 @@
                 OnCallbackCloseEditModal.InvokeAsync(true);
             }
         }
+        catch (AggregateException ex)
+        {
+            foreach (var e in ex.Flatten().InnerExceptions)
+            {
+                if (e is AGSException)
+                {
+                    CommonFunctions.HandleAGSResponseError(((AGSException)e).responseCode, NavManager, ref ErrorMessage);
+                }
+            }
+        }
         catch (AGSException ex)
         {
-            ErrorMessage = ex.responseCode.ToString();
+            CommonFunctions.HandleAGSResponseError(ex.responseCode, NavManager, ref ErrorMessage);
         }
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
+        }
+        finally
+        {
+            isProcessing = false;
         }
 
     }
@@ -142,6 +167,4 @@
     public bool AutoCompleteSelectMatchFunction(AGSFunctionClaimEntity functionClaim1, AGSFunctionClaimEntity functionClaim2)
     {
         return functionClaim1.Id == functionClaim2.Id;
-    }
-
-}
+    } }

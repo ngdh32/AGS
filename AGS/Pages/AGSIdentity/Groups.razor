@@ -4,6 +4,7 @@
 @using AGS.Services.AGS.Localization;
 @using AGS.Models.ViewModels.Common;
 @using AGSCommon.Models.EntityModels.Common;
+@using AGS.Services.AGS;
 @inject IAGSIdentityService _AGSIdentityService
 @inject ILocalizationService _localizer
 @inject NavigationManager NavManager
@@ -11,6 +12,7 @@
 <div>
     <div style="display: inline-block;">
         <h3>@_localizer.GetLocalizedString("ags_identity_group_admin_header", _appStateContainer.Lang)</h3>
+        <p class="text-danger">@_localizer.GetLocalizedString(ErrorMessage, _appStateContainer.Lang)</p>
     </div>
     <button class="btn btn-primary" style="float: right;" @onclick="OnAddClick">@_localizer.GetLocalizedString("ags_button_add", _appStateContainer.Lang)</button>
 </div>
@@ -25,23 +27,20 @@
     <tbody class="table-hover">
         @if (agsGroups != null)
         {
-            @foreach (var agsGroup in agsGroups)
-            {
-                <tr>
-                    <td>
-                        <a href="#" @onclick:preventDefault @onclick="@(e => OnEditClick(agsGroup.Id))">
-                            @agsGroup.Name
-                        </a>
-                    </td>
-                    <td>
-                        <a @onclick="@(e => OnDeleteClick(agsGroup.Id, agsGroup.Name))" href="#" @onclick:preventDefault>
-                            @_localizer.GetLocalizedString("ags_button_delete", _appStateContainer.Lang)
-                        </a>
-                    </td>
-                </tr>
-
-            }
-        }
+@foreach (var agsGroup in agsGroups)
+{
+<tr>
+    <td>
+        <a href="#" @onclick:preventDefault @onclick="@(e => OnEditClick(agsGroup.Id))">
+            @agsGroup.Name
+        </a>
+    </td>
+    <td>
+        <a @onclick="@(e => OnDeleteClick(agsGroup.Id, agsGroup.Name))" href="#" @onclick:preventDefault>
+            @_localizer.GetLocalizedString("ags_button_delete", _appStateContainer.Lang)
+        </a>
+    </td>
+</tr>}}
     </tbody>
 </table>
 
@@ -52,14 +51,13 @@
 </div>
 
 <div class="modal fade @DeleteModalClass" style="display: @DeleteModalDisplay;" id="GroupDeleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <DeleteModal ToBeDeleteId="@SelectedDeleteGroupId"
-                 DeleteConfirmMessage="@(_localizer.GetLocalizedString("ags_identity_group_admin_delete_confirm_dialog_info", _appStateContainer.Lang)+":"+SelectedDeleteGroupname+"?")"
-                 DeleteMethod="_AGSIdentityService.DeleteAGSGroupEntity"
-                 OnCallbackCloseDeleteModal="CallbackCloseDeleteModal"></DeleteModal>
+    <ConfirmModal Id="@SelectedDeleteGroupId"
+                 ConfirmMessage="@(_localizer.GetLocalizedString("ags_identity_group_admin_delete_confirm_dialog_info", _appStateContainer.Lang)+":"+SelectedDeleteGroupname+"?")"
+                 ConfirmMethod="_AGSIdentityService.DeleteAGSGroupEntity"
+                 OnCallbackCloseModal="CallbackCloseDeleteModal"></ConfirmModal>
 </div>
 
-@code {
-    [CascadingParameter]
+@code { [CascadingParameter]
     public AppStateContainer _appStateContainer { get; set; }
 
     private List<AGSGroupEntity> agsGroups { get; set; }
@@ -71,6 +69,7 @@
     private string EditModalClass => ShowEditModal ? "show" : "";
     private string EditModalDisplay => ShowEditModal ? "block" : "none";
 
+    // properties for Delete modal
     private string SelectedDeleteGroupId { get; set; } = "";
     private string SelectedDeleteGroupname { get; set; } = "";
     private bool ShowDeleteModal { get; set; } = false;
@@ -78,7 +77,7 @@
     private string DeleteModalDisplay => ShowDeleteModal ? "block" : "none";
 
 
-    private string ErrorMessage { get; set; }
+    private string ErrorMessage = "";
 
     protected override void OnInitialized()
     {
@@ -91,20 +90,22 @@
     {
         try
         {
-            var result = _AGSIdentityService.GetAGSGroupEntities();
+            var result = _AGSIdentityService.GetAGSGroupEntities().Result;
             agsGroups = result;
+        }
+        catch (AggregateException ex)
+        {
+            foreach (var e in ex.Flatten().InnerExceptions)
+            {
+                if (e is AGSException)
+                {
+                    CommonFunctions.HandleAGSResponseError(((AGSException)e).responseCode, NavManager, ref ErrorMessage);
+                }
+            }
         }
         catch (AGSException ex)
         {
-            if (ex.responseCode == AGSResponse.ResponseCodeEnum.TokenExpiredError)
-            {
-                NavManager.NavigateTo("/logout");
-            }
-            else
-            {
-                ErrorMessage = ex.responseCode.ToString();
-            }
-
+            CommonFunctions.HandleAGSResponseError(ex.responseCode, NavManager, ref ErrorMessage);
         }
         catch (Exception ex)
         {
@@ -150,5 +151,4 @@
     {
         SelectedGroupId = "";
         ShowEditModal = true;
-    }
-}
+    } }

@@ -15,8 +15,12 @@
   "ags_identity_user_admin_table_header_firstname": "First Name",
   "ags_identity_user_admin_table_header_lastname": "Last Name",
   "ags_identity_user_admin_table_header_title": "Title",
+  "ags_identity_user_admin_table_header_delete": "Delete?",
+  "ags_identity_user_admin_table_header_resetpw": "Reset Password?",
   "ags_identity_user_admin_table_delete_button_label": "Delete",
   "ags_identity_user_admin_delete_confirm_dialog_info": "Are you sure to delete this user",
+  "ags_identity_user_admin_table_reset_pw_button_label": "Reset",
+  "ags_identity_user_admin_reset_pw_confirm_dialog_info": "Are you sure to reset this user",
   "ags_identity_user_edit_header": "User",
   "ags_identity_user_edit_form_username": "User",
   "ags_identity_user_edit_form_email": "Email",
@@ -43,7 +47,15 @@
   "ags_button_cancel": "Cancel",
   "ags_button_delete": "Delete",
   "ags_button_add": "Add",
+  "ags_button_confirm": "Confirm",
   "ags_success": "Success!",
   "ags_fail": "Unknown Error occurs. Please try again later",
-  "ags_logout_label": "Logout"
+  "ags_logout_label": "Logout",
+
+
+
+  "ags_error_ModelNotFound": "The object is not found. Please refresh and see if it is already deleted.",
+  "ags_error_NoPermissionError": "You don't have permission to execute the action",
+  "ags_error_TokenExpiredError": "Your token has been expired. Please log out.",
+  "ags_error_UnknownError": "Unknown error has occured."
 }

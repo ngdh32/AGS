@@ -59,3 +59,11 @@ body{
     height: 200px;
     overflow: auto;
 }
+
+.modal-header {
+    background-color: #f8f9fa;
+}
+
+.btn-disabled{
+    opacity: .65;
+}

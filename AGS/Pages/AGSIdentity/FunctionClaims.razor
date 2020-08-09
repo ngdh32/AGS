@@ -2,12 +2,16 @@
 @using AGS.Services.AGSIdentity;
 @using AGSCommon.Models.EntityModels.AGSIdentity;
 @using AGS.Services.AGS.Localization;
+@using AGSCommon.Models.EntityModels.Common;
+@using AGS.Services.AGS;
 @using AGS.Models.ViewModels.Common;
+
 @inject IAGSIdentityService _AGSIdentityService
 @inject ILocalizationService _localizer
+@inject NavigationManager NavManager
 
 <h3>@_localizer.GetLocalizedString("ags_identity_functionclaim_admin_header", _appStateContainer.Lang)</h3>
-<p class="text-danger">@ErrorMessage</p>
+<p class="text-danger">@_localizer.GetLocalizedString(ErrorMessage, _appStateContainer.Lang)</p>
 
 <table class="table table-hover">
     <thead class="thead-light">
@@ -19,36 +23,46 @@
     <tbody class="table-hover">
         @if (AGSFunctionClaims != null)
         {
-            @foreach (var functionClaim in AGSFunctionClaims)
-            {
-                <tr>
-                    <td>
-                        @functionClaim.Name
-                    </td>
-                    <td>
-                        @functionClaim.Description
-                    </td>
-                </tr>
-
-            }
-        }
+@foreach (var functionClaim in AGSFunctionClaims)
+{
+<tr>
+    <td>
+        @functionClaim.Name
+    </td>
+    <td>
+        @functionClaim.Description
+    </td>
+</tr>}}
     </tbody>
 </table>
 
 
-@code {
-    [CascadingParameter]
+@code { [CascadingParameter]
     public AppStateContainer _appStateContainer { get; set; }
 
     private List<AGSFunctionClaimEntity> AGSFunctionClaims { get; set; }
-    private string ErrorMessage { get; set; }
+    private string ErrorMessage = "";
 
     protected override void OnInitialized()
     {
         try
         {
-            var result = _AGSIdentityService.GetFunctionClaimEntities();
+            var result = _AGSIdentityService.GetFunctionClaimEntities().Result;
             AGSFunctionClaims = result;
+        }
+        catch(AggregateException ex)
+        {
+            foreach (var e in ex.Flatten().InnerExceptions)
+            {
+                if (e is AGSException)
+                {
+                    CommonFunctions.HandleAGSResponseError(((AGSException)e).responseCode, NavManager, ref ErrorMessage);
+                }
+            }
+        }
+        catch (AGSException ex)
+        {
+            CommonFunctions.HandleAGSResponseError(ex.responseCode, NavManager, ref ErrorMessage);
         }
         catch (Exception ex)
         {
@@ -56,7 +70,4 @@
         }
 
         base.OnInitialized();
-    }
-
-
-}
+    } }

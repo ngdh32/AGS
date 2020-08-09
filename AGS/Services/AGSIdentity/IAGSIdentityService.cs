@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AGSCommon.Models.EntityModels.AGSIdentity;
 using AGSCommon.Models.ViewModels.AGSIdentity;
 
@@ -7,32 +8,34 @@ namespace AGS.Services.AGSIdentity
 {
     public interface IAGSIdentityService
     {
-        List<AGSFunctionClaimEntity> GetFunctionClaimEntities();
+        Task<List<AGSFunctionClaimEntity>> GetFunctionClaimEntities();
 
-        List<AGSUserEntity> GetAGSUserEntities();
+        Task<List<AGSUserEntity>> GetAGSUserEntities();
 
-        List<AGSGroupEntity> GetAGSGroupEntities();
+        Task<List<AGSGroupEntity>> GetAGSGroupEntities();
 
-        AGSUserEntity GetAGSUserEntity(string userId);
+        Task<AGSUserEntity> GetAGSUserEntity(string userId);
 
-        AGSGroupEntity GetAGSGroupEntity(string groupId);
+        Task<AGSGroupEntity> GetAGSGroupEntity(string groupId);
 
-        bool UpdateAGSUserEntity(AGSUserEntity userEntity);
+        Task<bool> UpdateAGSUserEntity(AGSUserEntity userEntity);
 
-        bool UpdateAGSGroupEntity(AGSGroupEntity groupEntity);
+        Task<bool> UpdateAGSGroupEntity(AGSGroupEntity groupEntity);
 
-        List<AGSGroupEntity> GetUserGroups(string userId);
+        Task<List<AGSGroupEntity>> GetUserGroups(string userId);
 
-        List<AGSFunctionClaimEntity> GetGroupFunctionClaims(string groupId);
+        Task<List<AGSFunctionClaimEntity>> GetGroupFunctionClaims(string groupId);
 
-        bool DeleteAGSUserEntity(string userId);
+        Task<bool> DeleteAGSUserEntity(string userId);
 
-        bool DeleteAGSGroupEntity(string groupId);
+        Task<bool> DeleteAGSGroupEntity(string groupId);
 
-        string AddAGSUserEntity(AGSUserEntity userEntity);
+        Task<string> AddAGSUserEntity(AGSUserEntity userEntity);
 
-        string AddAGSGroupEntity(AGSGroupEntity groupEntity);
+        Task<string> AddAGSGroupEntity(AGSGroupEntity groupEntity);
 
-        bool ChangePassword(ChangeUserPasswordViewModel changeUserPasswordViewModel);
+        Task<bool> ChangePassword(ChangeUserPasswordViewModel changeUserPasswordViewModel);
+
+        Task<bool> ResetPassword(string userId);
     }
 }

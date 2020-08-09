@@ -15,8 +15,12 @@
   "ags_identity_user_admin_table_header_firstname": "名",
   "ags_identity_user_admin_table_header_lastname": "姓",
   "ags_identity_user_admin_table_header_title": "稱號",
+  "ags_identity_user_admin_table_header_delete": "刪除?",
+  "ags_identity_user_admin_table_header_resetpw": "重設密碼?",
   "ags_identity_user_admin_table_delete_button_label": "刪除",
   "ags_identity_user_admin_delete_confirm_dialog_info": "您確定要刪除此用戶",
+  "ags_identity_user_admin_table_reset_pw_button_label": "重設密碼",
+  "ags_identity_user_admin_reset_pw_confirm_dialog_info": "您確定要重設此用戶密碼",
   "ags_identity_user_edit_header": "用户",
   "ags_identity_user_edit_form_username": "用户名稱",
   "ags_identity_user_edit_form_email": "電郵",
@@ -43,7 +47,15 @@
   "ags_button_cancel": "取消",
   "ags_button_delete": "刪除",
   "ags_button_add": "新增",
+  "ags_button_confirm": "壓定",
   "ags_success": "成功!",
   "ags_fail": "不明錯誤，請稍後再試。",
-  "ags_logout_label": "登出"
+  "ags_logout_label": "登出",
+
+
+
+  "ags_error_ModelNotFound": "物件已不存在，請重新載入。",
+  "ags_error_NoPermissionError": "你沒有權限執行這動作",
+  "ags_error_TokenExpiredError": "登入愈期，請重新登入",
+  "ags_error_UnknownError": "不明問題發生了"
 }
