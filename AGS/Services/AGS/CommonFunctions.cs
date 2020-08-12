@@ -10,7 +10,7 @@ namespace AGS.Services.AGS
         {
             if (responseCode == AGSResponse.ResponseCodeEnum.TokenExpiredError)
             {
-                navigationManager.NavigateTo("/logout");
+                navigationManager.NavigateTo("/logout", true);
             }
             else
             {

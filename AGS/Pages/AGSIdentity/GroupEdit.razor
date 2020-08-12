@@ -67,30 +67,51 @@
 
     protected override void OnParametersSet()
     {
-        // initialize all form control
-        ErrorMessage = "";
-        Groupname = "";
-        FunctionClaims = new List<AGSFunctionClaimEntity>();
-
-
-        AvailableFunctionClaims = _AGSIdentityService.GetFunctionClaimEntities().Result;
-
-        if (!string.IsNullOrEmpty(GroupId))
+        try
         {
-            FunctionClaims = _AGSIdentityService.GetGroupFunctionClaims(GroupId).Result;
-            GroupEntity = _AGSIdentityService.GetAGSGroupEntity(GroupId).Result;
-            Groupname = GroupEntity.Name;
-        }
-        else
-        {
-            GroupEntity = new AGSGroupEntity()
+            // initialize all form control
+            ErrorMessage = "";
+            Groupname = "";
+            FunctionClaims = new List<AGSFunctionClaimEntity>();
+
+
+            AvailableFunctionClaims = _AGSIdentityService.GetFunctionClaimEntities().Result;
+
+            if (!string.IsNullOrEmpty(GroupId))
             {
-                Id = ""
-            };
+                FunctionClaims = _AGSIdentityService.GetGroupFunctionClaims(GroupId).Result;
+                GroupEntity = _AGSIdentityService.GetAGSGroupEntity(GroupId).Result;
+                Groupname = GroupEntity.Name;
+            }
+            else
+            {
+                GroupEntity = new AGSGroupEntity()
+                {
+                    Id = ""
+                };
+            }
+
+
+            base.OnParametersSet();
         }
-
-
-        base.OnParametersSet();
+        catch (AggregateException ex)
+        {
+            foreach (var e in ex.Flatten().InnerExceptions)
+            {
+                if (e is AGSException)
+                {
+                    CommonFunctions.HandleAGSResponseError(((AGSException)e).responseCode, NavManager, ref ErrorMessage);
+                }
+            }
+        }
+        catch (AGSException ex)
+        {
+            CommonFunctions.HandleAGSResponseError(ex.responseCode, NavManager, ref ErrorMessage);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     async Task OnSaveClick()
