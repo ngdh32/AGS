@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using AGS.Models.ViewModels.Common;
 using AGS.Repositories.Menu;
+using AGS.Services.AGS.CurrentUser;
 using AGS.Services.AGS.Localization;
 using AGSCommon.Models.EntityModels.AGSIdentity;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +15,13 @@ namespace AGS.Services.AGS.Menu.AGS
     {
         private ILocalizationService _localizationService { get; set; }
         private IMenuRepository _menuRepository { get; set; }
+        private ICurrentUserService _currentUserService { get; set; }
 
-        public AGSMenuService(IMenuRepository menuRepository, ILocalizationService localizationService)
+        public AGSMenuService(IMenuRepository menuRepository, ILocalizationService localizationService, ICurrentUserService currentUserService)
         {
             _menuRepository = menuRepository;
             _localizationService = localizationService;
+            _currentUserService = currentUserService;
         }
 
         public List<MenuOption> GetMenuOptions(List<Claim> functionClaimEntities)
@@ -39,9 +42,12 @@ namespace AGS.Services.AGS.Menu.AGS
 
         public MenuOption GetMenuOptions(MenuOption menuOption, List<Claim> functionClaimEntities)
         {
+            // if add to menu list if the user has the corresponding claim, the user is an admin or the menu does't require a claim
             if (functionClaimEntities.Exists(x => x.Value == menuOption.FunctionClaim
                 && x.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant) ||
-                string.IsNullOrEmpty(menuOption.FunctionClaim))
+                string.IsNullOrEmpty(menuOption.FunctionClaim) ||
+                _currentUserService.GetCurrentUsername() == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName
+            )
             {
                 if (menuOption.ChildrenMenus == null)
                 {

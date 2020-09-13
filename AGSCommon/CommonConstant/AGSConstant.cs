@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AGSCommon.CommonConstant
 {
-    public class AGSConstant
+    public static class AGSConstant
     {
         public const string localization_lang_enus = "en-US";
 

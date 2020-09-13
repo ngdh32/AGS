@@ -21,6 +21,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet]
+        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigReadClaimConstant)]
         public IActionResult Get()
         {
             var systemConfigs = _repository.ConfigRepository.GetAll();
@@ -28,6 +29,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet("{key}")]
+        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigReadClaimConstant)]
         public IActionResult Get(string key)
         {
             var result = GetModel(key);
@@ -35,7 +37,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpPost]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditPolicyConstant)]
+        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant)]
         public IActionResult Post(AGSConfigEntity configEntity)
         {
             var result = SaveModel(configEntity);
@@ -44,7 +46,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpPut("{key}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditPolicyConstant)]
+        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant)]
         public IActionResult Put(AGSConfigEntity configEntity, string key)
         {
             if (configEntity.Key != key)
@@ -59,7 +61,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpDelete("{key}")]
-        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditPolicyConstant)]
+        [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant)]
         public IActionResult Delete(string key)
         {
             DeleteModel(key);

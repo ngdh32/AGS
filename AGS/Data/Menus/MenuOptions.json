@@ -2,7 +2,7 @@
   {
     "Id": "identity_admin",
     "LabelKey": "menu_identity_admin_label",
-    "FunctionClaim": "ags_identity_admin_menu",
+    "FunctionClaim": "",
     "Url": "agsidentity/",
     "IconUrl": "",
     "ChildrenMenus": [

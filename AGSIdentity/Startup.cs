@@ -35,6 +35,7 @@ using AGSIdentity.Data;
 using AGSIdentity.Data.EF;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AGSIdentity
 {
@@ -156,63 +157,7 @@ namespace AGSIdentity
             // add authorization policy
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant, policy =>
-                {
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser();
-                });
-                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant, policy =>
-                {
-                    //policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant);
-                    policy.RequireAuthenticatedUser();
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAssertion(context =>
-                    {
-                        return context.User.HasClaim(claim =>
-                            claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
-                            && claim.Value == AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant)
-                            || context.User.IsInRole(AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName);
-                    });
-                });
-                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant, policy =>
-                {
-                    //policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant);
-                    policy.RequireAuthenticatedUser();
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAssertion(context =>
-                    {
-                        return context.User.HasClaim(claim =>
-                            claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
-                            && claim.Value == AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant)
-                            || context.User.IsInRole(AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName);
-                    });
-                });
-                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant, policy =>
-                {
-                    //policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant);
-                    policy.RequireAuthenticatedUser();
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAssertion(context =>
-                    {
-                        return context.User.HasClaim(claim =>
-                            claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
-                            && claim.Value == AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant)
-                            || context.User.IsInRole(AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName);
-                    });
-                });
-                options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditPolicyConstant, policy =>
-                {
-                    //policy.RequireClaim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant);
-                    policy.RequireAuthenticatedUser();
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAssertion(context =>
-                    {
-                        return context.User.HasClaim(claim =>
-                            claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
-                            && claim.Value == AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant)
-                            || context.User.IsInRole(AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName);
-                    });
-                });
+                SetupAuthentticaionPolicy(options);
             });
         }
 
@@ -292,6 +237,13 @@ namespace AGSIdentity
             }
         }
 
+        /// <summary>
+        /// Set up a mapping function to get the correct EF provider
+        /// </summary>
+        /// <param name="databaseTypeEnum"></param>
+        /// <param name="connectionString"></param>
+        /// <param name="migrationsAssembly"></param>
+        /// <param name="contextOptionBuilder"></param>
         private void SetupEFProvider(EFRepository.DatabaseTypeEnum databaseTypeEnum, string connectionString, string migrationsAssembly, DbContextOptionsBuilder contextOptionBuilder)
         {
             switch (databaseTypeEnum)
@@ -304,6 +256,41 @@ namespace AGSIdentity
                     break;
                 default:
                     throw new ArgumentException();
+            }
+        }
+
+        /// <summary>
+        /// Use reflection to get the properties in AGS Identity Constant and setup a list of policy for authentication
+        /// </summary>
+        /// <param name="options"></param>
+        private void SetupAuthentticaionPolicy(AuthorizationOptions options)
+        {
+            options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant, policy =>
+            {
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                policy.RequireAuthenticatedUser();
+            });
+
+            var ags_identity_constant_type = typeof(AGSCommon.CommonConstant.AGSIdentityConstant);
+            var constant_fields = ags_identity_constant_type.GetFields();
+            foreach(var constant_field in constant_fields)
+            {
+                if (constant_field.Name.EndsWith("ClaimConstant")) {
+                    var claimValue = constant_field.GetValue(null);
+                    options.AddPolicy((string)claimValue, policy =>
+                    {
+                        policy.RequireAuthenticatedUser();
+                        policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                        policy.RequireAssertion(context =>
+                        {
+                            var hasClaim = context.User.HasClaim(claim =>
+                                claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
+                                && claim.Value == (string)claimValue);
+                            var isAdmin = (context.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value?? "") == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
+                            return hasClaim || isAdmin;
+                        });
+                    });
+                }
             }
         }
     }

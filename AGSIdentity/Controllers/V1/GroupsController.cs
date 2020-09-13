@@ -34,6 +34,7 @@ namespace AGSIdentity.Controllers.V1
         /// Get all groups
         /// </summary>
         [HttpGet]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
         public IActionResult Get() {
             var result = new List<AGSGroupEntity>();
             var groupIds = _repository.GroupRepository.GetAll();
@@ -53,6 +54,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet("{id}/functionclaims")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
         public IActionResult GetFunctionClaims(string id)
         {
             var result = GetGroupFunctionClaims(id);
@@ -60,6 +62,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
         /// <summary>
         /// Get a specified groups
         /// </summary>
@@ -75,6 +78,7 @@ namespace AGSIdentity.Controllers.V1
         /// Get all the users in a specified group
         /// </summary>
         [HttpGet("{id}/users")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
         public IActionResult GetAllUsersinGroup(string id) {
             List<AGSUserEntity> result = new List<AGSUserEntity>();
             var userIds = _repository.UserRepository.GetAll();
@@ -103,7 +107,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="group"></param>
         [HttpPost]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant))]
         public IActionResult Post([FromBody] AGSGroupEntity group)
         {
             var id = SaveModel(group);
@@ -119,7 +123,7 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="group"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant))]
         public IActionResult Put([FromBody] AGSGroupEntity group, string id)
         {
             if (group.Id == id)
@@ -141,7 +145,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant))]
         public IActionResult Delete(string id)
         {
             DeleteModel(id);
