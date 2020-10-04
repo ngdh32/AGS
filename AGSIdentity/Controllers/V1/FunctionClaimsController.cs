@@ -28,6 +28,7 @@ namespace AGSIdentity.Controllers.V1
         /// Return all the function claims
         /// </summary>
         [HttpGet]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimReadClaimConstant))]
         public IActionResult Get()
         {
             var result = new List<AGSFunctionClaimEntity>();
@@ -49,6 +50,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimReadClaimConstant))]
         public IActionResult Get(string id)
         {
             var functionClaim = GetModel(id);
@@ -61,7 +63,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="functionClaim"></param>
         [HttpPost]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant))]
         public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
         {
             var id = SaveModel(functionClaim);
@@ -75,7 +77,7 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="functionClaim"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant))]
         public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim, string id)
         {
             if (functionClaim.Id == id)
@@ -96,7 +98,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant))]
         public IActionResult DeleteAPI(string id)
         {
             DeleteModel(id);

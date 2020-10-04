@@ -32,6 +32,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserReadClaimConstant))]
         public IActionResult Get() {
             var result = new List<AGSUserEntity>();
             var userIds = _repository.UserRepository.GetAll();
@@ -51,6 +52,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserReadClaimConstant))]
         public IActionResult Get(string id)
         {
             var user = GetModel(id);
@@ -60,6 +62,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpGet("{id}/groups")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserReadClaimConstant))]
         public IActionResult GetGroups(string id)
         {
             var result = GetAGSGroupEntitiesByUserId(id);
@@ -68,7 +71,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpPost]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant))]
         public IActionResult Post([FromBody] AGSUserEntity user)
         {
             var id = SaveModel(user);
@@ -77,7 +80,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant))]
         public IActionResult Put([FromBody] AGSUserEntity user, string id) {
             if (user.Id != id)
             {
@@ -93,7 +96,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant))]
         public IActionResult Delete(string id) {
             DeleteModel(id);
             _repository.Save();
@@ -101,7 +104,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpPost("{id}/resetpw")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditPolicyConstant))]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant))]
         public IActionResult ResetPW(string id)
         {
             var result = ResetPassword(id);
@@ -111,6 +114,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpPost("{id}/changepw")]
+        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant))]
         public IActionResult ChangePW([FromBody] ChangeUserPasswordViewModel changeUserPasswordView, string id)
         {
             if (changeUserPasswordView.UserId != id)

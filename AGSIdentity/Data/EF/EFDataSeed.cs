@@ -30,59 +30,22 @@ namespace AGSIdentity.Data.EF
 
         public void InitializeApplicationData()
         {
-            EFFunctionClaim identityAdminMenuFC = new EFFunctionClaim()
+            // add all function claims into Database
+            var ags_identity_constant_type = typeof(AGSCommon.CommonConstant.AGSIdentityConstant);
+            var constant_fields = ags_identity_constant_type.GetFields();
+            foreach (var constant_field in constant_fields)
             {
-                Id = AGSCommon.CommonFunctions.GenerateId(),
-                Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityAdminMenuClaimConstant
-            };
+                if (constant_field.Name.EndsWith("ClaimConstant"))
+                {
+                    var claimValue = (string)(constant_field.GetValue(null));
+                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = claimValue });
+                }
+            }
 
-            _applicationDbContext.FunctionClaims.Add(identityAdminMenuFC);
-
-            EFFunctionClaim functionClaimMenuFC = new EFFunctionClaim()
-            {
-                Id = AGSCommon.CommonFunctions.GenerateId(),
-                Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimMenuClaimConstant
-            };
-
-
-            _applicationDbContext.FunctionClaims.Add(functionClaimMenuFC);
-
-            EFFunctionClaim userMenuFC = new EFFunctionClaim()
-            {
-                Id = AGSCommon.CommonFunctions.GenerateId(),
-                Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserMenuClaimConstant
-            };
-
-            _applicationDbContext.FunctionClaims.Add(userMenuFC);
-
-
-            EFFunctionClaim groupMenuFC = new EFFunctionClaim()
-            {
-                Id = AGSCommon.CommonFunctions.GenerateId(),
-                Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupMenuClaimConstant
-            };
-
-            _applicationDbContext.FunctionClaims.Add(groupMenuFC);
-
-            EFFunctionClaim configMenuFC = new EFFunctionClaim()
-            {
-                Id = AGSCommon.CommonFunctions.GenerateId(),
-                Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigMenuClaimConstant
-            };
-
-            _applicationDbContext.FunctionClaims.Add(configMenuFC);
-
-            _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserEditClaimConstant });
-            _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant });
-            _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSFunctionClaimEditClaimConstant });
-            _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = AGSCommon.CommonConstant.AGSIdentityConstant.AGSConfigEditClaimConstant });
-
-            
-
+            // create admin user 
             var userName = AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
             var email = _configuration["default_user_email"];
             var userPassword = _configuration["default_user_password"];
-            var adminName = AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
 
             var user = new EFApplicationUser
             {
@@ -97,48 +60,7 @@ namespace AGSIdentity.Data.EF
                 SecurityStamp = AGSCommon.CommonFunctions.GenerateId(), // need to add this !!!
             };
             _ = _userManager.CreateAsync(user, userPassword).Result;
-            //user = _userManager.FindByNameAsync(userName).Result;
-
-            //_applicationDbContext.Users.Add(user);
             _applicationDbContext.SaveChanges();
-
-            _ = _userManager.AddClaimsAsync(user, new Claim[]{
-                                new Claim(JwtClaimTypes.Name, userName),
-                                new Claim(JwtClaimTypes.Email, email)
-                            }).Result;
-
-            var adminRole = new EFApplicationRole()
-            {
-                Name = adminName
-            };
-
-            _ = _roleManager.CreateAsync(adminRole).Result;
-            adminRole = _roleManager.FindByNameAsync(adminRole.Name).Result;
-            if (_applicationDbContext.FunctionClaims.Any())
-            {
-                foreach (var functionClaim in _applicationDbContext.FunctionClaims.ToList())
-                {
-                    _ = _roleManager.AddClaimAsync(adminRole, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, functionClaim.Id)).Result;
-                }
-
-            }
-            _ = _userManager.AddToRoleAsync(user, adminRole.Name).Result;
-
-            var user_admin_role = new EFApplicationRole()
-            {
-                Name = "user_admin_role"
-            };
-
-            _ = _roleManager.CreateAsync(user_admin_role).Result;
-            user_admin_role = _roleManager.FindByNameAsync(user_admin_role.Name).Result;
-            if (_applicationDbContext.FunctionClaims.Any())
-            {
-                _ = _roleManager.AddClaimAsync(user_admin_role, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, userMenuFC.Id)).Result;
-                _ = _roleManager.AddClaimAsync(user_admin_role, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, identityAdminMenuFC.Id)).Result;
-            }
-
-
-            //_applicationDbContext.ConfigValues.Add(new EFConfigValue() { Key = AGSCommon.CommonConstant.AGSIdentityConstant.AGSUserDefaultPasswordConfigKey, IsSecure = true, Value = userPassword });
 
             _applicationDbContext.SaveChanges();
         }
