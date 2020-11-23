@@ -23,7 +23,6 @@
     <Folder Include="Models\" />
     <Folder Include="Pages\" />
     <Folder Include="Models\ViewModels\" />
-    <Folder Include="Models\ViewModels\Login\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
@@ -38,13 +37,15 @@
     <Folder Include="Controllers\" />
     <Folder Include="Controllers\V1\" />
     <Folder Include="Models\EntityModels\" />
-    <Folder Include="Models\EntityModels\EF\" />
     <Folder Include="Data\" />
     <Folder Include="Data\EF\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AGSCommon\AGSCommon.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <Folder Include="Models\EntityModels\AGSIdentity\" />
+    <Folder Include="Models\EntityModels\AGSIdentity\EF\" />
+    <Folder Include="Models\ViewModels\API\" />
+    <Folder Include="Models\ViewModels\API\Users\" />
+    <Folder Include="Models\ViewModels\API\Common\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\ViewModels\Pages\" />
+    <Folder Include="Models\ViewModels\Pages\Login\" />
   </ItemGroup>
 </Project>

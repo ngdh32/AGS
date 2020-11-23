@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AGSIdentity.Models;
-using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
 using AGSIdentity.Repositories;
 using IdentityModel;
 using IdentityServer4.Extensions;
@@ -51,7 +51,7 @@ namespace AGSIdentity.Services.ProfileService.Identity
                 {
                     // if it is function claim, substitute the ID with the actual claim name
                     // this enable authorization policy 
-                    if (roleClaim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant)
+                    if (roleClaim.Type == CommonConstant.FunctionClaimTypeConstant)
                     {
                         var functionClaim = _functionClaimRepository.Get(roleClaim.Value);
                         if (functionClaim != null)

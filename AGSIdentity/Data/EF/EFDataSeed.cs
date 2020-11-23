@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
-using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
 using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
@@ -19,6 +19,11 @@ namespace AGSIdentity.Data.EF
         private IConfiguration _configuration { get; set; }
 
 
+        private const string AGSAdminName = "admin";
+        
+        
+
+
         public EFDataSeed(UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, EFApplicationDbContext applicationDbContext, ConfigurationDbContext configurationDbContext, IConfiguration configuration)
         {
             _userManager = userManager;
@@ -31,25 +36,25 @@ namespace AGSIdentity.Data.EF
         public void InitializeApplicationData()
         {
             // add all function claims into Database
-            var ags_identity_constant_type = typeof(AGSCommon.CommonConstant.AGSIdentityConstant);
+            var ags_identity_constant_type = typeof(CommonConstant);
             var constant_fields = ags_identity_constant_type.GetFields();
             foreach (var constant_field in constant_fields)
             {
                 if (constant_field.Name.EndsWith("ClaimConstant"))
                 {
                     var claimValue = (string)(constant_field.GetValue(null));
-                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = AGSCommon.CommonFunctions.GenerateId(), Name = claimValue });
+                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = CommonConstant.GenerateId(), Name = claimValue });
                 }
             }
 
             // create admin user 
-            var userName = AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
+            var userName = AGSAdminName;
             var email = _configuration["default_user_email"];
             var userPassword = _configuration["default_user_password"];
 
             var user = new EFApplicationUser
             {
-                Id = AGSCommon.CommonFunctions.GenerateId(),
+                Id = CommonConstant.GenerateId(),
                 UserName = userName,
                 NormalizedEmail = email,
                 NormalizedUserName = userName,
@@ -57,11 +62,9 @@ namespace AGSIdentity.Data.EF
                 First_Name = "Tim",
                 Last_Name = "Ng",
                 Title = "Developer",
-                SecurityStamp = AGSCommon.CommonFunctions.GenerateId(), // need to add this !!!
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
             };
             _ = _userManager.CreateAsync(user, userPassword).Result;
-            _applicationDbContext.SaveChanges();
-
             _applicationDbContext.SaveChanges();
         }
 
@@ -165,14 +168,6 @@ namespace AGSIdentity.Data.EF
                 foreach (var functionClaim in _applicationDbContext.FunctionClaims.ToList())
                 {
                     _applicationDbContext.FunctionClaims.Remove(functionClaim);
-                }
-            }
-
-            if (_applicationDbContext.ConfigValues.Any())
-            {
-                foreach(var configEntity in _applicationDbContext.ConfigValues.ToList())
-                {
-                    _applicationDbContext.ConfigValues.Remove(configEntity);
                 }
             }
 

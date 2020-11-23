@@ -1,6 +1,6 @@
 ﻿using System;
 using AGSIdentity.Models;
-using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
@@ -13,16 +13,14 @@ namespace AGSIdentity.Repositories.EF
         public IUserRepository _userRepository { get; private set; }
         public IGroupRepository _groupRepository { get; private set; }
         public IFunctionClaimRepository _functionClaimRepository { get; private set; }
-        public IConfigRepository _configRepository { get; private set; }
 
         public EFRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, IConfiguration configuration, SignInManager<EFApplicationUser> signInManager)
         {
             _applicationDbContext = applicationDbContext;
 
-            _userRepository = new EFUserRepository(_applicationDbContext, userManager, roleManager, configuration, signInManager);
-            _groupRepository = new EFGroupRepository(_applicationDbContext, roleManager, userManager);
+            _userRepository = new EFUserRepository(_applicationDbContext, userManager, roleManager, signInManager);
+            _groupRepository = new EFGroupRepository(_applicationDbContext, roleManager);
             _functionClaimRepository = new EFFunctionClaimRepository(_applicationDbContext);
-            _configRepository = new EFConfigRepository(_applicationDbContext);
         }
 
         public IUserRepository UserRepository
@@ -46,14 +44,6 @@ namespace AGSIdentity.Repositories.EF
             get
             {
                 return _functionClaimRepository;
-            }
-        }
-
-        public IConfigRepository ConfigRepository
-        {
-            get
-            {
-                return _configRepository;
             }
         }
 

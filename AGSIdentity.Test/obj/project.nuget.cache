@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6TEPTmHaEeUnjtS4aSErs7qkrnkjylFOPu4do99HwM4NYUFwIMOhTbS0+eMghxKQDQl+Khb7Rdu1kaJXj0726g==",
+  "dgSpecHash": "rT6sDMNpRT8odztgg5MWhEaF2br3MIKQZ/PCM1tFhDYIv5DTfmIpc+//v41/ey9cEl+uBcLflJrdJ5qBLIhIQg==",
   "success": true,
   "projectFilePath": "/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/AGSIdentity.Test.csproj",
   "expectedPackageFiles": [
@@ -58,7 +58,7 @@
     "/Users/ngdh32/.nuget/packages/moq/4.14.3/moq.4.14.3.nupkg.sha512",
     "/Users/ngdh32/.nuget/packages/mysqlconnector/0.61.0/mysqlconnector.0.61.0.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
-    "/Users/ngdh32/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
+    "/Users/ngdh32/.nuget/packages/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg.sha512",
     "/Users/ngdh32/.nuget/packages/nuget.frameworks/5.0.0/nuget.frameworks.5.0.0.nupkg.sha512",
     "/Users/ngdh32/.nuget/packages/pomelo.entityframeworkcore.mysql/3.1.1/pomelo.entityframeworkcore.mysql.3.1.1.nupkg.sha512",
     "/Users/ngdh32/.nuget/packages/pomelo.jsonobject/2.2.1/pomelo.jsonobject.2.2.1.nupkg.sha512",

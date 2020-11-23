@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AGSCommon.Models.EntityModels.AGSIdentity;
+using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {

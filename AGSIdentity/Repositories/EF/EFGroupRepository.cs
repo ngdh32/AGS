@@ -1,32 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSCommon.Models.EntityModels.AGSIdentity;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using AGSIdentity.Models.EntityModels.EF;
 using AGSIdentity.Models.EntityModels;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories.EF
 {
     public class EFGroupRepository : IGroupRepository
     {
-        private EFApplicationDbContext _applicationDbContext { get; set; }
-        private RoleManager<EFApplicationRole> _roleManager { get; set; }
-        private UserManager<EFApplicationUser> _userManager { get; set; }
+        private readonly EFApplicationDbContext _applicationDbContext;
+        private readonly RoleManager<EFApplicationRole> _roleManager;
 
-        public EFGroupRepository(EFApplicationDbContext applicationDbContext, RoleManager<EFApplicationRole> roleManager, UserManager<EFApplicationUser> userManager)
+        public EFGroupRepository(EFApplicationDbContext applicationDbContext, RoleManager<EFApplicationRole> roleManager)
         {
             _applicationDbContext = applicationDbContext;
             _roleManager = roleManager;
-            _userManager = userManager;
         }
 
         public string Create(AGSGroupEntity group)
         {
             // create a new role in ASP.NET identity core
             var role = new EFApplicationRole();
-            UpdateApplicationRole(group, role);
+            role.Id = CommonConstant.GenerateId(); // assign id here
+            MapAGSGroupEntityToEFApplicationRole(group, role);
             _ = _roleManager.CreateAsync(role).Result;
 
             // update the associated Function Claims
@@ -53,16 +52,14 @@ namespace AGSIdentity.Repositories.EF
         public AGSGroupEntity Get(string id)
         {
             var selected = _roleManager.FindByIdAsync(id).Result;
-            if (selected != null)
-            {
-                var result = GetAGSGroupEntity(selected);
-                return result;
-            }
-            else
+            if (selected == null)
             {
                 return null;
             }
-            
+
+            var result = GetAGSGroupEntityFromEFApplicationRole(selected);
+            return result;
+
         }
 
         public List<string> GetAll()
@@ -80,36 +77,35 @@ namespace AGSIdentity.Repositories.EF
         public int Update(AGSGroupEntity group)
         {
             var selected = _roleManager.FindByIdAsync(group.Id).Result;
-            if (selected != null)
-            {
-                // update the group info
-                UpdateApplicationRole(group, selected);
-                _ = _roleManager.UpdateAsync(selected).Result;
-
-                // remove all the existing associated function claims
-                var existingClaimIds = this.GetFunctionClaimIdsByGroupId(group.Id);
-                if (existingClaimIds != null)
-                {
-                    foreach(var existingClaimId in existingClaimIds)
-                    {
-                        this.RemoveFunctionClaimFromGroup(group.Id, existingClaimId);
-                    }
-                }
-
-                // add new associated function claims to the group
-                if (group.FunctionClaimIds != null)
-                {
-                    foreach(var functionClaimId in group.FunctionClaimIds)
-                    {
-                        this.AddFunctionClaimToGroup(group.Id, functionClaimId);
-                    }
-                }
-
-                return 1;
-            }else
+            if (selected == null)
             {
                 return 0;
             }
+
+            // update the group info
+            MapAGSGroupEntityToEFApplicationRole(group, selected);
+            _ = _roleManager.UpdateAsync(selected).Result;
+
+            // remove all the existing associated function claims
+            var existingClaimIds = this.GetFunctionClaimIdsByGroupId(group.Id);
+            if (existingClaimIds != null)
+            {
+                foreach (var existingClaimId in existingClaimIds)
+                {
+                    this.RemoveFunctionClaimFromGroup(group.Id, existingClaimId);
+                }
+            }
+
+            // add new associated function claims to the group
+            if (group.FunctionClaimIds != null)
+            {
+                foreach (var functionClaimId in group.FunctionClaimIds)
+                {
+                    this.AddFunctionClaimToGroup(group.Id, functionClaimId);
+                }
+            }
+
+            return 1;
         }
 
         public List<string> GetFunctionClaimIdsByGroupId(string groupId)
@@ -123,7 +119,7 @@ namespace AGSIdentity.Repositories.EF
                 {
                     foreach (var claim in claims)
                     {
-                        if (claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant)
+                        if (claim.Type == CommonConstant.FunctionClaimTypeConstant)
                         {
                             result.Add(claim.Value);
                         }
@@ -139,7 +135,7 @@ namespace AGSIdentity.Repositories.EF
             var selected = _roleManager.FindByIdAsync(groupId).Result;
             if (selected != null)
             {
-                _ = _roleManager.AddClaimAsync(selected, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, functionClaimId)).Result;
+                _ = _roleManager.AddClaimAsync(selected, new Claim(CommonConstant.FunctionClaimTypeConstant, functionClaimId)).Result;
             }
         }
 
@@ -148,11 +144,11 @@ namespace AGSIdentity.Repositories.EF
             var selected = _roleManager.FindByIdAsync(groupId).Result;
             if (selected != null)
             {
-                _ = _roleManager.RemoveClaimAsync(selected, new Claim(AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant, functionClaimId)).Result;
+                _ = _roleManager.RemoveClaimAsync(selected, new Claim(CommonConstant.FunctionClaimTypeConstant, functionClaimId)).Result;
             }
         }
 
-        public AGSGroupEntity GetAGSGroupEntity(EFApplicationRole role)
+        public AGSGroupEntity GetAGSGroupEntityFromEFApplicationRole(EFApplicationRole role)
         {
             var result = new AGSGroupEntity()
             {
@@ -170,12 +166,12 @@ namespace AGSIdentity.Repositories.EF
             return result;
         }
 
-        public void UpdateApplicationRole(AGSGroupEntity groupEntity, EFApplicationRole efApplicationRole)
+        public void MapAGSGroupEntityToEFApplicationRole(AGSGroupEntity groupEntity, EFApplicationRole efApplicationRole)
         {
             efApplicationRole.Id = groupEntity.Id;
             efApplicationRole.Name = groupEntity.Name;
             efApplicationRole.NormalizedName = groupEntity.Name;
-            efApplicationRole.ConcurrencyStamp = AGSCommon.CommonFunctions.GenerateId();
+            efApplicationRole.ConcurrencyStamp = CommonConstant.GenerateId();
         }
 
     }

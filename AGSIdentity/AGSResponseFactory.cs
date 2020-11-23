@@ -1,5 +1,5 @@
 ﻿using System;
-using AGSCommon.Models.EntityModels.Common;
+using AGSIdentity.Models.ViewModels.API.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AGSIdentity

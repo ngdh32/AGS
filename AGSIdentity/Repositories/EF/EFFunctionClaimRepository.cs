@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using AGSIdentity.Models;
-using AGSCommon.Models.EntityModels.AGSIdentity;
 using System.Linq;
-using AGSIdentity.Models.EntityModels.EF;
 using AGSIdentity.Models.EntityModels;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories.EF
 {

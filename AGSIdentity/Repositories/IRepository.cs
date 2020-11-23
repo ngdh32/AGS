@@ -13,7 +13,5 @@ namespace AGSIdentity.Repositories
         IGroupRepository GroupRepository { get; }
         
         IFunctionClaimRepository FunctionClaimRepository { get; }
-
-        IConfigRepository ConfigRepository { get; }
     }
 }

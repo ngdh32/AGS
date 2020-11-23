@@ -28,7 +28,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Services;
-using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
 using AGSIdentity.Services.AuthService;
 using AGSIdentity.Services.AuthService.Identity;
 using AGSIdentity.Data;
@@ -69,7 +69,6 @@ namespace AGSIdentity
                 .AddEntityFrameworkStores<EFApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            
 
             // Configure asp.net Identity settings
             services.Configure<IdentityOptions>(options =>
@@ -126,7 +125,7 @@ namespace AGSIdentity
             {
                 options.Authority = Configuration["auth_url"];
                 options.RequireHttpsMetadata = false;
-                options.Audience = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant;
+                options.Audience = CommonConstant.AGSIdentityScopeConstant;
             });
             #endregion
 
@@ -153,12 +152,6 @@ namespace AGSIdentity
 
             // for data initialization
             services.AddTransient<IDataSeed, EFDataSeed>();
-
-            // add authorization policy
-            services.AddAuthorization(options =>
-            {
-                SetupAuthentticaionPolicy(options);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -259,39 +252,36 @@ namespace AGSIdentity
             }
         }
 
-        /// <summary>
-        /// Use reflection to get the properties in AGS Identity Constant and setup a list of policy for authentication
-        /// </summary>
-        /// <param name="options"></param>
-        private void SetupAuthentticaionPolicy(AuthorizationOptions options)
-        {
-            options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant, policy =>
-            {
-                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                policy.RequireAuthenticatedUser();
-            });
-
-            var ags_identity_constant_type = typeof(AGSCommon.CommonConstant.AGSIdentityConstant);
-            var constant_fields = ags_identity_constant_type.GetFields();
-            foreach(var constant_field in constant_fields)
-            {
-                if (constant_field.Name.EndsWith("ClaimConstant")) {
-                    var claimValue = constant_field.GetValue(null);
-                    options.AddPolicy((string)claimValue, policy =>
-                    {
-                        policy.RequireAuthenticatedUser();
-                        policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                        policy.RequireAssertion(context =>
-                        {
-                            var hasClaim = context.User.HasClaim(claim =>
-                                claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
-                                && claim.Value == (string)claimValue);
-                            var isAdmin = (context.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value?? "") == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
-                            return hasClaim || isAdmin;
-                        });
-                    });
-                }
-            }
-        }
+        ///// <summary>
+        ///// Use reflection to get the properties in AGS Identity Constant and setup a list of policy for authentication
+        ///// </summary>
+        ///// <param name="options"></param>
+        //private void SetupAuthentticaionPolicy(AuthorizationOptions options)
+        //{
+        //    var ags_identity_constant_type = typeof(CommonConstant);
+        //    var constant_fields = ags_identity_constant_type.GetFields();
+        //    foreach (var constant_field in constant_fields)
+        //    {
+        //        if (constant_field.Name.EndsWith("ClaimConstant"))
+        //        {
+        //            var claimValue = constant_field.GetValue(null);
+        //            options.AddPolicy((string)claimValue, policy =>
+        //            {
+        //                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        //                policy.RequireAuthenticatedUser();
+        //                policy.RequireAuthenticatedUser();
+        //                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        //                policy.RequireAssertion(context =>
+        //                {
+        //                    var hasClaim = context.User.HasClaim(claim =>
+        //                        claim.Type == CommonConstant.FunctionClaimTypeConstant
+        //                        && claim.Value == (string)claimValue);
+        //                    var isAdmin = (context.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "") == CommonConstant.AGSAdminName;
+        //                    return hasClaim || isAdmin;
+        //                });
+        //            });
+        //        }
+        //    }
+        //}
     }
 }
