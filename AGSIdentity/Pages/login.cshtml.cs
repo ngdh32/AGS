@@ -48,7 +48,7 @@ namespace AGSIdentity.Pages
                     var loginContext = _authService.GetLoginContext(redirectUrl);
 
 
-                    if (loginContext == null)
+                    if (loginContext != null)
                     {
                         Console.WriteLine("redirect url valid!");
                         // redirect the request to the identity server service and continue the process

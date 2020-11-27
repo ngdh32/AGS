@@ -97,11 +97,11 @@ namespace AGSIdentity.Data.EF
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     RequireConsent = false,
                     RedirectUris = {
-                        _configuration["ags_web_url"] +  "signin-oidc"
+                        _configuration["ags_web_url"] + "auth/signin-oidc"
                     },
                     PostLogoutRedirectUris =
                     {
-                        _configuration["ags_web_url"] +  "signout-callback-oidc"
+                        _configuration["ags_web_url"] +  "auth/signout-callback-oidc"
                     },
 
                     // secret for authentication
