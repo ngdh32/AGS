@@ -17,6 +17,7 @@ namespace AGSIdentity.Controllers.V1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class GroupsController : ControllerBase 
     {
         private readonly GroupHelper _groupHelper;
@@ -30,14 +31,14 @@ namespace AGSIdentity.Controllers.V1
         /// Get all groups
         /// </summary>
         [HttpGet]
-        [FunctionClaimAuth(CommonConstant.AGSGroupReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult Get() {
             var result = _groupHelper.GetAllGroups();
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         [HttpGet("{id}/functionclaims")]
-        [FunctionClaimAuth(CommonConstant.AGSGroupReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult GetFunctionClaims(string id)
         {
             var result = _groupHelper.GetFunctionClaimsByGroupId(id);
@@ -45,7 +46,7 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet("{id}")]
-        [FunctionClaimAuth(CommonConstant.AGSGroupReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         /// <summary>
         /// Get a specified groups
         /// </summary>
@@ -61,7 +62,7 @@ namespace AGSIdentity.Controllers.V1
         /// Get all the users in a specified group
         /// </summary>
         [HttpGet("{id}/users")]
-        [FunctionClaimAuth(CommonConstant.AGSGroupReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult GetAllUsersinGroup(string id) {
             var result = _groupHelper.GetUsersByGroupId(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
@@ -73,7 +74,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="group"></param>
         [HttpPost]
-        [FunctionClaimAuth(CommonConstant.AGSGroupEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Post([FromBody] AGSGroupEntity group)
         {
             var result = _groupHelper.CreateGroup(group);
@@ -88,7 +89,7 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="group"></param>
         /// <param name="id"></param>
         [HttpPut]
-        [FunctionClaimAuth(CommonConstant.AGSGroupEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Put([FromBody] AGSGroupEntity group)
         {
             var result = _groupHelper.UpdateGroup(group);
@@ -101,7 +102,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [FunctionClaimAuth(CommonConstant.AGSGroupEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Delete(string id)
         {
             _groupHelper.DeleteGroup(id);

@@ -27,7 +27,7 @@ namespace AGSIdentity.Controllers.V1
         /// Return all the function claims
         /// </summary>
         [HttpGet]
-        [FunctionClaimAuth(CommonConstant.AGSFunctionClaimReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
         public IActionResult Get()
         {
             var result = _functionClaimHelper.GetAllFunctionClaims();
@@ -40,7 +40,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        [FunctionClaimAuth(CommonConstant.AGSFunctionClaimReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
         public IActionResult Get(string id)
         {
             var result = _functionClaimHelper.GetFunctionClaimById(id);
@@ -53,7 +53,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="functionClaim"></param>
         [HttpPost]
-        [FunctionClaimAuth(CommonConstant.AGSFunctionClaimEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
         {
             var result = _functionClaimHelper.CreateFunctionClaim(functionClaim);
@@ -66,7 +66,7 @@ namespace AGSIdentity.Controllers.V1
         /// <param name="functionClaim"></param>
         /// <param name="id"></param>
         [HttpPut]
-        [FunctionClaimAuth(CommonConstant.AGSFunctionClaimEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim)
         {
             var result = _functionClaimHelper.UpdateFunctionClaim(functionClaim);
@@ -79,7 +79,7 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [FunctionClaimAuth(CommonConstant.AGSFunctionClaimEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Delete(string id)
         {
             _functionClaimHelper.DeleteFunctionClaim(id);

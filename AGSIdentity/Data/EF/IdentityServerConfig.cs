@@ -73,7 +73,8 @@ namespace AGSIdentity.Data.EF
                             Name = AGSDocumentScopeConstant,
                             DisplayName = "Full access to ags.document",
                             UserClaims = {
-                                JwtClaimTypes.Name
+                                JwtClaimTypes.Id
+                               ,JwtClaimTypes.Name
                                ,JwtClaimTypes.Email
                                ,JwtClaimTypes.Profile
                                ,AGSFunctionClaimResouceConstant
@@ -121,7 +122,8 @@ namespace AGSIdentity.Data.EF
                     },
                     
                     AllowAccessTokensViaBrowser = true,
-                    AlwaysIncludeUserClaimsInIdToken = true
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    RequirePkce = true
                 }
             };
         }

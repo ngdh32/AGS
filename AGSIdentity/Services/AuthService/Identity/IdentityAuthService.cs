@@ -109,14 +109,14 @@ namespace AGSIdentity.Services.AuthService.Identity
             _functionClaim = functionClaim;
         }
 
+        
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             // check if user has the corresponding claim
             var hasClaim = context.HttpContext?.User?.Claims?.Any(c => c.Type == CommonConstant.FunctionClaimTypeConstant && c.Value == _functionClaim) ?? false;
-            // check if user is the admin
-            var username = context.HttpContext?.User?.Claims?.Where(c => c.Type == "name").FirstOrDefault()?.Value ?? "";
+            
 
-            if (!hasClaim && username != CommonConstant.AGSAdminName)
+            if (!hasClaim)
             {
                 context.Result = new UnauthorizedResult();
             }

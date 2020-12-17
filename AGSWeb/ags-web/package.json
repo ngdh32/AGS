@@ -3,18 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.js",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
+    "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "cookies": "^0.8.0",
     "next": "10.0.1",
     "openid-client": "^4.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "reactstrap": "^8.7.1"
+    "reactstrap": "^8.7.1",
+    "universal-cookie": "^4.0.4"
   }
 }

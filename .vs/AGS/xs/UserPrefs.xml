@@ -1,17 +1,55 @@
-﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|AGS">
+﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Controllers/V1/UsersController.cs">
+    <Files>
+      <File FileName="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" Line="116" Column="53" />
+      <File FileName="AGSIdentity/Services/ProfileService/Identity/IdentityProfileService.cs" Line="89" Column="1" />
+      <File FileName="AGSIdentity/Startup.cs" Line="151" Column="52" />
+      <File FileName="AGSIdentity/Controllers/V1/FunctionClaimsController.cs" Line="30" Column="79" />
+      <File FileName="AGSIdentity/Helpers/FunctionClaimHelper.cs" Line="9" Column="37" />
+      <File FileName="AGSIdentity/Controllers/V1/GroupsController.cs" Line="105" Column="71" />
+      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="38" Column="9" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
+            <Node name="AGSDocument" expanded="True" />
             <Node name="AGSIdentity" expanded="True">
-              <Node name="appsettings.json" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="V1" expanded="True">
+                  <Node name="UsersController.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Data" expanded="True">
+                <Node name="EF" expanded="True" />
+              </Node>
+              <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="ViewModels" expanded="True">
+                  <Node name="API" expanded="True">
+                    <Node name="Common" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Pages" expanded="True">
+                <Node name="login.cshtml" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True">
+                <Node name="AuthService" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
+                <Node name="ProfileService" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
+              </Node>
             </Node>
             <Node name="AGSIdentity.Test" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
@@ -23,12 +61,12 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
+      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>
     <MultiItemSolutionRunConfiguration Id="AGSLaunchConfiguration" Name="AGSLaunchConfiguration">
       <Items>
-        <StartupItem ItemId="{2178A306-4862-4DC2-B5F1-1593797624A1}" ItemName="AGS" />
         <StartupItem ItemId="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}" ItemName="AGSIdentity" />
       </Items>
     </MultiItemSolutionRunConfiguration>

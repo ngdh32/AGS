@@ -1,39 +1,19 @@
-import App from 'next/app'
-import menuOptions from '../menu'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import NavigationBar from '../components/NavigationBar'
 
-function MyApp({ Component, pageProps, menuOptions }) {
-  if (menuOptions == undefined || menuOptions.length == 0){
-    return (
-      <Component {...pageProps} />
-    )
-  }else {
-    return (
-      <div>
-        <header>
-          <NavigationBar menuOptions={menuOptions} />
-        </header>
-        <main>
-          <Component {...pageProps} />
-        </main>
-      </div>
-      
-    )
-  }
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
 }
 
-MyApp.getInitialProps = async (appContext) => {
-  console.log("_app.js called")
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(appContext);
-  appProps.menuOptions = menuOptions;
-  
-  return { ...appProps }
-}
-
-async function GetMenuOptions(){
-
-}
+// Only uncomment this method if you have blocking data requirements for
+// every single page in your application. This disables the ability to
+// perform automatic static optimization, causing every page in your app to
+// be server-side rendered.
+//
+// MyApp.getInitialProps = async (appContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(appContext);
+//
+//   return { ...appProps }
+// }
 
 export default MyApp

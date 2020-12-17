@@ -28,14 +28,14 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpGet]
-        [FunctionClaimAuth(CommonConstant.AGSUserReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
         public IActionResult Get() {
             var result = _userHelper.GetAllUsers();
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         [HttpGet("{id}")]
-        [FunctionClaimAuth(CommonConstant.AGSUserReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
         public IActionResult Get(string id)
         {
             var user = _userHelper.GetUserById(id);
@@ -45,7 +45,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpGet("{id}/groups")]
-        [FunctionClaimAuth(CommonConstant.AGSUserReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
         public IActionResult GetGroups(string id)
         {
             var result = _userHelper.GetGroupsByUserId(id);
@@ -54,7 +54,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpPost]
-        [FunctionClaimAuth(CommonConstant.AGSUserEditClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult Post([FromBody] AGSUserEntity user)
         {
             var id = _userHelper.CreateUser(user);
@@ -62,21 +62,21 @@ namespace AGSIdentity.Controllers.V1
         }
 
         [HttpPut]
-        [FunctionClaimAuth(CommonConstant.AGSUserReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult Put([FromBody] AGSUserEntity user) {
             var result = _userHelper.UpdateUser(user);
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
 
         [HttpDelete("{id}")]
-        [FunctionClaimAuth(CommonConstant.AGSUserReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult Delete(string id) {
             _userHelper.DeleteUser(id);
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
 
         [HttpPost("{id}/resetpw")]
-        [FunctionClaimAuth(CommonConstant.AGSUserReadClaimConstant)]
+        [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult ResetPW(string id)
         {
             var result = _userHelper.ResetPassword(id);

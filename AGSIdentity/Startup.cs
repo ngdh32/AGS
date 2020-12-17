@@ -36,6 +36,7 @@ using AGSIdentity.Data.EF;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using AGSIdentity.Helpers;
 
 namespace AGSIdentity
 {
@@ -145,6 +146,9 @@ namespace AGSIdentity
             // add repository object
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();
+            services.AddTransient(typeof(FunctionClaimHelper));
+            services.AddTransient(typeof(GroupHelper));
+            services.AddTransient(typeof(UserHelper));
             services.AddTransient<IRepository, EFRepository>();
             services.AddTransient<IFunctionClaimRepository, EFFunctionClaimRepository>();
             services.AddTransient<IGroupRepository, EFGroupRepository>();
@@ -152,6 +156,11 @@ namespace AGSIdentity
 
             // for data initialization
             services.AddTransient<IDataSeed, EFDataSeed>();
+
+            services.AddAuthorization(options =>
+            {
+                SetupAuthentticaionPolicy(options);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -256,32 +265,29 @@ namespace AGSIdentity
         ///// Use reflection to get the properties in AGS Identity Constant and setup a list of policy for authentication
         ///// </summary>
         ///// <param name="options"></param>
-        //private void SetupAuthentticaionPolicy(AuthorizationOptions options)
-        //{
-        //    var ags_identity_constant_type = typeof(CommonConstant);
-        //    var constant_fields = ags_identity_constant_type.GetFields();
-        //    foreach (var constant_field in constant_fields)
-        //    {
-        //        if (constant_field.Name.EndsWith("ClaimConstant"))
-        //        {
-        //            var claimValue = constant_field.GetValue(null);
-        //            options.AddPolicy((string)claimValue, policy =>
-        //            {
-        //                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-        //                policy.RequireAuthenticatedUser();
-        //                policy.RequireAuthenticatedUser();
-        //                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-        //                policy.RequireAssertion(context =>
-        //                {
-        //                    var hasClaim = context.User.HasClaim(claim =>
-        //                        claim.Type == CommonConstant.FunctionClaimTypeConstant
-        //                        && claim.Value == (string)claimValue);
-        //                    var isAdmin = (context.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "") == CommonConstant.AGSAdminName;
-        //                    return hasClaim || isAdmin;
-        //                });
-        //            });
-        //        }
-        //    }
-        //}
+        private void SetupAuthentticaionPolicy(AuthorizationOptions options)
+        {
+            var ags_identity_constant_type = typeof(CommonConstant);
+            var constant_fields = ags_identity_constant_type.GetFields();
+            foreach (var constant_field in constant_fields)
+            {
+                if (constant_field.Name.EndsWith("ClaimConstant"))
+                {
+                    var claimValue = constant_field.GetValue(null);
+                    options.AddPolicy((string)claimValue, policy =>
+                    {
+                        policy.RequireAuthenticatedUser();
+                        policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                        policy.RequireAssertion(context =>
+                        {
+                            var hasClaim = context.User.HasClaim(claim =>
+                                claim.Type == CommonConstant.FunctionClaimTypeConstant
+                                && claim.Value == (string)claimValue);
+                            return hasClaim;
+                        });
+                    });
+                }
+            }
+        }
     }
 }
