@@ -1,5 +1,5 @@
-import NavigationBar from './NavigationBar.js'
-import { AGSContext } from '../AGSContext.js'
+import NavigationBar from './navigationBar.js'
+import { AGSContext } from '../helpers/common/agsContext.js'
 
 export function Master({children, agsContext}){
     return (
@@ -8,7 +8,7 @@ export function Master({children, agsContext}){
                 <header>
                     <NavigationBar/>
                 </header>
-                <main>
+                <main class="container-fluid">
                     {children}
                 </main>
             </AGSContext.Provider>

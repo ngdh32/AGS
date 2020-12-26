@@ -2,7 +2,7 @@ import {
     GetAuthCodeParams
     , GetPKCECookie
     , RemovePKCECookie, SetAccessToken
- } from '../../services/Auth/Client.js'
+ } from '../../helpers/auth/authHelper.js'
 import { useEffect } from 'react';
 
 export default function callback({tokens}){

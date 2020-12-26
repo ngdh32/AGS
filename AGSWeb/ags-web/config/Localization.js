@@ -34,6 +34,34 @@ export const locale_strings = {
     menu_change_password_label: {
         en_uk: "Change Password",
         zh_hk: "更改密碼"
+    },
+    label_no_data_return: {
+        en_uk: "No data has been returned",
+        zh_hk: "沒有數據返回"
+    },
+    label_identity_user_table_username:{
+        en_uk: "Username",
+        zh_hk: "用戶名"
+    },
+    label_identity_user_table_email:{
+        en_uk: "Email",
+        zh_hk: "電郵"
+    },
+    label_identity_user_table_first_name:{
+        en_uk: "First Name",
+        zh_hk: "名字"
+    },
+    label_identity_user_table_last_name:{
+        en_uk: "Last Name",
+        zh_hk: "名字"
+    },
+    label_identity_user_table_title:{
+        en_uk: "Title",
+        zh_hk: "稱號"
+    },
+    label_common_button_add:{
+        en_uk: "Add",
+        zh_hk: "新增"
     }
 }
 

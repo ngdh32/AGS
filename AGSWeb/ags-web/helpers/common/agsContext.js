@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { default_locale } from './config/Localization.js'
+import { default_locale } from '../../config/localization.js'
 
 export class AGSContextModel{
     constructor(userId, username, functionClaims, locale){

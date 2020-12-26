@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import { GetRedirectUri, GenerateCodeVerifier, SetCodeVerifierCookie} from '../../services/Auth/Client.js'
+import { GetRedirectUri
+    , GenerateCodeVerifier
+    , SetCodeVerifierCookie
+} from '../../helpers/auth/authHelper.js'
 
 export default function Login({redirectUrl}) {
     useEffect(() => {

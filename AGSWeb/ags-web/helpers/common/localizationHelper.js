@@ -1,6 +1,6 @@
 import Cookies from 'cookies';
 import UniversalCookies from "universal-cookie"
-import { locale_cookie_name, default_locale, locale_strings } from '../../config/Localization.js'
+import { locale_cookie_name, default_locale, locale_strings } from '../../config/localization.js'
 
 export function GetLocalizedString(label){
     const locale = GetLocaleCookieInClient();

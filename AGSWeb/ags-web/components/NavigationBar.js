@@ -16,9 +16,9 @@ import {
 } from 'reactstrap'
 import React, { useContext, useState } from 'react';
 import menus from '../config/Menu.js'
-import { AGSContext } from '../AGSContext'
-import { locale_Options } from '../config/Localization.js'
-import { SetLocaleCookieInClient, GetLocalizedString } from '../services/Common/Localization.js'
+import { AGSContext } from '../helpers/common/agsContext.js'
+import { locale_Options } from '../config/localization.js'
+import { SetLocaleCookieInClient, GetLocalizedString } from '../helpers/common/localizationHelper.js'
  
 export default function NavigationBar() {
     const agsContext = useContext(AGSContext);

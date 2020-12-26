@@ -1,6 +1,6 @@
 ﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Controllers/V1/UsersController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Data/EF/EFDataSeed.cs">
     <Files>
       <File FileName="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" Line="116" Column="53" />
       <File FileName="AGSIdentity/Services/ProfileService/Identity/IdentityProfileService.cs" Line="89" Column="1" />
@@ -8,7 +8,9 @@
       <File FileName="AGSIdentity/Controllers/V1/FunctionClaimsController.cs" Line="30" Column="79" />
       <File FileName="AGSIdentity/Helpers/FunctionClaimHelper.cs" Line="9" Column="37" />
       <File FileName="AGSIdentity/Controllers/V1/GroupsController.cs" Line="105" Column="71" />
-      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="38" Column="9" />
+      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="81" Column="10" />
+      <File FileName="AGSIdentity/Data/EF/EFDataSeed.cs" Line="85" Column="17" />
+      <File FileName="AGSIdentity/Repositories/EF/EFGroupRepository.cs" Line="87" Column="59" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,31 +19,16 @@
             <Node name="AGSDocument" expanded="True" />
             <Node name="AGSIdentity" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="V1" expanded="True">
-                  <Node name="UsersController.cs" selected="True" />
-                </Node>
+                <Node name="V1" expanded="True" />
               </Node>
               <Node name="Data" expanded="True">
-                <Node name="EF" expanded="True" />
+                <Node name="EF" expanded="True">
+                  <Node name="EFDataSeed.cs" selected="True" />
+                </Node>
               </Node>
               <Node name="Helpers" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="ViewModels" expanded="True">
-                  <Node name="API" expanded="True">
-                    <Node name="Common" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
-              <Node name="Pages" expanded="True">
-                <Node name="login.cshtml" expanded="True" />
-              </Node>
-              <Node name="Services" expanded="True">
-                <Node name="AuthService" expanded="True">
-                  <Node name="Identity" expanded="True" />
-                </Node>
-                <Node name="ProfileService" expanded="True">
-                  <Node name="Identity" expanded="True" />
-                </Node>
+              <Node name="Repositories" expanded="True">
+                <Node name="EF" expanded="True" />
               </Node>
             </Node>
             <Node name="AGSIdentity.Test" expanded="True" />

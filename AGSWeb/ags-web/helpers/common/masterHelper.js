@@ -1,6 +1,6 @@
-import { GetUserInfo } from '../Auth/Client.js'
-import { GetLocaleCookieInServer } from '../Common/Localization.js'
-import { AGSContextModel} from '../../AGSContext.js'
+import { GetUserInfo } from '../auth/authHelper.js'
+import { GetLocaleCookieInServer } from './localizationHelper.js'
+import { AGSContextModel} from './agsContext.js'
 
 export async function InitializePageWithMaster(req, res, callback){
     const userInfoClaims = await GetUserInfo(req, res);

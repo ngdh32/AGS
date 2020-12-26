@@ -65,7 +65,27 @@ namespace AGSIdentity.Data.EF
                 SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
             };
             _ = _userManager.CreateAsync(user, userPassword).Result;
+            
+
+            var group1 = new EFApplicationRole
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = "Group_1_Test",
+                NormalizedName = "Group_1_Test",
+                ConcurrencyStamp = CommonConstant.GenerateId()
+            };
+            var group2 = new EFApplicationRole
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = "Group_2_Test",
+                NormalizedName = "Group_2_Test",
+                ConcurrencyStamp = CommonConstant.GenerateId()
+            };
+
+            _ = _roleManager.CreateAsync(group1).Result;
+            _ = _roleManager.CreateAsync(group2).Result;
             _applicationDbContext.SaveChanges();
+
         }
 
         public void InitializeAuthenticationServer()

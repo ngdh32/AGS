@@ -6,7 +6,7 @@ import {
     scope,
     pkce_cookie_name, 
     auth_code_params_cookie_name
-} from '../../config/Auth.js'
+} from '../../config/auth.js'
 import Cookies from 'cookies';
 
 export async function GetClient(){
