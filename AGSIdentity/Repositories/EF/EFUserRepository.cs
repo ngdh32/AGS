@@ -62,9 +62,9 @@ namespace AGSIdentity.Repositories.EF
         {
             // creat the Identity User with the provided password
             EFApplicationUser appUser = new EFApplicationUser();
-            appUser.Id = CommonConstant.GenerateId();
             MapAGSUserEntityToEFApplicationUser(user, appUser);
-                
+            appUser.Id = CommonConstant.GenerateId();
+
 
             // set the default password for the newly created user
             _ = _userManager.CreateAsync(appUser).Result;

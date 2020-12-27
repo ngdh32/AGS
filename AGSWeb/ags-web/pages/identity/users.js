@@ -8,7 +8,9 @@ import { Table, Button, Modal } from 'reactstrap';
 import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
 import EditModal from '../../components/identity/editModal.js'
 import UsersEditModal from  '../../components/identity/usersEditModal.js'
+import GroupsEditModal from  '../../components/identity/groupsEditModal.js'
 import '../../styles/identity/common.css'
+import axios from 'axios';
 
 export default function GroupUIWithMaster({ agsContext, pageProps }) {
     return (
@@ -20,7 +22,6 @@ export default function GroupUIWithMaster({ agsContext, pageProps }) {
 
 function GroupUI({ users, groups }) {
     const agsContext = useContext(AGSContext);
-    const [toOpenModal, setToOpenModal] = useState(false);
     const [modal, setModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -43,6 +44,26 @@ function GroupUI({ users, groups }) {
         setTimeout(() => setModal(true), 0);
     }
 
+    const onEditModalSaveClick = async (user) => {
+        // validation
+        if (user.username == "" || user.username == null){
+            return "error_ags_identity_users_no_username";
+        }
+
+        const result = await axios.post('/api/identity/users', { user })
+        return result;
+    }
+    
+    const defaultUser = {
+        id: '',
+        username: '',
+        email: '',
+        first_Name: '',
+        last_Name: '',
+        title: '',
+        groupIds: []
+    };
+    
 
     const tbody = users == null ? (
         <div>
@@ -91,11 +112,16 @@ function GroupUI({ users, groups }) {
                 </tbody>
             </Table>
             <div>
-                <EditModal isOpen={modal} toggle={toggle}>
-                    <UsersEditModal 
-                        toggle={toggle} 
-                        selectedUser={selectedUser} 
-                        groups={groups}/>
+                <EditModal 
+                    isOpen={modal} 
+                    toggle={toggle} 
+                    title={ selectedUser == null ? "Create User" : `User: ${selectedUser.username}` }
+                    onSaveClick={onEditModalSaveClick}
+                    ConcreteEditModal={UsersEditModal}
+                    concreteEditModalProps={{groups}}
+                    inputData={selectedUser}
+                    defaultInputData={defaultUser}
+                    >
                 </EditModal>
             </div>
         </div>
@@ -106,13 +132,13 @@ function GroupUI({ users, groups }) {
 export async function getServerSideProps(context) {
     const result = await InitializePageWithMaster(context.req, context.res, async () => {
         const usersHelper = new UsersHelper(context.req, context.res)
-        const users = await usersHelper.GetUsers();
+        const usersResult = await usersHelper.GetUsers();
         const groupsHelper = new GroupsHelper(context.req, context.res);
         const groups = await groupsHelper.GetGroups();
 
 
         return {
-            users
+            users: usersResult.data
             , groups
         }
     })

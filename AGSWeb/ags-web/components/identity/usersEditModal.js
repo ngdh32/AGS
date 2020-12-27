@@ -6,33 +6,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import "../../styles/identity/userEditModal.css"
 
-export default function UsersEditModal({ toggle, selectedUser, groups }) {
-    const isCreate = selectedUser == null ? true : false;
-    const defaultUser = {
-        id: '',
-        username: '',
-        email: '',
-        first_Name: '',
-        last_Name: '',
-        title: '',
-        groupIds: []
-    };
-    const [user, setUser] = useState(selectedUser == null ? defaultUser : JSON.parse(JSON.stringify(selectedUser)));
+export default function UsersEditModal({ editData, setEditData, groups }) {
+    const isCreate = editData == null ? true : false;
+    
+    
+    const [filererGroupsValue, setFilererGroupsValue] = useState("");
     const [filteredGroups, setFilteredGroups] = useState(groups);
     const [showGroupOptions, setShowGroupOptions] = useState(false);
 
+    useEffect(() => {
+        console.log(editData)
+    }, [editData])
+
     const onValueChange = (e) => {
-        user[e.target.getAttribute("name")] = e.target.value;
-        setUser({ ...user })
+        editData[e.target.getAttribute("name")] = e.target.value;
+        setEditData({ ...editData })
     }
 
     const onGroupInputChange = (input) => {
+        setFilererGroupsValue(input);
+
         let groupOptions = input == null || input == "" ? groups : groups.filter(x => {
             return x.name.toUpperCase().includes(input.toUpperCase());
         });
 
         groupOptions = groupOptions.filter(x => {
-            const isAdded = user.groupIds.some(y => {
+            const isAdded = editData.groupIds.some(y => {
                 return y == x.id
             })
             return isAdded ? false : true;
@@ -50,25 +49,26 @@ export default function UsersEditModal({ toggle, selectedUser, groups }) {
     }
 
     const onGroupOptionClick = (groupId) => {
-        user.groupIds.push(groupId);
-        setUser({ ...user })
+        editData.groupIds.push(groupId);
+        setEditData({ ...editData })
         setShowGroupOptions(false)
+        setFilererGroupsValue('')
     }
 
     const onGroupBadgeRemoveClick = (groupId) => {
         const updatedGroupIds = []; 
-        user.groupIds.forEach(x => {
+        editData.groupIds.forEach(x => {
             if (x != groupId){
                 updatedGroupIds.push(x);
             }
         })
         console.log(updatedGroupIds)
         
-        user.groupIds = updatedGroupIds;
-        setUser({...user})
+        editData.groupIds = updatedGroupIds;
+        setEditData({...editData})
     }
 
-    const selectedGroupBadges = user.groupIds.map(x => {
+    const selectedGroupBadges = editData.groupIds == null ? (<React.Fragment></React.Fragment>) : editData.groupIds.map(x => {
         const group = groups.find(y => {return y.id == x});
         return (
             <GroupBadge group={group} onGroupBadgeRemoveClick={onGroupBadgeRemoveClick}/>
@@ -77,40 +77,37 @@ export default function UsersEditModal({ toggle, selectedUser, groups }) {
 
     return (
         <React.Fragment>
-            <ModalHeader toggle={toggle}>
-                {user.username == null ? "Create user" : `User: ${user.username}`}
-            </ModalHeader>
             <ModalBody onClick={onModalClick}>
                 <Form>
                     <FormGroup>
                         <Label>
                             Username:
                         </Label>
-                        <Input type="text" name="username" placeholder="Username" value={user.username} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="username" placeholder="Username" value={editData.username} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
                             Email:
                         </Label>
-                        <Input type="email" name="email" placeholder="Email" value={user.email} onChange={(e) => onValueChange(e)} />
+                        <Input type="email" name="email" placeholder="Email" value={editData.email} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
                             First Name:
                         </Label>
-                        <Input type="text" name="first_Name" placeholder="First Name" value={user.first_Name} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="first_Name" placeholder="First Name" value={editData.first_Name} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
                             Last Name:
                         </Label>
-                        <Input type="text" name="last_Name" placeholder="Last Name" value={user.last_Name} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="last_Name" placeholder="Last Name" value={editData.last_Name} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
                             Title:
                         </Label>
-                        <Input type="text" name="title" placeholder="Title" value={user.title} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="title" placeholder="Title" value={editData.title} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
@@ -121,7 +118,12 @@ export default function UsersEditModal({ toggle, selectedUser, groups }) {
                                 selectedGroupBadges
                             }
                             <div>
-                                <Input className="input" type="text" onClick={() => onGroupInputChange(null)} onChange={(e) => { onGroupInputChange(e.target.value) }}></Input>
+                                <Input className="input" type="text" 
+                                    onClick={() => onGroupInputChange(null)} 
+                                    onChange={(e) => { onGroupInputChange(e.target.value) }}
+                                    value={filererGroupsValue}
+                                    >    
+                                </Input>
                                 <div id="groupList">
                                     <ListGroup className={"groupList " + (showGroupOptions ? "" : "hide")}>
                                         {
@@ -140,10 +142,6 @@ export default function UsersEditModal({ toggle, selectedUser, groups }) {
                     </FormGroup>
                 </Form>
             </ModalBody>
-            <ModalFooter>
-                <Button color="primary" onClick={toggle}>Save</Button>
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
-            </ModalFooter>
         </React.Fragment>
     )
 }

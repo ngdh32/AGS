@@ -12,12 +12,26 @@ export default class UsersHelper {
         try {
             const url = `${api_url}/v${users_version}/users`;
             result = await axios.get(url, this.config)
+            
+        } catch (err) {
+            console.log(err);
+        }
+        
+        return result.data;
+    }
+
+    async CreateUser(user){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${users_version}/users`;
+            result = await axios.post(url, user, this.config);
         } catch (err) {
             console.log(err);
         }
 
         console.log(result.data)
-        return result.data.data;
+        return result.data;
     }
 }
 
