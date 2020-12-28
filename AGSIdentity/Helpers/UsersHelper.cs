@@ -7,12 +7,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace AGSIdentity.Helpers
 {
-    public class UserHelper
+    public class UsersHelper
     {
         private readonly IRepository _repository;
         private readonly IConfiguration _configuration;
 
-        public UserHelper(IRepository repository, IConfiguration configuration)
+        public UsersHelper(IRepository repository, IConfiguration configuration)
         {
             _repository = repository;
             _configuration = configuration;
@@ -30,8 +30,14 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
+            var selectedUserByName = _repository.UsersRepository.GetByUsername(model.Username);
+            if (selectedUserByName != null && selectedUserByName.Id != model.Id)
+            {
+                throw new AGSException(AGSResponse.ResponseCodeEnum.UsernameDuplicate);
+            }
 
-            var selected = _repository.UserRepository.Get(model.Id);
+
+            var selected = _repository.UsersRepository.Get(model.Id);
             if (selected == null)
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
@@ -49,7 +55,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
-            var result = _repository.UserRepository.Update(model);
+            var result = _repository.UsersRepository.Update(model);
             _repository.Save();
             return result;
         }
@@ -72,9 +78,15 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
-            string result = _repository.UserRepository.Create(model);
+            var selectedUserByName = _repository.UsersRepository.GetByUsername(model.Username);
+            if (selectedUserByName != null)
+            {
+                throw new AGSException(AGSResponse.ResponseCodeEnum.UsernameDuplicate);
+            }
+
+            string result = _repository.UsersRepository.Create(model);
             // set the default password
-            _repository.UserRepository.ResetPassword(result, _configuration["default_user_password"]);
+            _repository.UsersRepository.ResetPassword(result, _configuration["default_user_password"]);
             _repository.Save();
             return result;
         }
@@ -87,7 +99,7 @@ namespace AGSIdentity.Helpers
             }
 
             // Not allow to delete admin
-            var selected = _repository.UserRepository.Get(id);
+            var selected = _repository.UsersRepository.Get(id);
             if (selected != null)
             {
                 if (selected.Username == CommonConstant.AGSAdminName)
@@ -96,7 +108,7 @@ namespace AGSIdentity.Helpers
                 }
             }
 
-            _repository.UserRepository.Delete(id);
+            _repository.UsersRepository.Delete(id);
             _repository.Save();
         }
 
@@ -107,7 +119,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentNullException();
             }
 
-            var selected = _repository.UserRepository.Get(id);
+            var selected = _repository.UsersRepository.Get(id);
             return selected;
         }
 
@@ -118,13 +130,13 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentNullException();
             }
 
-            var selected = _repository.UserRepository.Get(userId);
+            var selected = _repository.UsersRepository.Get(userId);
             if (selected == null)
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
             }
 
-            bool result = _repository.UserRepository.ResetPassword(userId, _configuration["default_user_password"]);
+            bool result = _repository.UsersRepository.ResetPassword(userId, _configuration["default_user_password"]);
             _repository.Save();
             return result;
         }
@@ -132,7 +144,7 @@ namespace AGSIdentity.Helpers
         public List<AGSGroupEntity> GetGroupsByUserId(string userId)
         {
             var result = new List<AGSGroupEntity>();
-            var selected = _repository.UserRepository.Get(userId);
+            var selected = _repository.UsersRepository.Get(userId);
 
             if(selected == null)
             {
@@ -141,7 +153,7 @@ namespace AGSIdentity.Helpers
 
             foreach (var groupId in selected.GroupIds)
             {
-                var group = _repository.GroupRepository.Get(groupId);
+                var group = _repository.GroupsRepository.Get(groupId);
                 if (group != null)
                 {
                     result.Add(group);
@@ -154,12 +166,12 @@ namespace AGSIdentity.Helpers
         public List<AGSUserEntity> GetAllUsers()
         {
             var result = new List<AGSUserEntity>();
-            var userIds = _repository.UserRepository.GetAll();
+            var userIds = _repository.UsersRepository.GetAll();
             if (userIds != null)
             {
                 foreach (var userId in userIds)
                 {
-                    var user = _repository.UserRepository.Get(userId);
+                    var user = _repository.UsersRepository.Get(userId);
                     if (user != null)
                     {
                         result.Add(user);
@@ -188,13 +200,13 @@ namespace AGSIdentity.Helpers
             }
 
 
-            bool result = _repository.UserRepository.ValidatePassword(userId, oldPassword);
+            bool result = _repository.UsersRepository.ValidatePassword(userId, oldPassword);
             if (!result)
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.UsernameOrPasswordError);
             }
 
-            bool changeResult = _repository.UserRepository.ChangePassword(userId, newPassword);
+            bool changeResult = _repository.UsersRepository.ChangePassword(userId, newPassword);
             _repository.Save();
             return changeResult;
         }

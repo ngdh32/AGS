@@ -6,11 +6,11 @@ using AGSIdentity.Repositories;
 
 namespace AGSIdentity.Helpers
 {
-    public class FunctionClaimHelper
+    public class FunctionClaimsHelper
     {
         private IRepository _repository { get; set; }
 
-        public FunctionClaimHelper(IRepository repository)
+        public FunctionClaimsHelper(IRepository repository)
         {
             _repository = repository;    
         }
@@ -22,7 +22,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentNullException();
             }
 
-            var result = _repository.FunctionClaimRepository.Get(id);
+            var result = _repository.FunctionClaimsRepository.Get(id);
             return result;
         }
 
@@ -30,10 +30,10 @@ namespace AGSIdentity.Helpers
         {
             var result = new List<AGSFunctionClaimEntity>();
 
-            var functionClaimIds = _repository.FunctionClaimRepository.GetAll();
+            var functionClaimIds = _repository.FunctionClaimsRepository.GetAll();
             foreach (var functionClaimId in functionClaimIds)
             {
-                var entity = _repository.FunctionClaimRepository.Get(functionClaimId);
+                var entity = _repository.FunctionClaimsRepository.Get(functionClaimId);
                 if (entity != null)
                 {
                     result.Add(entity);
@@ -55,7 +55,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
-            var result = _repository.FunctionClaimRepository.Create(model);
+            var result = _repository.FunctionClaimsRepository.Create(model);
             _repository.Save();
             return result;
         }
@@ -73,7 +73,7 @@ namespace AGSIdentity.Helpers
             }
 
 
-            var result = _repository.FunctionClaimRepository.Update(model);
+            var result = _repository.FunctionClaimsRepository.Update(model);
             if (result == 0)
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
@@ -90,7 +90,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentNullException();
             }
 
-            _repository.FunctionClaimRepository.Delete(id);
+            _repository.FunctionClaimsRepository.Delete(id);
             _repository.Save();
         }
     }

@@ -4,7 +4,7 @@ using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
-    public interface IFunctionClaimRepository
+    public interface IFunctionClaimsRepository
     {
         AGSFunctionClaimEntity Get(string id);
         List<string> GetAll();

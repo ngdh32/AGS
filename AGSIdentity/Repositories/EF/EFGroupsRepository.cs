@@ -9,12 +9,12 @@ using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories.EF
 {
-    public class EFGroupRepository : IGroupRepository
+    public class EFGroupsRepository : IGroupsRepository
     {
         private readonly EFApplicationDbContext _applicationDbContext;
         private readonly RoleManager<EFApplicationRole> _roleManager;
 
-        public EFGroupRepository(EFApplicationDbContext applicationDbContext, RoleManager<EFApplicationRole> roleManager)
+        public EFGroupsRepository(EFApplicationDbContext applicationDbContext, RoleManager<EFApplicationRole> roleManager)
         {
             _applicationDbContext = applicationDbContext;
             _roleManager = roleManager;

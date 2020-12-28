@@ -1,5 +1,4 @@
 import UsersHelper from '../../../helpers/Identity/api/usersHelper'
-import { resposne_success } from  '../../../config/identity.js'
 
 // req = HTTP incoming message, res = HTTP server response
 export default async function UsersHandler(req, res) {
@@ -7,6 +6,13 @@ export default async function UsersHandler(req, res) {
     const { method } = req;
     if (method == "POST"){
         const result = await usersHelper.CreateUser(req.body.user);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(result));
+        return ;
+    }
+
+    if (method == "PUT"){
+        const result = await usersHelper.UpdateUser(req.body.user);
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result));
         return ;

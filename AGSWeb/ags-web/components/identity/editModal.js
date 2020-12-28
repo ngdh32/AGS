@@ -13,12 +13,13 @@ export default function EditModal({ toggle, isOpen, title, onSaveClick, Concrete
     }, [inputData])
 
     const onEditSaveClick = async (e) => {
+        setError("");
+
         const result = await onSaveClick(editData);
-        
-        if (result.code != resposne_success){
-            setError(result.code);
-        }else {
-            setError("");
+        console.log(result)
+        if (result.data.code != resposne_success){
+            setError(result.data.code);
+            return;
         }
 
         location.reload();

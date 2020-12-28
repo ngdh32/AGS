@@ -8,11 +8,11 @@ using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories.EF
 {
-    public class EFFunctionClaimRepository : IFunctionClaimRepository
+    public class EFFunctionClaimsRepository : IFunctionClaimsRepository
     {
         private EFApplicationDbContext _applicationDbContext { get; set; }
 
-        public EFFunctionClaimRepository(EFApplicationDbContext applicationDbContext)
+        public EFFunctionClaimsRepository(EFApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }

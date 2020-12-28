@@ -4,7 +4,7 @@ using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
-    public interface IGroupRepository
+    public interface IGroupsRepository
     {
         AGSGroupEntity Get(string id);
         List<string> GetAll();

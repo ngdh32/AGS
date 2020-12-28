@@ -20,11 +20,11 @@ namespace AGSIdentity.Controllers.V1
     [Authorize]
     public class GroupsController : ControllerBase 
     {
-        private readonly GroupHelper _groupHelper;
+        private readonly GroupsHelper _groupsHelper;
 
-        public GroupsController(GroupHelper groupHelper)
+        public GroupsController(GroupsHelper groupsHelper)
         {
-            _groupHelper = groupHelper;
+            _groupsHelper = groupsHelper;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace AGSIdentity.Controllers.V1
         [HttpGet]
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult Get() {
-            var result = _groupHelper.GetAllGroups();
+            var result = _groupsHelper.GetAllGroups();
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -41,7 +41,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult GetFunctionClaims(string id)
         {
-            var result = _groupHelper.GetFunctionClaimsByGroupId(id);
+            var result = _groupsHelper.GetFunctionClaimsByGroupId(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -51,7 +51,7 @@ namespace AGSIdentity.Controllers.V1
         /// Get a specified groups
         /// </summary>
         public IActionResult Get(string id) {
-            var result = _groupHelper.GetGroupById(id);
+            var result = _groupsHelper.GetGroupById(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -64,7 +64,7 @@ namespace AGSIdentity.Controllers.V1
         [HttpGet("{id}/users")]
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult GetAllUsersinGroup(string id) {
-            var result = _groupHelper.GetUsersByGroupId(id);
+            var result = _groupsHelper.GetUsersByGroupId(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -77,7 +77,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Post([FromBody] AGSGroupEntity group)
         {
-            var result = _groupHelper.CreateGroup(group);
+            var result = _groupsHelper.CreateGroup(group);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -92,7 +92,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Put([FromBody] AGSGroupEntity group)
         {
-            var result = _groupHelper.UpdateGroup(group);
+            var result = _groupsHelper.UpdateGroup(group);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -105,7 +105,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Delete(string id)
         {
-            _groupHelper.DeleteGroup(id);
+            _groupsHelper.DeleteGroup(id);
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
     }

@@ -6,11 +6,11 @@ using AGSIdentity.Repositories;
 
 namespace AGSIdentity.Helpers
 {
-    public class GroupHelper
+    public class GroupsHelper
     {
         private IRepository _repository { get; set; }
 
-        public GroupHelper(IRepository repository)
+        public GroupsHelper(IRepository repository)
         {
             _repository = repository;
         }
@@ -27,7 +27,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
-            var result = _repository.GroupRepository.Create(model);
+            var result = _repository.GroupsRepository.Create(model);
             _repository.Save();
             return result;
         }
@@ -45,7 +45,7 @@ namespace AGSIdentity.Helpers
             }
 
 
-            var result = _repository.GroupRepository.Update(model);
+            var result = _repository.GroupsRepository.Update(model);
             if (result == 0)
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
@@ -62,7 +62,7 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentNullException();
             }
 
-            _repository.GroupRepository.Delete(id);
+            _repository.GroupsRepository.Delete(id);
             _repository.Save();
         }
 
@@ -73,19 +73,19 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentNullException();
             }
 
-            var entity = _repository.GroupRepository.Get(id);
+            var entity = _repository.GroupsRepository.Get(id);
             return entity;
         }
 
         public List<AGSGroupEntity> GetAllGroups()
         {
             var result = new List<AGSGroupEntity>();
-            var groupIds = _repository.GroupRepository.GetAll();
+            var groupIds = _repository.GroupsRepository.GetAll();
             if (groupIds != null)
             {
                 foreach (var groupId in groupIds)
                 {
-                    var group = _repository.GroupRepository.Get(groupId);
+                    var group = _repository.GroupsRepository.Get(groupId);
                     if (group != null)
                     {
                         result.Add(group);
@@ -99,7 +99,7 @@ namespace AGSIdentity.Helpers
         public List<AGSFunctionClaimEntity> GetFunctionClaimsByGroupId(string id)
         {
             var result = new List<AGSFunctionClaimEntity>();
-            var selectedGroup = _repository.GroupRepository.Get(id);
+            var selectedGroup = _repository.GroupsRepository.Get(id);
 
             if (selectedGroup != null)
             {
@@ -107,7 +107,7 @@ namespace AGSIdentity.Helpers
                 {
                     foreach (var functionClaimId in selectedGroup.FunctionClaimIds)
                     {
-                        var functionClaim = _repository.FunctionClaimRepository.Get(functionClaimId);
+                        var functionClaim = _repository.FunctionClaimsRepository.Get(functionClaimId);
                         result.Add(functionClaim);
                     }
                 }
@@ -119,12 +119,12 @@ namespace AGSIdentity.Helpers
         public List<AGSUserEntity> GetUsersByGroupId(string id)
         {
             var result = new List<AGSUserEntity>();
-            var userIds = _repository.UserRepository.GetAll();
+            var userIds = _repository.UsersRepository.GetAll();
             if (userIds != null)
             {
                 foreach(var userId in userIds)
                 {
-                    var user = _repository.UserRepository.Get(userId);
+                    var user = _repository.UsersRepository.Get(userId);
                     if (user != null && user.GroupIds != null)
                     {
                         if (user.GroupIds.Contains(id))

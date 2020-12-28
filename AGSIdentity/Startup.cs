@@ -146,13 +146,13 @@ namespace AGSIdentity
             // add repository object
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();
-            services.AddTransient(typeof(FunctionClaimHelper));
-            services.AddTransient(typeof(GroupHelper));
-            services.AddTransient(typeof(UserHelper));
+            services.AddTransient(typeof(FunctionClaimsHelper));
+            services.AddTransient(typeof(GroupsHelper));
+            services.AddTransient(typeof(UsersHelper));
             services.AddTransient<IRepository, EFRepository>();
-            services.AddTransient<IFunctionClaimRepository, EFFunctionClaimRepository>();
-            services.AddTransient<IGroupRepository, EFGroupRepository>();
-            services.AddTransient<IUserRepository, EFUserRepository>();
+            services.AddTransient<IFunctionClaimsRepository, EFFunctionClaimsRepository>();
+            services.AddTransient<IGroupsRepository, EFGroupsRepository>();
+            services.AddTransient<IUsersRepository, EFUsersRepository>();
 
             // for data initialization
             services.AddTransient<IDataSeed, EFDataSeed>();

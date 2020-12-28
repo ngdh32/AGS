@@ -34,7 +34,7 @@ namespace AGSIdentity.Models.ViewModels.API.Common
             DefaultPasswordNotFound = 90003,
             NoPermissionError = 90004,
             TokenExpiredError = 90005,
-
+            UsernameDuplicate = 90006,
 
             UnknownError = 99999
         }

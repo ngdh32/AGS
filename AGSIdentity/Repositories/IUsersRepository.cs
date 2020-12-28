@@ -4,7 +4,7 @@ using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         AGSUserEntity Get(string id);
         List<string> GetAll();
@@ -13,6 +13,7 @@ namespace AGSIdentity.Repositories
         string Create(AGSUserEntity user);
         // return how many records are updated.
         int Update(AGSUserEntity user);
+        AGSUserEntity GetByUsername(string username);
 
 
         bool ValidatePassword(string userId, string password);

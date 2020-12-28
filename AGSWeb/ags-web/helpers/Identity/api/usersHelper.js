@@ -16,7 +16,7 @@ export default class UsersHelper {
         } catch (err) {
             console.log(err);
         }
-        
+
         return result.data;
     }
 
@@ -33,5 +33,34 @@ export default class UsersHelper {
         console.log(result.data)
         return result.data;
     }
+
+    async UpdateUser(user){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${users_version}/users`;
+            result = await axios.put(url, user, this.config);
+        } catch (err) {
+            console.log(err);
+        }
+
+        console.log(result.data)
+        return result.data;
+    }
+    
+    async DeleteUser(userId) {
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${users_version}/users/${userId}`;
+            result = await axios.delete(url, this.config)
+            
+        } catch (err) {
+            console.log(err);
+        }
+
+        return result.data;
+    }
+ 
 }
 

@@ -8,9 +8,11 @@ import { Table, Button, Modal } from 'reactstrap';
 import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
 import EditModal from '../../components/identity/editModal.js'
 import UsersEditModal from  '../../components/identity/usersEditModal.js'
-import GroupsEditModal from  '../../components/identity/groupsEditModal.js'
+import { resposne_success } from '../../config/identity.js'
 import '../../styles/identity/common.css'
 import axios from 'axios';
+
+const default_user_id = "";
 
 export default function GroupUIWithMaster({ agsContext, pageProps }) {
     return (
@@ -50,12 +52,25 @@ function GroupUI({ users, groups }) {
             return "error_ags_identity_users_no_username";
         }
 
-        const result = await axios.post('/api/identity/users', { user })
+        const result = user.id == default_user_id ? await axios.post('/api/identity/users', { user }) : await axios.put('/api/identity/users', { user });
         return result;
+    }
+
+    const onDeleteClick = async (e, userId, username) => {
+        const confirmDelete = confirm(`Confirm to delete the user: ${username}`);
+        if (confirmDelete){
+            const result = await axios.delete(`/api/identity/users/${userId}`);
+            if (result.data.code == resposne_success){
+                alert("Delete successfully!")
+                location.reload();
+            } else {
+                alert("Delete failed!")
+            }
+        }
     }
     
     const defaultUser = {
-        id: '',
+        id: default_user_id,
         username: '',
         email: '',
         first_Name: '',
@@ -79,6 +94,7 @@ function GroupUI({ users, groups }) {
                         <td>{x.first_Name}</td>
                         <td>{x.last_Name}</td>
                         <td>{x.title}</td>
+                        <td><a href="#" onClick={(e) => onDeleteClick(e, x.id, x.username)}>Delete</a></td>
                     </tr>
                 )
             }
@@ -103,6 +119,7 @@ function GroupUI({ users, groups }) {
                         <th>{GetLocalizedString("label_identity_user_table_first_name")}</th>
                         <th>{GetLocalizedString("label_identity_user_table_last_name")}</th>
                         <th>{GetLocalizedString("label_identity_user_table_title")}</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>

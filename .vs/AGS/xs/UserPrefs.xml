@@ -1,13 +1,11 @@
 ﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/CommonConstant.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Models/ViewModels/API/Common/AGSResponse.cs">
     <Files>
-      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="60" Column="40" />
-      <File FileName="AGSIdentity/Repositories/EF/EFGroupRepository.cs" Line="87" Column="59" />
-      <File FileName="AGSIdentity/Models/ViewModels/API/Common/AGSResponse.cs" Line="7" Column="37" />
-      <File FileName="AGSIdentity/Repositories/EF/EFUserRepository.cs" Line="65" Column="50" />
-      <File FileName="AGSIdentity/Helpers/UserHelper.cs" Line="75" Column="60" />
-      <File FileName="AGSIdentity/CommonConstant.cs" Line="25" Column="30" />
+      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="60" Column="66" />
+      <File FileName="AGSIdentity/Helpers/UserHelper.cs" Line="82" Column="43" />
+      <File FileName="AGSIdentity/AGSResponseFactory.cs" Line="11" Column="46" />
+      <File FileName="AGSIdentity/Models/ViewModels/API/Common/AGSResponse.cs" Line="37" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,14 +23,18 @@
               <Node name="Models" expanded="True">
                 <Node name="ViewModels" expanded="True">
                   <Node name="API" expanded="True">
-                    <Node name="Common" expanded="True" />
+                    <Node name="Common" expanded="True">
+                      <Node name="AGSResponse.cs" selected="True" />
+                    </Node>
                   </Node>
                 </Node>
               </Node>
-              <Node name="Repositories" expanded="True">
-                <Node name="EF" expanded="True" />
+              <Node name="Repositories" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="ProfileService" expanded="True">
+                  <Node name="Identity" expanded="True" />
+                </Node>
               </Node>
-              <Node name="CommonConstant.cs" selected="True" />
             </Node>
             <Node name="AGSIdentity.Test" expanded="True" />
           </Node>
@@ -53,7 +55,6 @@
       <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
       <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
       <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Controllers/V1/UsersController.cs" relfile="AGSIdentity/Controllers/V1/UsersController.cs" line="60" column="1" />
-      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Helpers/UserHelper.cs" relfile="AGSIdentity/Helpers/UserHelper.cs" line="59" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>

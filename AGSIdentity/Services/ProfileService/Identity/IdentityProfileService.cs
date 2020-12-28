@@ -17,12 +17,12 @@ namespace AGSIdentity.Services.ProfileService.Identity
     {
         private UserManager<EFApplicationUser> _userManager { get; set; }
         private RoleManager<EFApplicationRole> _roleManager { get; set; }
-        private IFunctionClaimRepository _functionClaimRepository { get; set; }
+        private IFunctionClaimsRepository _functionClaimRepository { get; set; }
 
         public IdentityProfileService(
             UserManager<EFApplicationUser> userManager,
             RoleManager<EFApplicationRole> roleManager,
-            IFunctionClaimRepository functionClaimRepository)
+            IFunctionClaimsRepository functionClaimRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;

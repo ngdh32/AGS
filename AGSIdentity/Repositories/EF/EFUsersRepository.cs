@@ -12,14 +12,14 @@ using AGSIdentity.Models.EntityModels.AGSIdentity;
 
 namespace AGSIdentity.Repositories.EF
 {
-    public class EFUserRepository : IUserRepository
+    public class EFUsersRepository : IUsersRepository
     {
         private EFApplicationDbContext _applicationDbContext { get; set; }
         private UserManager<EFApplicationUser> _userManager { get; set; }
         private RoleManager<EFApplicationRole> _roleManager { get; set; }
         private SignInManager<EFApplicationUser> _signInManager { get; set; }
 
-        public EFUserRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, SignInManager<EFApplicationUser> signInManager)
+        public EFUsersRepository(EFApplicationDbContext applicationDbContext, UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, SignInManager<EFApplicationUser> signInManager)
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
@@ -46,6 +46,18 @@ namespace AGSIdentity.Repositories.EF
             {
                 result.Add(user.Id);
             }
+            return result;
+        }
+
+        public AGSUserEntity GetByUsername(string username)
+        {
+            var selected = _userManager.FindByNameAsync(username).Result;
+            if (selected == null)
+            {
+                return null;
+            }
+
+            var result = GetAGSUserEntityFromEFApplicationUser(selected);
             return result;
         }
 

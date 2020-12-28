@@ -16,11 +16,11 @@ namespace AGSIdentity.Controllers.V1
     [Authorize]
     public class FunctionClaimsController : ControllerBase
     {
-        private readonly FunctionClaimHelper _functionClaimHelper;
+        private readonly FunctionClaimsHelper _functionClaimsHelper;
 
-        public FunctionClaimsController(FunctionClaimHelper functionClaimHelper)
+        public FunctionClaimsController(FunctionClaimsHelper functionClaimsHelper)
         {
-            _functionClaimHelper = functionClaimHelper;
+            _functionClaimsHelper = functionClaimsHelper;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
         public IActionResult Get()
         {
-            var result = _functionClaimHelper.GetAllFunctionClaims();
+            var result = _functionClaimsHelper.GetAllFunctionClaims();
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -43,7 +43,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
         public IActionResult Get(string id)
         {
-            var result = _functionClaimHelper.GetFunctionClaimById(id);
+            var result = _functionClaimsHelper.GetFunctionClaimById(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -56,7 +56,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
         {
-            var result = _functionClaimHelper.CreateFunctionClaim(functionClaim);
+            var result = _functionClaimsHelper.CreateFunctionClaim(functionClaim);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -69,7 +69,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim)
         {
-            var result = _functionClaimHelper.UpdateFunctionClaim(functionClaim);
+            var result = _functionClaimsHelper.UpdateFunctionClaim(functionClaim);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -82,7 +82,7 @@ namespace AGSIdentity.Controllers.V1
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Delete(string id)
         {
-            _functionClaimHelper.DeleteFunctionClaim(id);
+            _functionClaimsHelper.DeleteFunctionClaim(id);
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
 
