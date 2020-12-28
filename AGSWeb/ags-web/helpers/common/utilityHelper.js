@@ -9,3 +9,16 @@ export function GetBearerConfig(req, res) {
         headers: { Authorization: `Bearer ${access_token}` }
     }
 }
+
+export function CheckIfUnauthorizedResponse(result){
+    return result == 403 ? true : false
+}
+
+export function GetRedirectToErrorPageObject(){
+    return {
+        redirect: {
+            permanent: false,
+            destination: '/error'
+        }
+    }
+}

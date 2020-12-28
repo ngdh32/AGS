@@ -67,9 +67,21 @@ export const locale_strings = {
         en_uk: "Create User",
         zh_hk: "新增用户"
     },
-    label_identity_user_confirm_delete: {
-        en_uk: "Confirm to delete user",
-        zh_hk: "確定刪除用户"
+    label_identity_confirm_delete: {
+        en_uk: "Confirm to delete",
+        zh_hk: "確定刪除"
+    },
+    label_identity_group_table_name:{
+        en_uk: "Name",
+        zh_hk: "名字"
+    },
+    label_identity_group_table_functionClaim:{
+        en_uk: "Function Claims",
+        zh_hk: "功能"
+    },
+    label_identity_group_create_modal_title:{
+        en_uk: "Create group",
+        zh_hk: "新增團體"
     },
     label_common_button_add:{
         en_uk: "Add",

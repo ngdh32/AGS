@@ -14,9 +14,55 @@ export default class GroupsHelper {
             result = await axios.get(url, this.config)
         } catch (err) {
             console.log(err);
+            return err;
         }
 
         console.log(result.data)
-        return result.data.data;
+        return result.data;
+    }
+
+    async CreateGroup(group){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${groups_version}/groups`;
+            result = await axios.post(url, group, this.config);
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+
+        console.log(result.data)
+        return result.data;
+    }
+
+    async UpdateGroup(group){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${groups_version}/groups`;
+            result = await axios.put(url, group, this.config);
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+
+        console.log(result.data)
+        return result.data;
+    }
+    
+    async DeleteGroup(groupId) {
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${groups_version}/groups/${groupId}`;
+            result = await axios.delete(url, this.config)
+            
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+
+        return result.data;
     }
 }

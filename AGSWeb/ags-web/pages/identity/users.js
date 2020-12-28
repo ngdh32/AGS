@@ -1,7 +1,7 @@
 import { Master } from '../../components/Master.js'
 import { AGSContext } from '../../helpers/common/agsContext.js'
 import { InitializePageWithMaster } from '../../helpers/common/masterHelper.js'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import UsersHelper from '../../helpers/identity/api/usersHelper.js'
 import GroupsHelper from '../../helpers/identity/api/groupsHelper.js'
 import { Table, Button, Modal } from 'reactstrap';
@@ -11,18 +11,29 @@ import UsersEditModal from  '../../components/identity/usersEditModal.js'
 import { resposne_success } from '../../config/identity.js'
 import '../../styles/identity/common.css'
 import axios from 'axios';
+import {CheckIfUnauthorizedResponse} from "../../helpers/common/utilityHelper.js"
 
 const default_user_id = "";
 
-export default function GroupUIWithMaster({ agsContext, pageProps }) {
+const defaultUser = {
+    id: default_user_id,
+    username: '',
+    email: '',
+    first_Name: '',
+    last_Name: '',
+    title: '',
+    groupIds: []
+};
+
+export default function UsersUIWithMaster({ agsContext, pageProps }) {
     return (
         <Master agsContext={agsContext}>
-            <GroupUI {...pageProps} />
+            <UsersUI {...pageProps} />
         </Master>
     )
 }
 
-function GroupUI({ users, groups }) {
+function UsersUI({ users, groups }) {
     const agsContext = useContext(AGSContext);
     const [modal, setModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -57,7 +68,7 @@ function GroupUI({ users, groups }) {
     }
 
     const onDeleteClick = async (e, userId, username) => {
-        const confirmDelete = confirm(`${GetLocalizedString("label_identity_user_confirm_delete")}: ${username}`);
+        const confirmDelete = confirm(`${GetLocalizedString("label_identity_confirm_delete")}: ${username}`);
         if (confirmDelete){
             const result = await axios.delete(`/api/identity/users/${userId}`);
             if (result.data.code == resposne_success){
@@ -69,17 +80,6 @@ function GroupUI({ users, groups }) {
         }
     }
     
-    const defaultUser = {
-        id: default_user_id,
-        username: '',
-        email: '',
-        first_Name: '',
-        last_Name: '',
-        title: '',
-        groupIds: []
-    };
-    
-
     const tbody = users == null ? (
         <div>
             <span>{GetLocalizedString("label_no_data_return")}</span>
@@ -151,12 +151,15 @@ export async function getServerSideProps(context) {
         const usersHelper = new UsersHelper(context.req, context.res)
         const usersResult = await usersHelper.GetUsers();
         const groupsHelper = new GroupsHelper(context.req, context.res);
-        const groups = await groupsHelper.GetGroups();
+        const groupResult = await groupsHelper.GetGroups();
 
+        if (CheckIfUnauthorizedResponse(usersResult) || CheckIfUnauthorizedResponse(groupResult)){
+            return 403;
+        }
 
         return {
             users: usersResult.data
-            , groups
+            , groups: groupResult.data
         }
     })
 

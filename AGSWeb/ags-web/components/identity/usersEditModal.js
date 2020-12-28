@@ -4,7 +4,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import "../../styles/identity/userEditModal.css"
+import "../../styles/identity/editModal.css"
 import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
 
 export default function UsersEditModal({ editData, setEditData, groups }) {
@@ -14,10 +14,6 @@ export default function UsersEditModal({ editData, setEditData, groups }) {
     const [filererGroupsValue, setFilererGroupsValue] = useState("");
     const [filteredGroups, setFilteredGroups] = useState(groups);
     const [showGroupOptions, setShowGroupOptions] = useState(false);
-
-    useEffect(() => {
-        console.log(editData)
-    }, [editData])
 
     const onValueChange = (e) => {
         editData[e.target.getAttribute("name")] = e.target.value;
@@ -114,7 +110,7 @@ export default function UsersEditModal({ editData, setEditData, groups }) {
                         <Label>
                             {GetLocalizedString("label_identity_user_table_groups")}:
                         </Label>
-                        <div class="form-control user-edit groups">
+                        <div class="form-control autocomplete">
                             {
                                 selectedGroupBadges
                             }
@@ -126,11 +122,11 @@ export default function UsersEditModal({ editData, setEditData, groups }) {
                                     >    
                                 </Input>
                                 <div id="groupList">
-                                    <ListGroup className={"groupList " + (showGroupOptions ? "" : "hide")}>
+                                    <ListGroup className={"optionList " + (showGroupOptions ? "" : "hide")}>
                                         {
                                             filteredGroups.map(x => {
                                                 return (
-                                                    <ListGroupItem className="groupOption" action onClick={() => onGroupOptionClick(x.id)}>
+                                                    <ListGroupItem className="option" action onClick={() => onGroupOptionClick(x.id)}>
                                                         {x.name}
                                                     </ListGroupItem>
                                                 )
@@ -150,7 +146,7 @@ export default function UsersEditModal({ editData, setEditData, groups }) {
 function GroupBadge({group, onGroupBadgeRemoveClick}) {
     return (
         <React.Fragment>
-            <Button className="groupBadge" color="secondary" type="button">{group.name} <FontAwesomeIcon icon={faTimes} onClick={() => onGroupBadgeRemoveClick(group.id)}></FontAwesomeIcon></Button>
+            <Button className="optionBadge" color="secondary" type="button">{group.name} <FontAwesomeIcon icon={faTimes} onClick={() => onGroupBadgeRemoveClick(group.id)}></FontAwesomeIcon></Button>
         </React.Fragment>
     )
 }

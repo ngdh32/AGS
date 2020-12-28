@@ -15,6 +15,7 @@ export default class UsersHelper {
             
         } catch (err) {
             console.log(err);
+            return err;
         }
 
         return result.data;
@@ -28,6 +29,7 @@ export default class UsersHelper {
             result = await axios.post(url, user, this.config);
         } catch (err) {
             console.log(err);
+            return err;
         }
 
         console.log(result.data)
@@ -42,6 +44,7 @@ export default class UsersHelper {
             result = await axios.put(url, user, this.config);
         } catch (err) {
             console.log(err);
+            return err;
         }
 
         console.log(result.data)
@@ -57,6 +60,7 @@ export default class UsersHelper {
             
         } catch (err) {
             console.log(err);
+            return err;
         }
 
         return result.data;
