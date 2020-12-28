@@ -1,4 +1,4 @@
-import UsersHelper from '../../../helpers/Identity/api/usersHelper'
+import UsersHelper from '../../../../helpers/Identity/api/usersHelper'
 
 // req = HTTP incoming message, res = HTTP server response
 export default async function UsersHandler(req, res) {

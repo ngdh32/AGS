@@ -57,14 +57,14 @@ function GroupUI({ users, groups }) {
     }
 
     const onDeleteClick = async (e, userId, username) => {
-        const confirmDelete = confirm(`Confirm to delete the user: ${username}`);
+        const confirmDelete = confirm(`${GetLocalizedString("label_identity_user_confirm_delete")}: ${username}`);
         if (confirmDelete){
             const result = await axios.delete(`/api/identity/users/${userId}`);
             if (result.data.code == resposne_success){
-                alert("Delete successfully!")
+                alert(GetLocalizedString("label_common_response_delete_succeeded"))
                 location.reload();
             } else {
-                alert("Delete failed!")
+                alert(GetLocalizedString("label_common_response_delete_failed"))
             }
         }
     }
@@ -94,7 +94,7 @@ function GroupUI({ users, groups }) {
                         <td>{x.first_Name}</td>
                         <td>{x.last_Name}</td>
                         <td>{x.title}</td>
-                        <td><a href="#" onClick={(e) => onDeleteClick(e, x.id, x.username)}>Delete</a></td>
+                        <td><a href="#" onClick={(e) => onDeleteClick(e, x.id, x.username)}>{GetLocalizedString("label_common_button_delete")}</a></td>
                     </tr>
                 )
             }
@@ -119,7 +119,7 @@ function GroupUI({ users, groups }) {
                         <th>{GetLocalizedString("label_identity_user_table_first_name")}</th>
                         <th>{GetLocalizedString("label_identity_user_table_last_name")}</th>
                         <th>{GetLocalizedString("label_identity_user_table_title")}</th>
-                        <th>Action</th>
+                        <th>{GetLocalizedString("label_common_button_action")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,7 +132,7 @@ function GroupUI({ users, groups }) {
                 <EditModal 
                     isOpen={modal} 
                     toggle={toggle} 
-                    title={ selectedUser == null ? "Create User" : `User: ${selectedUser.username}` }
+                    title={ selectedUser == null ? GetLocalizedString("label_identity_user_create_modal_title") : `${GetLocalizedString("label_identity_user_table_username")}: ${selectedUser.username}` }
                     onSaveClick={onEditModalSaveClick}
                     ConcreteEditModal={UsersEditModal}
                     concreteEditModalProps={{groups}}

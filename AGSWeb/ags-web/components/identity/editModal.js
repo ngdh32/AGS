@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label } from 'reactstrap';
 import React, { useEffect } from 'react';
 import { resposne_success } from '../../config/identity.js'
+import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
 
 
 export default function EditModal({ toggle, isOpen, title, onSaveClick, ConcreteEditModal, concreteEditModalProps, inputData, defaultInputData }) {
@@ -33,8 +34,8 @@ export default function EditModal({ toggle, isOpen, title, onSaveClick, Concrete
             <ConcreteEditModal editData={editData} setEditData={setEditData} {...concreteEditModalProps} />
             <ModalFooter>
                 <Label className="text-danger">{error}</Label>
-                <Button color="primary" onClick={onEditSaveClick} type="button">Save</Button>
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                <Button color="primary" onClick={onEditSaveClick} type="button">{GetLocalizedString("label_common_button_confirm")}</Button>
+                <Button color="secondary" onClick={toggle}>{GetLocalizedString("label_common_button_cancel")}</Button>
             </ModalFooter>
         </Modal>
     )

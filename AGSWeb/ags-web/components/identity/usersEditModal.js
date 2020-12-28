@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import "../../styles/identity/userEditModal.css"
+import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
 
 export default function UsersEditModal({ editData, setEditData, groups }) {
     const isCreate = editData == null ? true : false;
@@ -81,37 +82,37 @@ export default function UsersEditModal({ editData, setEditData, groups }) {
                 <Form>
                     <FormGroup>
                         <Label>
-                            Username:
+                            {GetLocalizedString("label_identity_user_table_username")}:
                         </Label>
-                        <Input type="text" name="username" placeholder="Username" value={editData.username} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="username" placeholder={GetLocalizedString("label_identity_user_table_username")} value={editData.username} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
-                            Email:
+                        {GetLocalizedString("label_identity_user_table_email")}:
                         </Label>
-                        <Input type="email" name="email" placeholder="Email" value={editData.email} onChange={(e) => onValueChange(e)} />
+                        <Input type="email" name="email" placeholder={GetLocalizedString("label_identity_user_table_email")} value={editData.email} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
-                            First Name:
+                        {GetLocalizedString("label_identity_user_table_first_name")}:
                         </Label>
-                        <Input type="text" name="first_Name" placeholder="First Name" value={editData.first_Name} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="first_Name" placeholder={GetLocalizedString("label_identity_user_table_first_name")} value={editData.first_Name} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
-                            Last Name:
+                        {GetLocalizedString("label_identity_user_table_last_name")}:
                         </Label>
-                        <Input type="text" name="last_Name" placeholder="Last Name" value={editData.last_Name} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="last_Name" placeholder={GetLocalizedString("label_identity_user_table_last_name")} value={editData.last_Name} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
-                            Title:
+                        {GetLocalizedString("label_identity_user_table_title")}:
                         </Label>
                         <Input type="text" name="title" placeholder="Title" value={editData.title} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                     <FormGroup>
                         <Label>
-                            Groups:
+                            {GetLocalizedString("label_identity_user_table_groups")}:
                         </Label>
                         <div class="form-control user-edit groups">
                             {

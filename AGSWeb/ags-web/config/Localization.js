@@ -41,7 +41,7 @@ export const locale_strings = {
     },
     label_identity_user_table_username:{
         en_uk: "Username",
-        zh_hk: "用戶名"
+        zh_hk: "用戶"
     },
     label_identity_user_table_email:{
         en_uk: "Email",
@@ -53,15 +53,51 @@ export const locale_strings = {
     },
     label_identity_user_table_last_name:{
         en_uk: "Last Name",
-        zh_hk: "名字"
+        zh_hk: "姓"
     },
     label_identity_user_table_title:{
         en_uk: "Title",
         zh_hk: "稱號"
     },
+    label_identity_user_table_groups:{
+        en_uk: "Groups",
+        zh_hk: "團隊"
+    },
+    label_identity_user_create_modal_title:{
+        en_uk: "Create User",
+        zh_hk: "新增用户"
+    },
+    label_identity_user_confirm_delete: {
+        en_uk: "Confirm to delete user",
+        zh_hk: "確定刪除用户"
+    },
     label_common_button_add:{
         en_uk: "Add",
         zh_hk: "新增"
+    },
+    label_common_button_delete:{
+        en_uk: "Delete",
+        zh_hk: "刪除"
+    },
+    label_common_button_confirm:{
+        en_uk: "Confirm",
+        zh_hk: "確定"
+    },
+    label_common_button_cancel:{
+        en_uk: "Cancel",
+        zh_hk: "取消"
+    },
+    label_common_button_action:{
+        en_uk: "Action",
+        zh_hk: "操作"
+    },
+    label_common_response_delete_succeeded:{
+        en_uk: "Delete Succeeded",
+        zh_hk: "刪除成功"
+    },
+    label_common_response_delete_failed:{
+        en_uk: "Delete failed",
+        zh_hk: "刪除失敗"
     }
 }
 
