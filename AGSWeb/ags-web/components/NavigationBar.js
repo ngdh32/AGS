@@ -19,7 +19,7 @@ import menus from '../config/Menu.js'
 import { AGSContext } from '../helpers/common/agsContext.js'
 import { locale_Options } from '../config/localization.js'
 import { SetLocaleCookieInClient, GetLocalizedString } from '../helpers/common/localizationHelper.js'
- 
+
 export default function NavigationBar() {
     const agsContext = useContext(AGSContext);
     let menuOptions = JSON.parse(JSON.stringify(menus));
@@ -29,7 +29,7 @@ export default function NavigationBar() {
     const toggle = () => setIsOpen(!isOpen);
  
     return (
-        <Navbar expand="md" color="light" light>
+        <Navbar className="background-theme" dark expand="md">
             <NavbarBrand><h1>AGS</h1></NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>

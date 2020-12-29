@@ -28,7 +28,7 @@ export default function FunctionClaimsEditModal({editData, setEditData}){
                         <Label>
                             {GetLocalizedString("label_identity_functionClaims_table_description")}:
                         </Label>
-                        <Input type="text" name="name" placeholder={GetLocalizedString("label_identity_functionClaims_table_description")} value={editData.description} onChange={(e) => onValueChange(e)} />
+                        <Input type="text" name="description" placeholder={GetLocalizedString("label_identity_functionClaims_table_description")} value={editData.description} onChange={(e) => onValueChange(e)} />
                     </FormGroup>
                 </Form>
             </ModalBody>

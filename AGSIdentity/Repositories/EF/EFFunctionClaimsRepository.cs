@@ -60,6 +60,7 @@ namespace AGSIdentity.Repositories.EF
         {
             var result = new EFFunctionClaim();
             UpdateFunctionClaim(functionClaim, result);
+            result.Id = CommonConstant.GenerateId();
             _applicationDbContext.FunctionClaims.Add(result);
             return result.Id;
 

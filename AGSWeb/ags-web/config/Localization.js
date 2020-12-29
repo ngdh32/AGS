@@ -91,6 +91,10 @@ export const locale_strings = {
         en_uk: "Description",
         zh_hk: "描述"
     },
+    label_identity_functionClaims_create_modal_title:{
+        en_uk: "Create Function Claim",
+        zh_hk: "新增功能"
+    },
     label_common_button_add:{
         en_uk: "Add",
         zh_hk: "新增"

@@ -18,4 +18,50 @@ export default class FunctionClaimsHelper {
     
         return result.data;
     }
+
+
+    async CreateFunctionClaim(functionclaim){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${function_claims_version}/functionclaims`;
+            result = await axios.post(url, functionclaim, this.config);
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+
+        console.log(result.data)
+        return result.data;
+    }
+
+    async UpdateFunctionClaim(functionclaim){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${function_claims_version}/functionclaims`;
+            result = await axios.put(url, functionclaim, this.config);
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+
+        console.log(result.data)
+        return result.data;
+    }
+    
+    async DeleteFunctionClaim(functionClaimId) {
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${function_claims_version}/functionclaims/${functionClaimId}`;
+            result = await axios.delete(url, this.config)
+            
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+
+        return result.data;
+    }
 }

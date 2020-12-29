@@ -1,10 +1,11 @@
 ﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Repositories/EF/EFGroupsRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Repositories/EF/EFFunctionClaimsRepository.cs">
     <Files>
-      <File FileName="AGSIdentity/Repositories/EF/EFGroupsRepository.cs" Line="25" Column="11" />
+      <File FileName="AGSIdentity/Repositories/EF/EFGroupsRepository.cs" Line="18" Column="10" />
       <File FileName="AGSIdentity/Repositories/EF/EFUsersRepository.cs" />
       <File FileName="AGSIdentity/Repositories/IGroupsRepository.cs" />
+      <File FileName="AGSIdentity/Repositories/EF/EFFunctionClaimsRepository.cs" Line="62" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -31,7 +32,7 @@
               </Node>
               <Node name="Repositories" expanded="True">
                 <Node name="EF" expanded="True">
-                  <Node name="EFGroupsRepository.cs" selected="True" />
+                  <Node name="EFFunctionClaimsRepository.cs" selected="True" />
                 </Node>
               </Node>
               <Node name="Services" expanded="True">
@@ -56,7 +57,6 @@
       <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
       <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
       <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Controllers/V1/UsersController.cs" relfile="AGSIdentity/Controllers/V1/UsersController.cs" line="60" column="1" />
-      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Repositories/EF/EFGroupsRepository.cs" relfile="AGSIdentity/Repositories/EF/EFGroupsRepository.cs" line="29" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>
