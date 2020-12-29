@@ -44,7 +44,7 @@ export default function NavigationBar() {
                 </Nav>
                 <NavbarText>
                     <LocaleButtonGroups />
-                    <a href="/auth/Logout">Logout</a>
+                    <a href="/auth/logout">Logout</a>
                 </NavbarText>
             </Collapse>
         </Navbar>

@@ -5,7 +5,9 @@ import {
     authentication_url, 
     scope,
     pkce_cookie_name, 
-    auth_code_params_cookie_name
+    auth_code_params_cookie_name,
+    auth_code_id_token_cookie_name,
+    redirect_post_logout_url
 } from '../../config/auth.js'
 import Cookies from 'cookies';
 
@@ -16,6 +18,7 @@ export async function GetClient(){
         client_id: client_id,
         client_secret: client_secret,
         redirect_uris: [redirect_uri],
+        post_logout_redirect_uris: [redirect_post_logout_url],
         response_types: ['code']
     });
 
@@ -30,6 +33,15 @@ export async function GetRedirectUri(code_verifier){
         code_challenge: generators.codeChallenge(code_verifier),
         code_challenge_method: 'S256'
     });
+    return url;
+}
+
+export async function GetLogoutRedirectUri(req, res){
+    const cookies = new Cookies(req, res);
+    const id_token = cookies.get(auth_code_id_token_cookie_name);
+
+    const client = await GetClient();
+    const url = client.endSessionUrl({ id_token_hint: id_token, redirect_post_logout_url } );
     return url;
 }
 
@@ -73,12 +85,24 @@ async function GetTokenSet(code_verifier, auth_code_params){
 export async function SetAccessToken(req, res, code_verifier, auth_code_params){
     const tokenSet = await GetTokenSet(code_verifier, auth_code_params);
     const access_token = tokenSet.access_token;
+    const id_token = tokenSet.id_token;
     const cookies = new Cookies(req, res);
     cookies.set(auth_code_params_cookie_name, access_token, {
         httpOnly: true,
         sameSite: "strict",
         secure: true
     })
+    cookies.set(auth_code_id_token_cookie_name, id_token, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true
+    })
+}
+
+export async function RemoveAccessToken(req, res){
+    const cookies = new Cookies(req, res);
+    cookies.set(auth_code_params_cookie_name);
+    cookies.set(auth_code_id_token_cookie_name);
 }
 
 export async function GetUserInfo(req, res){

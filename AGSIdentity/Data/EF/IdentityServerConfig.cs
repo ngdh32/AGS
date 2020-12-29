@@ -95,6 +95,7 @@ namespace AGSIdentity.Data.EF
                     ClientId = CommonConstant.AGSClientIdConstant,
 
                     // no interactive user, use the clientid/secret for authentication
+                   
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     RequireConsent = false,
                     RedirectUris = {
