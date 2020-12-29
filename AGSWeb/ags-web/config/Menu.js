@@ -29,7 +29,7 @@ const menus = [
         {
           "Id": "change_password",
           "LabelKey": "menu_change_password_label",
-          "FunctionClaim": "",
+          "FunctionClaim": "ags_identity_user_change_password",
           "Url": "/identity/changepassword",
           "ChildrenMenus": []
         }

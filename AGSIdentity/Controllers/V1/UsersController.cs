@@ -98,7 +98,7 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpPost("changepw")]
-        [Authorize(Policy = CommonConstant.User_Only_Policy)]
+        [Authorize(Policy = CommonConstant.AGSUserChangePasswordClaimConstant)]
         public IActionResult ChangePW([FromBody] ChangePasswordRequestModel changePasswordRequest)
         {
             var userId = HttpContext?.User?.Claims?.Where(c => c.Type == "sub").FirstOrDefault()?.Value ?? "";

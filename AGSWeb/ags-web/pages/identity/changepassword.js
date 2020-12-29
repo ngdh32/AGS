@@ -25,6 +25,7 @@ function ChangePasswordUI(){
 
     const onSaveClick = async () => {
         setIsSaving(true);
+        setError("")
 
         if (newPassword == null || newPassword == ""){
             setError(GetLocalizedString("error_identity_changePassword_password_mandatory"))

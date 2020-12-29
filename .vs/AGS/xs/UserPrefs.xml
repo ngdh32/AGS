@@ -1,11 +1,12 @@
 ﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/CommonConstant.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Data/EF/EFDataSeed.cs">
     <Files>
-      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="88" Column="60" />
+      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="101" Column="78" />
       <File FileName="AGSIdentity/Helpers/UsersHelper.cs" Line="203" Column="79" />
-      <File FileName="AGSIdentity/Startup.cs" Line="270" Column="59" />
-      <File FileName="AGSIdentity/CommonConstant.cs" Line="12" Column="16" />
+      <File FileName="AGSIdentity/Startup.cs" Line="290" Column="1" />
+      <File FileName="AGSIdentity/CommonConstant.cs" Line="26" Column="63" />
+      <File FileName="AGSIdentity/Data/EF/EFDataSeed.cs" Line="44" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,7 +18,9 @@
                 <Node name="V1" expanded="True" />
               </Node>
               <Node name="Data" expanded="True">
-                <Node name="EF" expanded="True" />
+                <Node name="EF" expanded="True">
+                  <Node name="EFDataSeed.cs" selected="True" />
+                </Node>
               </Node>
               <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True">
@@ -39,7 +42,6 @@
                   <Node name="Identity" expanded="True" />
                 </Node>
               </Node>
-              <Node name="CommonConstant.cs" selected="True" />
             </Node>
             <Node name="AGSIdentity.Test" expanded="True" />
           </Node>

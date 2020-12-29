@@ -8,8 +8,7 @@ namespace AGSIdentity
         public const string AGSClientIdConstant = "AGS";
         public const string AGSIdentityScopeConstant = "ags.identity";
 
-        public const string User_Only_Policy = "ags_user";
-
+        
         // Please make sure function claim properties end with "ClaimConstant"
         // for AGS Identity Function Claim menu, edit & read
         public const string AGSFunctionClaimMenuClaimConstant = "ags_identity_functionClaim_menu";
@@ -23,6 +22,8 @@ namespace AGSIdentity
         public const string AGSUserMenuClaimConstant = "ags_identity_user_menu";
         public const string AGSUserEditClaimConstant = "ags_identity_user_edit";
         public const string AGSUserReadClaimConstant = "ags_identity_user_read";
+
+        public const string AGSUserChangePasswordClaimConstant = "ags_identity_user_change_password";
 
         public static string GenerateId()
         {
