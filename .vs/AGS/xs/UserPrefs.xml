@@ -1,14 +1,10 @@
 ﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Models/EntityModels/AGSIdentity/AGSFunctionClaimEntity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/Repositories/EF/EFGroupsRepository.cs">
     <Files>
-      <File FileName="AGSIdentity/Controllers/V1/UsersController.cs" Line="60" Column="66" />
-      <File FileName="AGSIdentity/Helpers/UserHelper.cs" Line="82" Column="43" />
-      <File FileName="AGSIdentity/AGSResponseFactory.cs" Line="11" Column="46" />
-      <File FileName="AGSIdentity/Models/ViewModels/API/Common/AGSResponse.cs" Line="32" Column="38" />
-      <File FileName="AGSIdentity/Controllers/V1/FunctionClaimsController.cs" Line="19" Column="38" />
-      <File FileName="AGSIdentity/Helpers/FunctionClaimsHelper.cs" Line="29" Column="37" />
-      <File FileName="AGSIdentity/Models/EntityModels/AGSIdentity/AGSFunctionClaimEntity.cs" Line="5" Column="18" />
+      <File FileName="AGSIdentity/Repositories/EF/EFGroupsRepository.cs" Line="25" Column="11" />
+      <File FileName="AGSIdentity/Repositories/EF/EFUsersRepository.cs" />
+      <File FileName="AGSIdentity/Repositories/IGroupsRepository.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,9 +21,7 @@
               <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="EntityModels" expanded="True">
-                  <Node name="AGSIdentity" expanded="True">
-                    <Node name="AGSFunctionClaimEntity.cs" selected="True" />
-                  </Node>
+                  <Node name="AGSIdentity" expanded="True" />
                 </Node>
                 <Node name="ViewModels" expanded="True">
                   <Node name="API" expanded="True">
@@ -35,7 +29,11 @@
                   </Node>
                 </Node>
               </Node>
-              <Node name="Repositories" expanded="True" />
+              <Node name="Repositories" expanded="True">
+                <Node name="EF" expanded="True">
+                  <Node name="EFGroupsRepository.cs" selected="True" />
+                </Node>
+              </Node>
               <Node name="Services" expanded="True">
                 <Node name="ProfileService" expanded="True">
                   <Node name="Identity" expanded="True" />
@@ -45,9 +43,6 @@
             <Node name="AGSIdentity.Test" expanded="True" />
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
@@ -61,6 +56,7 @@
       <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
       <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
       <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Controllers/V1/UsersController.cs" relfile="AGSIdentity/Controllers/V1/UsersController.cs" line="60" column="1" />
+      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Repositories/EF/EFGroupsRepository.cs" relfile="AGSIdentity/Repositories/EF/EFGroupsRepository.cs" line="29" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>

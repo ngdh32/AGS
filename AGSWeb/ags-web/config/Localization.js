@@ -83,6 +83,14 @@ export const locale_strings = {
         en_uk: "Create group",
         zh_hk: "新增團體"
     },
+    label_identity_functionClaims_table_functionClaim:{
+        en_uk: "Function Claim",
+        zh_hk: "功能"
+    },
+    label_identity_functionClaims_table_description:{
+        en_uk: "Description",
+        zh_hk: "描述"
+    },
     label_common_button_add:{
         en_uk: "Add",
         zh_hk: "新增"

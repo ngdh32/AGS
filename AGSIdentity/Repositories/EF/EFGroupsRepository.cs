@@ -24,8 +24,8 @@ namespace AGSIdentity.Repositories.EF
         {
             // create a new role in ASP.NET identity core
             var role = new EFApplicationRole();
-            role.Id = CommonConstant.GenerateId(); // assign id here
             MapAGSGroupEntityToEFApplicationRole(group, role);
+            role.Id = CommonConstant.GenerateId(); // assign id here
             _ = _roleManager.CreateAsync(role).Result;
 
             // update the associated Function Claims
