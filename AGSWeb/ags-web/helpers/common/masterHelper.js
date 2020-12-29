@@ -18,7 +18,7 @@ export async function InitializePageWithMaster(req, res, callback){
     const agsContext = new AGSContextModel(
         userInfoClaims.sub
         , userInfoClaims.name
-        , userInfoClaims.FunctionClaim
+        , userInfoClaims.FunctionClaim == null ? [] : userInfoClaims.FunctionClaim
     , locale);
 
     const pageProps = await callback();

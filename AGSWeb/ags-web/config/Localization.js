@@ -95,6 +95,34 @@ export const locale_strings = {
         en_uk: "Create Function Claim",
         zh_hk: "新增功能"
     },
+    label_identity_changePassword_oldpassword:{
+        en_uk: "Old Password",
+        zh_hk: "舊密碼"
+    },
+    label_identity_changePassword_newpassword:{
+        en_uk: "New Password",
+        zh_hk: "新密碼"
+    },
+    label_identity_changePassword_newpassword2:{
+        en_uk: "Re-enter new password",
+        zh_hk: "重複新密碼"
+    },
+    error_identity_changePassword_password_mandatory:{
+        en_uk: "Password is mandatory",
+        zh_hk: "密碼是必須"
+    },
+    error_identity_changePassword_not_match_newpassword:{
+        en_uk: "New passwords are different",
+        zh_hk: "新密碼不相同"
+    },
+    label_common_save_succeeded:{
+        en_uk: "Save succeeded",
+        zh_hk: "更新成功"
+    },
+    label_common_save_failed:{
+        en_uk: "Save failed",
+        zh_hk: "更新失敗"
+    },
     label_common_button_add:{
         en_uk: "Add",
         zh_hk: "新增"

@@ -66,5 +66,20 @@ export default class UsersHelper {
         return result.data;
     }
  
+    async ChangePassword(changePWRequest){
+        const axios = require('axios');
+        let result = null
+        try {
+            const url = `${api_url}/v${users_version}/users/changepw`;
+            result = await axios.post(url, changePWRequest, this.config);
+        } catch (err) {
+            console.log("ChangePassword Error")
+            console.log(err);
+            return err;
+        }
+
+        console.log(result.data)
+        return result.data;
+    }
 }
 

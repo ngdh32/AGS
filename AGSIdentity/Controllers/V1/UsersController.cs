@@ -98,10 +98,10 @@ namespace AGSIdentity.Controllers.V1
 
 
         [HttpPost("changepw")]
-        [Authorize]
+        [Authorize(Policy = CommonConstant.User_Only_Policy)]
         public IActionResult ChangePW([FromBody] ChangePasswordRequestModel changePasswordRequest)
         {
-            var userId = HttpContext?.User?.Claims?.Where(c => c.Type == "name").FirstOrDefault()?.Value ?? "";
+            var userId = HttpContext?.User?.Claims?.Where(c => c.Type == "sub").FirstOrDefault()?.Value ?? "";
 
             var result = _usersHelper.ChangePassword(userId, changePasswordRequest.OldPassword, changePasswordRequest.NewPassword);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);

@@ -288,6 +288,12 @@ namespace AGSIdentity
                     });
                 }
             }
+
+            options.AddPolicy(CommonConstant.User_Only_Policy, policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+            });
         }
     }
 }

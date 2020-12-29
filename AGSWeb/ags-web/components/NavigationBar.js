@@ -29,7 +29,7 @@ export default function NavigationBar() {
     const toggle = () => setIsOpen(!isOpen);
  
     return (
-        <Navbar className="background-theme" dark expand="md">
+        <Navbar color="light" light expand="md">
             <NavbarBrand><h1>AGS</h1></NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
@@ -64,7 +64,7 @@ function LocaleButtonGroups(){
             {
                 locale_Options.map(x => {
                     return (
-                        <Button active={agsContext.locale == x.value} onClick={() => { OnClickLocaleButton(x.value) }} >{x.label}</Button>
+                        <Button color="primary" active={agsContext.locale == x.value} onClick={() => { OnClickLocaleButton(x.value) }} >{x.label}</Button>
                     )
                 })
             }
