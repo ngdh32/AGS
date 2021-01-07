@@ -1,5 +1,5 @@
-export const redirect_uri = process.env.ags_identity_redirect_uri; 
-export const redirect_post_logout_url = process.env.ags_identity_post_logout_redirect_uri;
+export const redirect_uri = process.env.ags_web_host + "/auth/signin-oidc"; 
+export const redirect_post_logout_url = process.env.ags_web_host + "/auth/signout-callback-oidc";
 export const authentication_url = process.env.ags_identity_authentication_url;
 export const client_secret = process.env.ags_identity_client_secret;
 export const scope = 'openid profile email FunctionClaimResource ags.identity'

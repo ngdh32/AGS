@@ -1,4 +1,4 @@
-import FunctionClaimsHelper from '../../../../helpers/Identity/api/functionClaimsHelper.js'
+import FunctionClaimsHelper from '../../../../helpers/identity/api/functionClaimsHelper.js'
 
 // req = HTTP incoming message, res = HTTP server response
 export default async function FunctionClaimsHandler(req, res) {

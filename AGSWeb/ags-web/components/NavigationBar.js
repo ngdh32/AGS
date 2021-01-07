@@ -15,7 +15,7 @@ import {
     ButtonGroup
 } from 'reactstrap'
 import React, { useContext, useState } from 'react';
-import menus from '../config/Menu.js'
+import menus from '../config/menu.js'
 import { AGSContext } from '../helpers/common/agsContext.js'
 import { locale_Options } from '../config/localization.js'
 import { SetLocaleCookieInClient, GetLocalizedString } from '../helpers/common/localizationHelper.js'

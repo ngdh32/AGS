@@ -1,4 +1,4 @@
-import GroupsHelper from '../../../../helpers/Identity/api/groupsHelper.js'
+import GroupsHelper from '../../../../helpers/identity/api/groupsHelper.js'
 
 // req = HTTP incoming message, res = HTTP server response
 export default async function GroupsHandler(req, res) {

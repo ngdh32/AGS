@@ -1,8 +1,8 @@
-import { Master } from '../../components/Master.js'
+import { Master } from '../../components/master.js'
 import { AGSContext } from '../../helpers/common/agsContext.js'
 import { InitializePageWithMaster } from '../../helpers/common/masterHelper.js'
 import { useContext, useState } from 'react'
-import FunctionClaimsHelper from '../../helpers/Identity/api/functionClaimsHelper.js'
+import FunctionClaimsHelper from '../../helpers/identity/api/functionClaimsHelper.js'
 import EditModal from '../../components/identity/editModal.js'
 import FunctionClaimsEditModal from '../../components/identity/functionClaimsEditModal.js'
 import { Table, Button } from 'reactstrap';

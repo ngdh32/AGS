@@ -37,6 +37,11 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using AGSIdentity.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Logging;
+using System.Net;
+using System.Net.Http;
+using System.Security.Authentication;
 
 namespace AGSIdentity
 {
@@ -52,6 +57,8 @@ namespace AGSIdentity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             // this is for ef migration file generation
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -125,8 +132,14 @@ namespace AGSIdentity
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = Configuration["auth_url"];
-                options.RequireHttpsMetadata = false;
                 options.Audience = CommonConstant.AGSIdentityScopeConstant;
+                //options.TokenValidationParameters = new TokenValidationParameters()
+                //{
+                //    ValidateIssuerSigningKey = false,
+                //    d
+                //};
+                options.BackchannelHttpHandler = GetJWTBearerTokenHandler();
+                options.RequireHttpsMetadata = false;
             });
             #endregion
 
@@ -289,6 +302,15 @@ namespace AGSIdentity
                 }
             }
 
+        }
+
+        private static HttpClientHandler GetJWTBearerTokenHandler()
+        {
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.SslProtocols = SslProtocols.Tls12;
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            return handler;
         }
     }
 }

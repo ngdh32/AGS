@@ -61,7 +61,7 @@ export function SetCodeVerifierCookie(req, res, code_verifier){
     const cookies = new Cookies(req, res);
     cookies.set(pkce_cookie_name, code_verifier, {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
         secure: true
     })
 }
@@ -89,12 +89,12 @@ export async function SetAccessToken(req, res, code_verifier, auth_code_params){
     const cookies = new Cookies(req, res);
     cookies.set(auth_code_params_cookie_name, access_token, {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
         secure: true
     })
     cookies.set(auth_code_id_token_cookie_name, id_token, {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
         secure: true
     })
 }
@@ -117,6 +117,7 @@ export async function GetUserInfo(req, res){
     let claims = null;
     try {
         claims = await client.userinfo(access_token);
+        console.log({claims})
     }catch(err){
         console.log(err);
         return null;

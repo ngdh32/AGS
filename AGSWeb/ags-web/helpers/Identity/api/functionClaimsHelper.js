@@ -11,11 +11,14 @@ export default class FunctionClaimsHelper {
         let result = null
         try {
             const url = `${api_url}/v${function_claims_version}/functionclaims`;
+            console.log({url})
             result = await axios.get(url, this.config)
         } catch (err) {
+            console.log(err)
             return err.response.status;
         }
     
+        console.log(result.data);
         return result.data;
     }
 

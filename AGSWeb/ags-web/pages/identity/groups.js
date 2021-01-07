@@ -1,9 +1,9 @@
-import { Master } from '../../components/Master.js'
+import { Master } from '../../components/master.js'
 import { AGSContext } from '../../helpers/common/agsContext.js'
 import { InitializePageWithMaster } from '../../helpers/common/masterHelper.js'
 import { useContext, useState } from 'react'
-import GroupsHelper from '../../helpers/Identity/api/groupshelper.js'
-import FunctionClaimsHelper from '../../helpers/Identity/api/functionClaimshelper.js'
+import GroupsHelper from '../../helpers/identity/api/groupsHelper.js'
+import FunctionClaimsHelper from '../../helpers/identity/api/functionClaimsHelper.js'
 import { Table, Button, Modal } from 'reactstrap';
 import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
 import EditModal from '../../components/identity/editModal.js'
