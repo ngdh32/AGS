@@ -1,22 +1,23 @@
 ﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/azure-pipelines.yml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
     <Files>
       <File FileName="AGSIdentity/Models/EntityModels/AGSIdentity/AGSFunctionClaimEntity.cs" Line="10" Column="1" />
       <File FileName="AGSIdentity/Data/EF/IdentityServerConfig.cs" />
-      <File FileName="AGSIdentity/appsettings.json" Line="24" Column="27" />
+      <File FileName="AGSIdentity/appsettings.json" Line="18" Column="76" />
       <File FileName="AGSIdentity/Startup.cs" Line="141" Column="76" />
       <File FileName="AGSIdentity/Controllers/V1/FunctionClaimsController.cs" />
       <File FileName="AGSIdentity/Program.cs" />
       <File FileName="AGSIdentity/appsettings.production.json" Line="20" Column="30" />
-      <File FileName="AGSIdentity/azure-pipelines.yml" Line="35" Column="1" />
+      <File FileName="AGSIdentity/README.md" Line="6" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
             <Node name="AGSIdentity" expanded="True">
-              <Node name="azure-pipelines.yml" selected="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="appsettings.json" selected="True" />
             </Node>
             <Node name="AGSIdentity.Test" expanded="True" />
           </Node>
