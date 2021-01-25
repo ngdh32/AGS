@@ -49,4 +49,7 @@
     <Folder Include="Models\ViewModels\Pages\" />
     <Folder Include="Models\ViewModels\Pages\Login\" />
   </ItemGroup>
+  <ItemGroup>
+     <None Update="vgt.pfx" CopyToPublishDirectory="Always" />
+  </ItemGroup>
 </Project>
