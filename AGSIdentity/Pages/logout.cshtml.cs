@@ -30,6 +30,11 @@ namespace AGSIdentity.Pages
                 _authService.Logout();
 
                 var logoutId = HttpContext.Request.Query["logoutId"].ToString();
+                if (string.IsNullOrEmpty(logoutId)){
+                    Response.Redirect("/");
+                    return;
+                }
+
                 // to get the post logout redirect url 
                 var clientInfo = _authService.GetLogoutContext(logoutId);
                 if (clientInfo != null)
