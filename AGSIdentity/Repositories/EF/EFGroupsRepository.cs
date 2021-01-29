@@ -33,7 +33,7 @@ namespace AGSIdentity.Repositories.EF
             {
                 foreach (var functionClaimId in group.FunctionClaimIds)
                 {
-                    this.AddFunctionClaimToGroup(group.Id, functionClaimId);
+                    this.AddFunctionClaimToGroup(role, functionClaimId);
                 }   
             }
 
@@ -133,6 +133,14 @@ namespace AGSIdentity.Repositories.EF
         public void AddFunctionClaimToGroup(string groupId, string functionClaimId)
         {
             var selected = _roleManager.FindByIdAsync(groupId).Result;
+            if (selected != null)
+            {
+                _ = _roleManager.AddClaimAsync(selected, new Claim(CommonConstant.FunctionClaimTypeConstant, functionClaimId)).Result;
+            }
+        }
+
+        public void AddFunctionClaimToGroup(EFApplicationRole selected, string functionClaimId)
+        {
             if (selected != null)
             {
                 _ = _roleManager.AddClaimAsync(selected, new Claim(CommonConstant.FunctionClaimTypeConstant, functionClaimId)).Result;

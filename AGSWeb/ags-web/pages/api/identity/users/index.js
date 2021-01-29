@@ -5,6 +5,7 @@ export default async function UsersHandler(req, res) {
     const usersHelper = new UsersHelper(req,res);
     const { method } = req;
     if (method == "POST"){
+        console.log(req.body.user)
         const result = await usersHelper.CreateUser(req.body.user);
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result));

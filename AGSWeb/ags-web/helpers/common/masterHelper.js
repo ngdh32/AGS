@@ -15,10 +15,13 @@ export async function InitializePageWithMaster(req, res, callback){
     }
 
     const locale = GetLocaleCookieInServer(req, res);
+    const functionClaims = userInfoClaims.FunctionClaim == null? [] : 
+                            (typeof userInfoClaims.FunctionClaim == "string" ? [userInfoClaims.FunctionClaim] :  userInfoClaims.FunctionClaim )
+    
     const agsContext = new AGSContextModel(
         userInfoClaims.sub
         , userInfoClaims.name
-        , userInfoClaims.FunctionClaim == null ? [] : userInfoClaims.FunctionClaim
+        , functionClaims
     , locale);
 
     const pageProps = await callback();

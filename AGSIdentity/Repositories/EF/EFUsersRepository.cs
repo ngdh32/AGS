@@ -89,9 +89,11 @@ namespace AGSIdentity.Repositories.EF
             // update the associated groups
             if (user.GroupIds != null)
             {
+                
                 foreach(var groupId in user.GroupIds)
                 {
-                    this.AddUserToGroup(user.Id, groupId);
+                    Console.WriteLine($"Adding group:{groupId}");
+                    this.AddUserToGroup(appUser, groupId);
                 }
             }
 
@@ -150,6 +152,7 @@ namespace AGSIdentity.Repositories.EF
         {
             var result = new List<string>();
             var selected = _userManager.FindByIdAsync(userId).Result;
+
             if (selected != null)
             {
                 var roleNames = _userManager.GetRolesAsync(selected).Result;
@@ -169,6 +172,15 @@ namespace AGSIdentity.Repositories.EF
         {
             var selectedRole = _roleManager.FindByIdAsync(groupId).Result;
             var selectedUser = _userManager.FindByIdAsync(userId).Result;
+            if (selectedRole != null && selectedUser != null)
+            {
+                _ = _userManager.AddToRoleAsync(selectedUser, selectedRole.Name).Result;
+            }
+        }
+
+        public void AddUserToGroup(EFApplicationUser selectedUser, string groupId)
+        {
+            var selectedRole = _roleManager.FindByIdAsync(groupId).Result;
             if (selectedRole != null && selectedUser != null)
             {
                 _ = _userManager.AddToRoleAsync(selectedUser, selectedRole.Name).Result;

@@ -10,6 +10,7 @@ import {
     redirect_post_logout_url
 } from '../../config/auth.js'
 import Cookies from 'cookies';
+import {cookies_config} from "../../config/Cookies"
 
 export async function GetClient(){
     const { Issuer } = require('openid-client');
@@ -37,7 +38,7 @@ export async function GetRedirectUri(code_verifier){
 }
 
 export async function GetLogoutRedirectUri(req, res){
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     const id_token = cookies.get(auth_code_id_token_cookie_name);
 
     const client = await GetClient();
@@ -58,7 +59,7 @@ export async function GetAuthCodeParams(req){
 }
 
 export function SetCodeVerifierCookie(req, res, code_verifier){
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     cookies.set(pkce_cookie_name, code_verifier, {
         httpOnly: true,
         sameSite: "lax",
@@ -67,12 +68,12 @@ export function SetCodeVerifierCookie(req, res, code_verifier){
 }
 
 export function GetPKCECookie(req, res){
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     return cookies.get(pkce_cookie_name);
 }
 
 export function RemovePKCECookie(req, res){
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     cookies.set(pkce_cookie_name)
 }
 
@@ -86,7 +87,7 @@ export async function SetAccessToken(req, res, code_verifier, auth_code_params){
     const tokenSet = await GetTokenSet(code_verifier, auth_code_params);
     const access_token = tokenSet.access_token;
     const id_token = tokenSet.id_token;
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     cookies.set(auth_code_params_cookie_name, access_token, {
         httpOnly: true,
         sameSite: "lax",
@@ -100,13 +101,13 @@ export async function SetAccessToken(req, res, code_verifier, auth_code_params){
 }
 
 export async function RemoveAccessToken(req, res){
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     cookies.set(auth_code_params_cookie_name);
     cookies.set(auth_code_id_token_cookie_name);
 }
 
 export async function GetUserInfo(req, res){
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, cookies_config);
     const access_token = cookies.get(auth_code_params_cookie_name);
 
     if (access_token == null){
