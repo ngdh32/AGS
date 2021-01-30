@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Form, FormGroup, Label, Input, FormText, Badge, Button } from 'reactstrap';
 import { InitializePageWithMaster } from '../../helpers/common/masterHelper.js'
-import { Master } from '../../components/master.js'
+import { Master } from '../../components/Master.js'
 import { AGSContext } from '../../helpers/common/agsContext.js'
 import axios from 'axios'
 import { GetLocalizedString } from '../../helpers/common/localizationHelper.js'
