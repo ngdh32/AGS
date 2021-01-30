@@ -1,5 +1,5 @@
 import Cookies from 'cookies';
-import {cookies_config} from "../../config/Cookies"
+import {cookies_config} from "../../config/cookies.js"
 import UniversalCookies from "universal-cookie"
 import { locale_cookie_name, default_locale, locale_strings } from '../../config/localization.js'
 

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Master } from '../components/Master.js'
+import { Master } from '../components/master.js'
 import { AGSContext } from '../helpers/common/agsContext.js'
 import { InitializePageWithMaster } from '../helpers/common/masterHelper.js'
 import { useContext } from 'react'

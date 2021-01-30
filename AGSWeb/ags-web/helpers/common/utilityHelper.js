@@ -1,5 +1,5 @@
 import Cookies from  'cookies'
-import {cookies_config} from "../../config/Cookies"
+import {cookies_config} from "../../config/cookies.js"
 import { auth_code_params_cookie_name } from '../../config/auth.js'
 
 export function GetBearerConfig(req, res) {

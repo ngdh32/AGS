@@ -1,4 +1,4 @@
-import { Master } from '../../components/Master.js'
+import { Master } from '../../components/master.js'
 import { AGSContext } from '../../helpers/common/agsContext.js'
 import { InitializePageWithMaster } from '../../helpers/common/masterHelper.js'
 import { useContext, useState } from 'react'

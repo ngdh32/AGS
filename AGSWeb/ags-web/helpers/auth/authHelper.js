@@ -10,7 +10,7 @@ import {
     redirect_post_logout_url
 } from '../../config/auth.js'
 import Cookies from 'cookies';
-import {cookies_config} from "../../config/Cookies"
+import {cookies_config} from "../../config/cookies.js"
 
 export async function GetClient(){
     const { Issuer } = require('openid-client');
