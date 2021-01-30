@@ -1,5 +1,6 @@
 trigger:
 - main
+- AGSDocument
 
 pool:
   vmImage: 'ubuntu-latest' # set to windows-latest or another Windows vmImage for Windows builds
