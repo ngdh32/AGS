@@ -1,0 +1,18 @@
+trigger:
+- main
+- AGSDocument
+
+pool:
+  vmImage: 'ubuntu-latest' # set to windows-latest or another Windows vmImage for Windows builds
+
+variables:
+  imageName: 'pipelines-javascript-docker'
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub Connection'
+    repository: 'ngdh32/ags-web-production'
+    command: 'buildAndPush'
+    Dockerfile: 'AGSWeb/ags-web/Dockerfile.production'
+    buildContext: 'AGSWeb/ags-web'

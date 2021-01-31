@@ -18,12 +18,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Pages\" />
     <Folder Include="Models\ViewModels\" />
-    <Folder Include="Models\ViewModels\Login\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
@@ -38,13 +38,18 @@
     <Folder Include="Controllers\" />
     <Folder Include="Controllers\V1\" />
     <Folder Include="Models\EntityModels\" />
-    <Folder Include="Models\EntityModels\EF\" />
     <Folder Include="Data\" />
     <Folder Include="Data\EF\" />
+    <Folder Include="Models\EntityModels\AGSIdentity\" />
+    <Folder Include="Models\EntityModels\AGSIdentity\EF\" />
+    <Folder Include="Models\ViewModels\API\" />
+    <Folder Include="Models\ViewModels\API\Users\" />
+    <Folder Include="Models\ViewModels\API\Common\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\ViewModels\Pages\" />
+    <Folder Include="Models\ViewModels\Pages\Login\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGSCommon\AGSCommon.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+     <None Update="vgt.pfx" CopyToPublishDirectory="Always" />
   </ItemGroup>
 </Project>

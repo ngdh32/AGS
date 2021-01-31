@@ -1,0 +1,33 @@
+.autocomplete.form-control{
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.autocomplete.form-control .input{
+    width: 200px;
+    margin: 5px;
+    
+}
+
+.autocomplete.form-control .optionBadge{
+    margin: 5px;
+}
+
+.autocomplete.form-control .option{
+    cursor: pointer;
+}
+
+
+.autocomplete.form-control .optionList.hide{
+    display: none;
+}
+
+.autocomplete.form-control .optionList{
+    position: absolute;
+}
+
+
+td{
+    word-break: break-all;
+}

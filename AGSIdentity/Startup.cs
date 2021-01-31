@@ -28,7 +28,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Services;
-using AGSIdentity.Models.EntityModels.EF;
+using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
 using AGSIdentity.Services.AuthService;
 using AGSIdentity.Services.AuthService.Identity;
 using AGSIdentity.Data;
@@ -36,6 +36,12 @@ using AGSIdentity.Data.EF;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using AGSIdentity.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Logging;
+using System.Net;
+using System.Net.Http;
+using System.Security.Authentication;
 
 namespace AGSIdentity
 {
@@ -51,6 +57,8 @@ namespace AGSIdentity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             // this is for ef migration file generation
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -69,7 +77,6 @@ namespace AGSIdentity
                 .AddEntityFrameworkStores<EFApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            
 
             // Configure asp.net Identity settings
             services.Configure<IdentityOptions>(options =>
@@ -125,8 +132,14 @@ namespace AGSIdentity
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = Configuration["auth_url"];
+                options.Audience = CommonConstant.AGSIdentityScopeConstant;
+                //options.TokenValidationParameters = new TokenValidationParameters()
+                //{
+                //    ValidateIssuerSigningKey = false,
+                //    d
+                //};
+                options.BackchannelHttpHandler = GetJWTBearerTokenHandler();
                 options.RequireHttpsMetadata = false;
-                options.Audience = AGSCommon.CommonConstant.AGSIdentityConstant.AGSIdentityScopeConstant;
             });
             #endregion
 
@@ -146,15 +159,17 @@ namespace AGSIdentity
             // add repository object
             services.AddHttpContextAccessor();
             services.AddTransient<IAuthService, IdentityAuthService>();
+            services.AddTransient(typeof(FunctionClaimsHelper));
+            services.AddTransient(typeof(GroupsHelper));
+            services.AddTransient(typeof(UsersHelper));
             services.AddTransient<IRepository, EFRepository>();
-            services.AddTransient<IFunctionClaimRepository, EFFunctionClaimRepository>();
-            services.AddTransient<IGroupRepository, EFGroupRepository>();
-            services.AddTransient<IUserRepository, EFUserRepository>();
+            services.AddTransient<IFunctionClaimsRepository, EFFunctionClaimsRepository>();
+            services.AddTransient<IGroupsRepository, EFGroupsRepository>();
+            services.AddTransient<IUsersRepository, EFUsersRepository>();
 
             // for data initialization
             services.AddTransient<IDataSeed, EFDataSeed>();
 
-            // add authorization policy
             services.AddAuthorization(options =>
             {
                 SetupAuthentticaionPolicy(options);
@@ -259,23 +274,18 @@ namespace AGSIdentity
             }
         }
 
-        /// <summary>
-        /// Use reflection to get the properties in AGS Identity Constant and setup a list of policy for authentication
-        /// </summary>
-        /// <param name="options"></param>
+        ///// <summary>
+        ///// Use reflection to get the properties in AGS Identity Constant and setup a list of policy for authentication
+        ///// </summary>
+        ///// <param name="options"></param>
         private void SetupAuthentticaionPolicy(AuthorizationOptions options)
         {
-            options.AddPolicy(AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant, policy =>
-            {
-                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                policy.RequireAuthenticatedUser();
-            });
-
-            var ags_identity_constant_type = typeof(AGSCommon.CommonConstant.AGSIdentityConstant);
+            var ags_identity_constant_type = typeof(CommonConstant);
             var constant_fields = ags_identity_constant_type.GetFields();
-            foreach(var constant_field in constant_fields)
+            foreach (var constant_field in constant_fields)
             {
-                if (constant_field.Name.EndsWith("ClaimConstant")) {
+                if (constant_field.Name.EndsWith("ClaimConstant"))
+                {
                     var claimValue = constant_field.GetValue(null);
                     options.AddPolicy((string)claimValue, policy =>
                     {
@@ -284,14 +294,23 @@ namespace AGSIdentity
                         policy.RequireAssertion(context =>
                         {
                             var hasClaim = context.User.HasClaim(claim =>
-                                claim.Type == AGSCommon.CommonConstant.AGSIdentityConstant.FunctionClaimTypeConstant
+                                claim.Type == CommonConstant.FunctionClaimTypeConstant
                                 && claim.Value == (string)claimValue);
-                            var isAdmin = (context.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value?? "") == AGSCommon.CommonConstant.AGSIdentityConstant.AGSAdminName;
-                            return hasClaim || isAdmin;
+                            return hasClaim;
                         });
                     });
                 }
             }
+
+        }
+
+        private static HttpClientHandler GetJWTBearerTokenHandler()
+        {
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.SslProtocols = SslProtocols.Tls12;
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            return handler;
         }
     }
 }

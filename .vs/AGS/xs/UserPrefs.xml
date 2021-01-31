@@ -1,12 +1,22 @@
-﻿<Properties StartupConfiguration="{2178A306-4862-4DC2-B5F1-1593797624A1}|AGS">
+﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.ItemProperties.AGS PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
+    <Files>
+      <File FileName="AGSIdentity/Models/EntityModels/AGSIdentity/AGSFunctionClaimEntity.cs" Line="10" Column="1" />
+      <File FileName="AGSIdentity/Data/EF/IdentityServerConfig.cs" />
+      <File FileName="AGSIdentity/appsettings.json" Line="18" Column="76" />
+      <File FileName="AGSIdentity/Startup.cs" Line="141" Column="76" />
+      <File FileName="AGSIdentity/Controllers/V1/FunctionClaimsController.cs" />
+      <File FileName="AGSIdentity/Program.cs" />
+      <File FileName="AGSIdentity/appsettings.production.json" Line="20" Column="30" />
+      <File FileName="AGSIdentity/README.md" Line="6" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
             <Node name="AGSIdentity" expanded="True">
+              <Node name="Data" expanded="True" />
               <Node name="appsettings.json" selected="True" />
             </Node>
             <Node name="AGSIdentity.Test" expanded="True" />
@@ -23,12 +33,12 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
+      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>
     <MultiItemSolutionRunConfiguration Id="AGSLaunchConfiguration" Name="AGSLaunchConfiguration">
       <Items>
-        <StartupItem ItemId="{2178A306-4862-4DC2-B5F1-1593797624A1}" ItemName="AGS" />
         <StartupItem ItemId="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}" ItemName="AGSIdentity" />
       </Items>
     </MultiItemSolutionRunConfiguration>

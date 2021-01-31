@@ -6,13 +6,7 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <Folder Include="Models\" />
-    <Folder Include="Models\EntityModels\" />
-    <Folder Include="Models\EntityModels\AGSIdentity\" />
     <Folder Include="CommonConstant\" />
-    <Folder Include="Models\EntityModels\Common\" />
-    <Folder Include="Models\ViewModels\" />
-    <Folder Include="Models\ViewModels\AGSIdentity\" />
     <Folder Include="Repositories\" />
     <Folder Include="Repositories\AGSIdentity\" />
     <Folder Include="Repositories\AGSIdentity\FunctionClaim\" />

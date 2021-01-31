@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
-using AGSIdentity.Models.ViewModels.Login;
-using IdentityServer4.Models;
+using AGSIdentity.Models.ViewModels.Pages.Login;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AGSIdentity.Services.AuthService
 {
@@ -9,14 +10,12 @@ namespace AGSIdentity.Services.AuthService
     {
         bool Login(LoginInputModel loginInputModel);
 
-        string GetRedriectUrl();
+        LoginContext GetLoginContext(string redirectUrl);
 
-        LogoutRequest GetLogoutContext();
+        LogoutContext GetLogoutContext(string logoutId);
 
         void Logout();
 
-        ClaimsPrincipal GetCurrentUser();
-
-        string GetCurrentUserId();
+        string GetUserIdFromClaims(List<Claim> claims);
     }
 }

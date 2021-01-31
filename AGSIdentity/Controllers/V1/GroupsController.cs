@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using AGSCommon.Models.EntityModels.AGSIdentity;
-using AGSCommon.Models.EntityModels.Common;
+using AGSIdentity.Helpers;
 using AGSIdentity.Models.EntityModels;
+using AGSIdentity.Models.EntityModels.AGSIdentity;
 using AGSIdentity.Repositories;
 using AGSIdentity.Services.AuthService;
+using AGSIdentity.Services.AuthService.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,59 +17,42 @@ namespace AGSIdentity.Controllers.V1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Authorize(Policy = AGSCommon.CommonConstant.AGSIdentityConstant.AGSPolicyConstant)]
-    public class GroupsController : ControllerBase , IBLLController<AGSGroupEntity>
+    [Authorize]
+    public class GroupsController : ControllerBase 
     {
-        private IRepository _repository { get; set; }
-        private IConfiguration _configuration { get; set; }
-        private IAuthService _authService { get; set; }
+        private readonly GroupsHelper _groupsHelper;
 
-        public GroupsController(IRepository repository, IConfiguration configuration, IAuthService authService)
+        public GroupsController(GroupsHelper groupsHelper)
         {
-            _repository = repository;
-            _configuration = configuration;
-            _authService = authService;
+            _groupsHelper = groupsHelper;
         }
 
         /// <summary>
         /// Get all groups
         /// </summary>
         [HttpGet]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult Get() {
-            var result = new List<AGSGroupEntity>();
-            var groupIds = _repository.GroupRepository.GetAll();
-            if (groupIds != null)
-            {
-                foreach (var groupId in groupIds)
-                {
-                    var group = GetModel(groupId);
-                    if (group != null)
-                    {
-                        result.Add(group);
-                    }
-                }
-            }
-
+            var result = _groupsHelper.GetAllGroups();
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         [HttpGet("{id}/functionclaims")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult GetFunctionClaims(string id)
         {
-            var result = GetGroupFunctionClaims(id);
+            var result = _groupsHelper.GetFunctionClaimsByGroupId(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         /// <summary>
         /// Get a specified groups
         /// </summary>
         public IActionResult Get(string id) {
-            var group = GetModel(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(group);
+            var result = _groupsHelper.GetGroupById(id);
+            return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         
@@ -78,26 +62,9 @@ namespace AGSIdentity.Controllers.V1
         /// Get all the users in a specified group
         /// </summary>
         [HttpGet("{id}/users")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupReadClaimConstant))]
+        [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
         public IActionResult GetAllUsersinGroup(string id) {
-            List<AGSUserEntity> result = new List<AGSUserEntity>();
-            var userIds = _repository.UserRepository.GetAll();
-            UsersController usersController = new UsersController(_repository, _configuration, _authService);
-            foreach(var userId in userIds)
-            {
-                var user = _repository.UserRepository.Get(userId);
-                if (user != null)
-                {
-                    if (user.GroupIds != null)
-                    {
-                        {
-                            result.Add(usersController.GetModel(userId));
-                        }
-                    }
-                }
-                
-            }
-            
+            var result = _groupsHelper.GetUsersByGroupId(id);
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
@@ -107,12 +74,11 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="group"></param>
         [HttpPost]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant))]
+        [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Post([FromBody] AGSGroupEntity group)
         {
-            var id = SaveModel(group);
-            _repository.Save();
-            return AGSResponseFactory.GetAGSResponseJsonResult(id);
+            var result = _groupsHelper.CreateGroup(group);
+            return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
         
@@ -122,21 +88,12 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="group"></param>
         /// <param name="id"></param>
-        [HttpPut("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant))]
-        public IActionResult Put([FromBody] AGSGroupEntity group, string id)
+        [HttpPut]
+        [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
+        public IActionResult Put([FromBody] AGSGroupEntity group)
         {
-            if (group.Id == id)
-            {
-                var result = UpdateModel(group);
-                _repository.Save();
-                return AGSResponseFactory.GetAGSResponseJsonResult();
-
-            }
-            else
-            {
-                return BadRequest();
-            }
+            var result = _groupsHelper.UpdateGroup(group);
+            return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
 
@@ -145,102 +102,11 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [Authorize(Policy = (AGSCommon.CommonConstant.AGSIdentityConstant.AGSGroupEditClaimConstant))]
+        [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
         public IActionResult Delete(string id)
         {
-            DeleteModel(id);
-            _repository.Save();
+            _groupsHelper.DeleteGroup(id);
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
-
-
-
-
-        #region BLL
-
-        public string SaveModel(AGSGroupEntity group)
-        {
-            if (group == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if(string.IsNullOrEmpty(group.Id))
-            {
-                group.Id = AGSCommon.CommonFunctions.GenerateId();
-            }
-
-            
-            string entityId = _repository.GroupRepository.Create(group);
-            return entityId;
-        }
-
-        public int UpdateModel(AGSGroupEntity group)
-        {
-            if (group == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (string.IsNullOrEmpty(group.Id))
-            {
-                throw new ArgumentException();
-            }
-
-            
-            int result = _repository.GroupRepository.Update(group);
-            if (result > 0)
-            {
-                return result;
-            }
-            else
-            {
-                throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
-            }
-        }
-
-        public void DeleteModel(string groupId)
-        {
-            if (string.IsNullOrEmpty(groupId))
-            {
-                throw new ArgumentNullException();
-            }
-
-            _repository.GroupRepository.Delete(groupId);
-        }
-
-        public AGSGroupEntity GetModel(string groupId)
-        {
-            if (string.IsNullOrEmpty(groupId))
-            {
-                throw new ArgumentNullException();
-            }
-
-            var entity = _repository.GroupRepository.Get(groupId);
-            return entity;
-        }
-
-        public List<AGSFunctionClaimEntity> GetGroupFunctionClaims(string groupId)
-        {
-            var result = new List<AGSFunctionClaimEntity>();
-
-            var selectedGroup = _repository.GroupRepository.Get(groupId);
-
-            if (selectedGroup != null)
-            {
-                if (selectedGroup.FunctionClaimIds != null)
-                {
-                    foreach (var functionClaimId in selectedGroup.FunctionClaimIds)
-                    {
-                        var functionClaim = _repository.FunctionClaimRepository.Get(functionClaimId);
-                        result.Add(functionClaim);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        #endregion
     }
 }

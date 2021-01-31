@@ -1,15 +1,16 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGS", "AGS\AGS.csproj", "{2178A306-4862-4DC2-B5F1-1593797624A1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSIdentity", "AGSIdentity\AGSIdentity.csproj", "{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocument", "AGSDocument\AGSDocument.csproj", "{539BCD69-507D-47D6-8BA4-A4899EB14115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSCommon", "AGSCommon\AGSCommon.csproj", "{3495EC45-DE44-46C9-8AC3-D75C26E1ED54}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSIdentity.Test", "AGSIdentity.Test\AGSIdentity.Test.csproj", "{B1FBE225-7D06-47A6-8798-3245E6BCF2BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE900762-AA6A-447C-B029-77697BACE91B}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2178A306-4862-4DC2-B5F1-1593797624A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2178A306-4862-4DC2-B5F1-1593797624A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2178A306-4862-4DC2-B5F1-1593797624A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2178A306-4862-4DC2-B5F1-1593797624A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,10 +26,6 @@ Global
 		{539BCD69-507D-47D6-8BA4-A4899EB14115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{539BCD69-507D-47D6-8BA4-A4899EB14115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{539BCD69-507D-47D6-8BA4-A4899EB14115}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3495EC45-DE44-46C9-8AC3-D75C26E1ED54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3495EC45-DE44-46C9-8AC3-D75C26E1ED54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3495EC45-DE44-46C9-8AC3-D75C26E1ED54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3495EC45-DE44-46C9-8AC3-D75C26E1ED54}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1FBE225-7D06-47A6-8798-3245E6BCF2BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1FBE225-7D06-47A6-8798-3245E6BCF2BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1FBE225-7D06-47A6-8798-3245E6BCF2BC}.Release|Any CPU.ActiveCfg = Release|Any CPU

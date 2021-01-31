@@ -8,12 +8,10 @@ namespace AGSIdentity.Repositories
     {
         int Save();
 
-        IUserRepository UserRepository { get; }
+        IUsersRepository UsersRepository { get; }
 
-        IGroupRepository GroupRepository { get; }
+        IGroupsRepository GroupsRepository { get; }
         
-        IFunctionClaimRepository FunctionClaimRepository { get; }
-
-        IConfigRepository ConfigRepository { get; }
+        IFunctionClaimsRepository FunctionClaimsRepository { get; }
     }
 }

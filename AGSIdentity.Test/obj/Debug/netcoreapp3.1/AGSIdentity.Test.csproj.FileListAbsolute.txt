@@ -152,10 +152,8 @@
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSCommon.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSIdentity.dll
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSIdentity.pdb
-/Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/bin/Debug/netcoreapp3.1/AGSCommon.pdb
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/obj/Debug/netcoreapp3.1/AGSIdentity.Test.csprojAssemblyReference.cache
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/obj/Debug/netcoreapp3.1/AGSIdentity.Test.AssemblyInfoInputs.cache
 /Users/ngdh32/Desktop/AGS_git/AGSIdentity.Test/obj/Debug/netcoreapp3.1/AGSIdentity.Test.AssemblyInfo.cs
