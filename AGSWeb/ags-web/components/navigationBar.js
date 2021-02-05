@@ -62,16 +62,20 @@ function LocaleButtonGroups(){
     }
     
     return (
-        <React.Fragment>
+        <div className="divLocale">
             {
                 locale_Options.map((x, index) => {
+                    const seperator = index != locale_Options.length - 1 ? "/" : "";
                     return (
-                        <a className="" onClick={(e) => { OnClickLocaleButton(e, x.value)}}>{x.label}{ index != locale_Options.length - 1 ? "/" : "" }</a>
+                        <React.Fragment>
+                            <a className={ agsContext.locale == x.value ? "locale-active" : "locale-inactive" } onClick={(e) => { OnClickLocaleButton(e, x.value)}}>{x.label}</a>
+                            <span>{seperator}</span>
+                        </React.Fragment>
                         // <Button color="primary" active={agsContext.locale == x.value} onClick={() => { OnClickLocaleButton(x.value) }} className="ags-link"></Button>
                     )
                 })
             }
-        </React.Fragment>
+        </div>
     )
 }
 

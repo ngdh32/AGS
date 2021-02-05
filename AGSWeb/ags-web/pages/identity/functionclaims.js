@@ -103,7 +103,7 @@ function FunctionClaimUI({ functionClaims }) {
                         <h1>{GetLocalizedString("menu_functionClaim_admin_label")}</h1>
                     </div>
                     <div>
-                        <Button onClick={onAddButtonClick} >{GetLocalizedString("label_common_button_add")}</Button>
+                        <Button color="primary" onClick={onAddButtonClick} >{GetLocalizedString("label_common_button_add")}</Button>
                     </div>
                 </div>
                 <Table hover>

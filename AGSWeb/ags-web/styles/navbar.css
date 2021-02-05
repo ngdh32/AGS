@@ -10,7 +10,8 @@
 }
 
 .ags-navbar a,
-.ags-navbar p{
+.ags-navbar p,
+.ags-navbar span{
     color: var(--font-tertiary-color);
 }
 
@@ -26,6 +27,19 @@
 
 .ags-navbar .dropdown-item:hover {
     background-color: inherit;
+}
+
+.ags-navbar .locale-active {
+    font-weight: bold;
+}
+
+.ags-navbar .locale-inactive {
+    font-weight: 100;
+}
+
+.ags-navbar .divLocale{
+    margin-right: 1%;
+    margin-left: 1%;
 }
 
 @media (min-width: 768px) {
