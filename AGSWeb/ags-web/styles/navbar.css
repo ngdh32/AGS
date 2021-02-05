@@ -1,0 +1,35 @@
+.ags-navbar {
+    background-color: var(--background-tertiary-color);
+    border-bottom: 1px solid var(--background-secondary-color);;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-family:Courier New;
+    font-size: 40px;
+}
+
+.ags-navbar a,
+.ags-navbar p{
+    color: var(--font-tertiary-color);
+}
+
+.ags-navbar a:hover,
+.ags-navbar p:hover {
+    color: var(--font-secondary-color);
+    cursor: pointer;
+}
+
+.ags-navbar .dropdown-menu {
+    background-color: var(--background-tertiary-color);
+}
+
+.ags-navbar .dropdown-item:hover {
+    background-color: inherit;
+}
+
+@media (min-width: 768px) {
+    .ags-navbar {
+        height: 50px;
+    }
+}

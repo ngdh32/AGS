@@ -1,0 +1,8 @@
+:root {
+    --font-primary-color: black;
+    --font-secondary-color: lightgrey;
+    --font-tertiary-color: white;
+    --background-primary-color: white;
+    --background-secondary-color: darkgrey;
+    --background-tertiary-color: black;
+}
