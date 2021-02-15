@@ -7,13 +7,21 @@ import {
     pkce_cookie_name, 
     auth_code_params_cookie_name,
     auth_code_id_token_cookie_name,
-    redirect_post_logout_url
+    redirect_post_logout_url,
+    request_timeout
 } from '../../config/auth.js'
 import Cookies from 'cookies';
 import {cookies_config} from "../../config/cookies.js"
 
+function SetTimeout(custom){
+    custom.setHttpOptionsDefaults({
+        timeout: request_timeout
+    });
+}
+
 export async function GetClient(){
-    const { Issuer } = require('openid-client');
+    const { Issuer, custom } = require('openid-client');
+    SetTimeout(custom);
     const agsIdentityIssuer = await Issuer.discover(authentication_url);
     const client = new agsIdentityIssuer.Client({
         client_id: client_id,
@@ -27,7 +35,8 @@ export async function GetClient(){
 }
 
 export async function GetRedirectUri(code_verifier){
-    const { generators } = require('openid-client');
+    const { generators, custom } = require('openid-client');
+    SetTimeout(custom);
     const client = await GetClient();
     const url = client.authorizationUrl({
         scope: scope,
@@ -47,7 +56,8 @@ export async function GetLogoutRedirectUri(req, res){
 }
 
 export function GenerateCodeVerifier(){
-    const { generators } = require('openid-client');
+    const { generators, custom } = require('openid-client');
+    SetTimeout(custom);
     const code_verifier = generators.codeVerifier();
     return code_verifier;
 }
