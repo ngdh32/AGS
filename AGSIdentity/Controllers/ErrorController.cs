@@ -16,6 +16,8 @@ namespace AGSIdentity.Controllers
             _logger = logger;
         }
 
+        
+        [NonAction]
         [Route("/error")]
         public IActionResult Error()
         {

@@ -21,6 +21,11 @@ namespace AGSIdentity.Controllers.V1
             _usersHelper = usersHelper;
         }
 
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>          
         [HttpGet]
         [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
         public IActionResult Get() {
@@ -28,6 +33,11 @@ namespace AGSIdentity.Controllers.V1
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
+        /// <summary>
+        /// Get one specified user
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>     
         [HttpGet("{id}")]
         [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
         public IActionResult Get(string id)
@@ -37,7 +47,11 @@ namespace AGSIdentity.Controllers.V1
             
         }
 
-
+        /// <summary>
+        /// Get one specified user's all groups
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>           
         [HttpGet("{id}/groups")]
         [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
         public IActionResult GetGroups(string id)
@@ -46,7 +60,11 @@ namespace AGSIdentity.Controllers.V1
             return AGSResponseFactory.GetAGSResponseJsonResult(result);
         }
 
-
+        /// <summary>
+        /// Create a user
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult Post([FromBody] AGSUserEntity user)
@@ -65,6 +83,11 @@ namespace AGSIdentity.Controllers.V1
 
         }
 
+        /// <summary>
+        /// Update one specified user
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPut]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult Put([FromBody] AGSUserEntity user) {
@@ -81,6 +104,11 @@ namespace AGSIdentity.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// Delete one specified user
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpDelete("{id}")]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult Delete(string id) {
@@ -88,6 +116,11 @@ namespace AGSIdentity.Controllers.V1
             return AGSResponseFactory.GetAGSResponseJsonResult();
         }
 
+        /// <summary>
+        /// Reset one specified user's password
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost("{id}/resetpw")]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
         public IActionResult ResetPW(string id)
@@ -97,6 +130,11 @@ namespace AGSIdentity.Controllers.V1
         }
 
 
+        /// <summary>
+        /// Update one specified user's password
+        /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost("changepw")]
         [Authorize(Policy = CommonConstant.AGSUserChangePasswordClaimConstant)]
         public IActionResult ChangePW([FromBody] ChangePasswordRequestModel changePasswordRequest)

@@ -6,6 +6,7 @@
 trigger:
 - main
 - AGSDocument
+- AGSFlow
 
 pool:
   vmImage: 'windows-latest'
