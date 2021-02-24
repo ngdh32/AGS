@@ -119,5 +119,147 @@ namespace AGSIdentity.Test.Helpers
             Assert.NotNull(result);
             Assert.Empty(result);
         }
+
+
+        [Theory]
+        [InlineData("testing")]
+        [InlineData("")]
+        [InlineData(null)]
+        public void CreateFunctionClaim_Valid_Success(string name)
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Create(It.Is<AGSFunctionClaimEntity>(g => string.IsNullOrEmpty(g.Id)))).Returns(CommonConstant.GenerateId());
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            var newFunctionClaim = new AGSFunctionClaimEntity()
+            {
+                Name = name
+            };
+            var result = functionClaimsHelper.CreateFunctionClaim(newFunctionClaim);
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void CreateFunctionClaim_Null_ThrowException()
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Create(It.Is<AGSFunctionClaimEntity>(g => string.IsNullOrEmpty(g.Id)))).Returns(CommonConstant.GenerateId());
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            Assert.Throws<ArgumentNullException>(() => functionClaimsHelper.CreateFunctionClaim(null));
+        }
+
+        [Fact]
+        public void CreateFunctionClaim_IdProvided_ThrowException()
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Create(It.Is<AGSFunctionClaimEntity>(g => string.IsNullOrEmpty(g.Id)))).Returns(CommonConstant.GenerateId());
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            var newFunctionClaim = new AGSFunctionClaimEntity()
+            {
+                Id = CommonConstant.GenerateId()
+            };
+            Assert.Throws<ArgumentException>(() => functionClaimsHelper.CreateFunctionClaim(newFunctionClaim));
+        }
+
+        [Theory]
+        [InlineData("1", "testing")]
+        [InlineData("2", "")]
+        [InlineData("3", null)]
+        public void UpdateFunctionClaim_Valid_Success(string id, string name)
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            var updateFunctionClaim = new AGSFunctionClaimEntity()
+            {
+                Id = id,
+                Name = name
+            };
+            var result = functionClaimsHelper.UpdateFunctionClaim(updateFunctionClaim);
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void UpdateFunctionClaim_Null_ThrowException()
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            Assert.Throws<ArgumentNullException>(() => functionClaimsHelper.UpdateFunctionClaim(null));
+        }
+
+        [Fact]
+        public void UpdateFunctionClaim_EmptyOrNullId_ThrowException()
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            var updateFunctionClaim = new AGSFunctionClaimEntity()
+            {
+                Id = null
+            };
+            Assert.Throws<ArgumentException>(() => functionClaimsHelper.UpdateFunctionClaim(updateFunctionClaim));
+
+            var updateFunctionClaim2 = new AGSFunctionClaimEntity()
+            {
+                Id = string.Empty
+            };
+            Assert.Throws<ArgumentException>(() => functionClaimsHelper.UpdateFunctionClaim(updateFunctionClaim2));
+        }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        public void DeleteFunctionClaim_ValidId_Success(string id)
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Delete(It.Is<string>(g => functionClaims.Any(y => y.Id == g))));
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            functionClaimsHelper.DeleteFunctionClaim(id);
+            Assert.True(true);
+        }
+
+
+        [Fact]
+        public void DeleteFunctionClaim_EmptyOrNull_ThrowException()
+        {
+            // mock the IRepository object start
+            var functionClaimsRepository = new Mock<IRepository>();
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Delete(It.Is<string>(g => functionClaims.Any(y => y.Id == g))));
+            // end
+
+
+            var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
+            Assert.Throws<ArgumentNullException>(() => functionClaimsHelper.DeleteFunctionClaim(""));
+            Assert.Throws<ArgumentNullException>(() => functionClaimsHelper.DeleteFunctionClaim(null));
+        }
     }
 }
