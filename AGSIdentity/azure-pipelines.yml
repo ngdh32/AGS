@@ -29,24 +29,16 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:publishUrl="$(System.DefaultWorkingDirectory)\\WebAppContent" /t:AGSIdentity;AGSIdentity_Test'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-  
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: |
-      **\bin\$(BuildConfiguration)\**
-      **\${BuildConfiguration}\*test*.dll
-      !**\obj\**
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
 
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      **\$(BuildConfiguration)\*test*.dll
-      **\$(BuildConfiguration)\**\*test*.dll
-      !**\*TestAdapter.dll
+      **\bin\$(BuildConfiguration)\**\*test*.dll
       !**\obj\**
+      !**\xunit.runner.visualstudio.testadapter.dll
+      !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
 
