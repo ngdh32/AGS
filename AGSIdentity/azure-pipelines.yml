@@ -29,11 +29,16 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:publishUrl="$(System.DefaultWorkingDirectory)\\WebAppContent" /t:AGSIdentity'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
 - task: VSTest@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\$(BuildConfiguration)\*test*.dll
+      **\$(BuildConfiguration)\**\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+
 
 - task: ArchiveFiles@2
   inputs:
