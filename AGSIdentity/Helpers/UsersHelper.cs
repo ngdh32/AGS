@@ -30,17 +30,17 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
-            var selectedUserByName = _repository.UsersRepository.GetByUsername(model.Username);
-            if (selectedUserByName != null && selectedUserByName.Id != model.Id)
-            {
-                throw new AGSException(AGSResponse.ResponseCodeEnum.UsernameDuplicate);
-            }
-
-
             var selected = _repository.UsersRepository.Get(model.Id);
             if (selected == null)
             {
                 throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
+            }
+
+            var selectedUserByName = _repository.UsersRepository.GetByUsername(model.Username);
+            // Not allow to change the username to admin
+            if (selected.Username != CommonConstant.AGSAdminName && model.Username == CommonConstant.AGSAdminName)
+            {
+                throw new ArgumentException();
             }
 
             // Not allow to change admin username
@@ -49,11 +49,15 @@ namespace AGSIdentity.Helpers
                 throw new ArgumentException();
             }
 
-            // Not allow to change the username to admin
-            if (selected.Username != CommonConstant.AGSAdminName && model.Username == CommonConstant.AGSAdminName)
+            // not allow duplicate username
+            if (selectedUserByName != null && selectedUserByName.Id != model.Id)
             {
-                throw new ArgumentException();
+                throw new AGSException(AGSResponse.ResponseCodeEnum.UsernameDuplicate);
             }
+
+            
+
+            
 
             var result = _repository.UsersRepository.Update(model);
             _repository.Save();
@@ -68,6 +72,11 @@ namespace AGSIdentity.Helpers
             }
 
             if (!string.IsNullOrEmpty(model.Id))
+            {
+                throw new ArgumentException();
+            }
+
+            if (string.IsNullOrEmpty(model.Username))
             {
                 throw new ArgumentException();
             }
@@ -143,6 +152,11 @@ namespace AGSIdentity.Helpers
 
         public List<AGSGroupEntity> GetGroupsByUserId(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new ArgumentNullException();
+            }
+
             var result = new List<AGSGroupEntity>();
             var selected = _repository.UsersRepository.Get(userId);
 

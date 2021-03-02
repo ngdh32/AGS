@@ -11,22 +11,7 @@ namespace AGSIdentity.Test.Helpers
 {
     public class FunctionClaimsHelperTest
     {
-        private static List<AGSFunctionClaimEntity> functionClaims = new List<AGSFunctionClaimEntity>()
-            {
-                new AGSFunctionClaimEntity()
-                {
-                    Id = "1"
-                },
-                new AGSFunctionClaimEntity()
-                {
-                    Id = "2"
-                },
-                new AGSFunctionClaimEntity()
-                {
-                    Id = "3"
-                }
-            };
-
+        
         public FunctionClaimsHelperTest()
         {
             
@@ -41,7 +26,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            foreach(var functionClaim in functionClaims)
+            foreach(var functionClaim in MockData.functionClaims)
             {
                 functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Get(functionClaim.Id)).Returns(functionClaim);
             }
@@ -61,7 +46,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            foreach (var functionClaim in functionClaims)
+            foreach (var functionClaim in MockData.functionClaims)
             {
                 functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Get(functionClaim.Id)).Returns(functionClaim);
             }
@@ -77,7 +62,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            foreach (var functionClaim in functionClaims)
+            foreach (var functionClaim in MockData.functionClaims)
             {
                 functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Get(functionClaim.Id)).Returns(functionClaim);
             }
@@ -93,17 +78,17 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            foreach (var functionClaim in functionClaims)
+            foreach (var functionClaim in MockData.functionClaims)
             {
                 functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Get(functionClaim.Id)).Returns(functionClaim);
             }
-            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.GetAll()).Returns(functionClaims.Select(x => x.Id).ToList());
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.GetAll()).Returns(MockData.functionClaims.Select(x => x.Id).ToList());
             // end
 
             var functionClaimsHelper = new FunctionClaimsHelper(functionClaimsRepository.Object);
             var result = functionClaimsHelper.GetAllFunctionClaims();
             Assert.NotNull(result);
-            Assert.Equal(functionClaims.Count(), result.Count());
+            Assert.Equal(MockData.functionClaims.Count(), result.Count());
         }
 
         [Fact]
@@ -180,7 +165,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => MockData.functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
             // end
 
 
@@ -199,7 +184,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => MockData.functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
             // end
 
 
@@ -212,7 +197,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Update(It.Is<AGSFunctionClaimEntity>(g => MockData.functionClaims.Any(y => y.Id == g.Id)))).Returns(1);
             // end
 
 
@@ -238,7 +223,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Delete(It.Is<string>(g => functionClaims.Any(y => y.Id == g))));
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Delete(It.Is<string>(g => MockData.functionClaims.Any(y => y.Id == g))));
             // end
 
 
@@ -253,7 +238,7 @@ namespace AGSIdentity.Test.Helpers
         {
             // mock the IRepository object start
             var functionClaimsRepository = new Mock<IRepository>();
-            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Delete(It.Is<string>(g => functionClaims.Any(y => y.Id == g))));
+            functionClaimsRepository.Setup(_ => _.FunctionClaimsRepository.Delete(It.Is<string>(g => MockData.functionClaims.Any(y => y.Id == g))));
             // end
 
 
