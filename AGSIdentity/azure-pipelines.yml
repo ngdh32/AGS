@@ -39,7 +39,7 @@ steps:
       !**\xunit.runner.visualstudio.testadapter.dll
       !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
-    vsTestVersion: '15.0'
+    vsTestVersion: 'toolsInstaller'
 
 - task: ArchiveFiles@2
   inputs:
