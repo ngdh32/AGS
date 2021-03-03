@@ -23,28 +23,46 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:publishUrl="$(System.DefaultWorkingDirectory)\\WebAppContent" /t:AGSIdentity;AGSIdentity_Test'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'build'
+    projects: |
+      **/AGSIdentity.csproj
+      **/AGSIdentity_Test.csproj
+    arguments: '--configuration $(buildConfiguration)'
 
-- task: VisualStudioTestPlatformInstaller@1
-  inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestPreRelease'
 
-- task: VSTest@2
+# ...
+# do this after other tasks such as building
+- task: DotNetCoreCLI@2
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\bin\$(BuildConfiguration)\**\*test*.dll
-      !**\obj\**
-      !**\xunit.runner.visualstudio.testadapter.dll
-      !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    vsTestVersion: 'toolsInstaller'
+    command: test
+    projects: '**/*Test.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+#- task: VSBuild@1
+#  inputs:
+#    solution: '$(solution)'
+#    msbuildArgs: '/p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:publishUrl="$(System.DefaultWorkingDirectory)\\WebAppContent" /t:AGSIdentity;AGSIdentity_Test'
+#    platform: '$(buildPlatform)'
+#    configuration: '$(buildConfiguration)'
+
+#- task: VisualStudioTestPlatformInstaller@1
+#  inputs:
+#    packageFeedSelector: 'nugetOrg'
+#    versionSelector: 'latestPreRelease'
+
+#- task: VSTest@2
+#  inputs:
+#    testSelector: 'testAssemblies'
+#    testAssemblyVer2: |
+#      **\bin\$(BuildConfiguration)\**\*test*.dll
+#      !**\obj\**
+#      !**\xunit.runner.visualstudio.testadapter.dll
+#      !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+#    searchFolder: '$(System.DefaultWorkingDirectory)'
+#    vsTestVersion: 'toolsInstaller'
+
 
 - task: ArchiveFiles@2
   inputs:
