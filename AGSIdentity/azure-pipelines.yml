@@ -92,6 +92,7 @@ steps:
     zipAfterPublish: True
     projects: |
       **/AGSIdentity.csproj
+    modifyOutputPath: false
 
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
