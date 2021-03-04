@@ -64,17 +64,30 @@ steps:
 #    vsTestVersion: 'toolsInstaller'
 
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)\\WebAppContent'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+#- task: ArchiveFiles@2
+#  inputs:
+#    rootFolderOrFile: '$(System.DefaultWorkingDirectory)\\WebAppContent'
+#    includeRootFolder: false
+#    archiveType: 'zip'
+#    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#    replaceExistingArchive: true
   
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish Artifact'
+#  inputs:
+#    PathtoPublish: '$(build.artifactstagingdirectory)'
+#  condition: succeededOrFailed()
+
+- task: DotNetCoreCLI@2
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'AGSIdentity'
