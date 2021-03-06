@@ -31,7 +31,7 @@ export default function NavigationBar() {
  
     return (
         <Navbar className="ags-navbar" expand="md">
-            <NavbarBrand className="">AGS</NavbarBrand>
+            <NavbarBrand className=""><a href="/">AGS</a></NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>

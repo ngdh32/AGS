@@ -10,7 +10,7 @@ export function Master({children, agsContext}){
                 <header>
                     <NavigationBar/>
                 </header>
-                <main class="container">
+                <main class="container-fluid">
                     {children}
                 </main>
             </AGSContext.Provider>
