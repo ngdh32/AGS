@@ -19,6 +19,7 @@ import menus from '../config/menu.js'
 import { AGSContext } from '../helpers/common/agsContext.js'
 import { locale_Options } from '../config/localization.js'
 import { SetLocaleCookieInClient, GetLocalizedString } from '../helpers/common/localizationHelper.js'
+import "../styles/navbar.css"
 
 export default function NavigationBar() {
     const agsContext = useContext(AGSContext);
@@ -29,8 +30,8 @@ export default function NavigationBar() {
     const toggle = () => setIsOpen(!isOpen);
  
     return (
-        <Navbar color="light" light expand="md">
-            <NavbarBrand><h1>AGS</h1></NavbarBrand>
+        <Navbar className="ags-navbar" expand="md">
+            <NavbarBrand className=""><a href="/">AGS</a></NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
@@ -42,9 +43,9 @@ export default function NavigationBar() {
                         })
                     }
                 </Nav>
+                <LocaleButtonGroups />
                 <NavbarText>
-                    <LocaleButtonGroups />
-                    <a href="/auth/logout">Logout</a>
+                    <a href="/auth/logout" class="">Logout</a>
                 </NavbarText>
             </Collapse>
         </Navbar>
@@ -54,46 +55,55 @@ export default function NavigationBar() {
 function LocaleButtonGroups(){
     const agsContext = useContext(AGSContext);
     
-    function OnClickLocaleButton(locale){
+    function OnClickLocaleButton(e, locale){
+        e.preventDefault();
         SetLocaleCookieInClient(locale)
         location.reload();
     }
     
     return (
-        <ButtonGroup>
+        <div className="divLocale">
             {
-                locale_Options.map(x => {
+                locale_Options.map((x, index) => {
+                    const seperator = index != locale_Options.length - 1 ? "/" : "";
                     return (
-                        <Button color="primary" active={agsContext.locale == x.value} onClick={() => { OnClickLocaleButton(x.value) }} >{x.label}</Button>
+                        <React.Fragment>
+                            <a className={ agsContext.locale == x.value ? "locale-active" : "locale-inactive" } onClick={(e) => { OnClickLocaleButton(e, x.value)}}>{x.label}</a>
+                            <span>{seperator}</span>
+                        </React.Fragment>
+                        // <Button color="primary" active={agsContext.locale == x.value} onClick={() => { OnClickLocaleButton(x.value) }} className="ags-link"></Button>
                     )
                 })
             }
-        </ButtonGroup>
+        </div>
     )
 }
 
 function NavigationItem({ menuOption, level }) {
     if (menuOption.ChildrenMenus == undefined || menuOption.ChildrenMenus.length == 0) {
         if (level == 0) {
+            // this is the toppest level
             return (
                 <NavItem>
-                    <NavLink href={menuOption.Url}>{GetLocalizedString(menuOption.LabelKey)}</NavLink>
+                    <NavLink><p class="">{GetLocalizedString(menuOption.LabelKey)}</p></NavLink>
                 </NavItem>
             )
         } else {
+            // this is the lowest level
             return (
-                <DropdownItem><a href={menuOption.Url}>{GetLocalizedString(menuOption.LabelKey)}</a></DropdownItem>
+                <DropdownItem><a class="" href={menuOption.Url}>{GetLocalizedString(menuOption.LabelKey)}</a></DropdownItem>
             )
         }
     }
  
     if (menuOption.ChildrenMenus != undefined && menuOption.ChildrenMenus.length > 0) {
+        // this is middle level and continue literation
         return (
             <UncontrolledDropdown inNavbar direction={level == 0 ? "down" : "right"}>
-                <DropdownToggle nav caret>
-                    {GetLocalizedString(menuOption.LabelKey)}
+                <DropdownToggle nav caret className="">
+                    {GetLocalizedString(menuOption.LabelKey)} 
                 </DropdownToggle>
-                <DropdownMenu>
+                <DropdownMenu className="">
                     {
                         menuOption.ChildrenMenus.map(x => {
                             return (

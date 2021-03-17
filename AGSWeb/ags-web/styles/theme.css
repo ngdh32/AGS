@@ -1,7 +1,62 @@
-.background-theme {
-    background-color: darkblue;
+a,
+p,
+span,
+td,
+th,
+label, 
+input{
+    color: var(--font-primary-color);
 }
 
-.text-theme{
-    color: blue;
+.form-control {
+    color: var(--font-primary-color);
+    background-color: var(--background-primary-color);
+}
+
+.btn-primary {
+    color: var(--font-tertiary-color);
+    background-color: var(--background-tertiary-color);
+    border-color: var(--background-tertiary-color);
+}
+
+.btn-primary:hover {
+    color: var(--font-primary-color);
+    background-color: var(--background-primary-color);
+    border-color: var(--background-tertiary-color);
+}
+
+.btn-secondary {
+    color: var(--font-tertiary-color);
+    background-color: var(--background-secondary-color);
+    border-color: var(--background-secondary-color);
+}
+
+.btn-secondary:hover {
+    color: var(--font-primary-color);
+    background-color: var(--background-primary-color);
+    border-color: var(--background-tertiary-color);
+}
+
+a:hover{
+    color: var(--font-secondary-color)
+}
+
+.modal-content {
+    border-color: var(--background-secondary-color)
+}
+
+.modal-header{
+    background-color: var(--background-tertiary-color);
+}
+
+.modal-header .close{
+    opacity: 1;
+}
+
+.modal-header .close span{
+    color: var(--font-tertiary-color);
+}
+
+.modal-title{
+    color: var(--font-tertiary-color);
 }

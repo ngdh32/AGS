@@ -1,6 +1,7 @@
 import NavigationBar from './navigationBar.js'
 import { AGSContext } from '../helpers/common/agsContext.js'
 import '../styles/theme.css'
+import '../styles/common.css'
 
 export function Master({children, agsContext}){
     return (

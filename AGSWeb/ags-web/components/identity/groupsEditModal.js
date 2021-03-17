@@ -121,7 +121,7 @@ export default function GroupsEditModal({editData, setEditData, functionClaims})
 function FunctionClaimBadge({functionClaim, onFunctionClaimBadgeRemoveClick}) {
     return (
         <React.Fragment>
-            <Button className="optionBadge" color="secondary" type="button">{functionClaim.name} <FontAwesomeIcon icon={faTimes} onClick={() => onFunctionClaimBadgeRemoveClick(functionClaim.id)}></FontAwesomeIcon></Button>
+            <Button className="optionBadge" color="primary" type="button">{functionClaim.name} <FontAwesomeIcon icon={faTimes} onClick={() => onFunctionClaimBadgeRemoveClick(functionClaim.id)}></FontAwesomeIcon></Button>
         </React.Fragment>
     )
 }

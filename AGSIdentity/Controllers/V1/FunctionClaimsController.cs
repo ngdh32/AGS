@@ -26,6 +26,8 @@ namespace AGSIdentity.Controllers.V1
         /// <summary>
         /// Return all the function claims
         /// </summary>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
         public IActionResult Get()
@@ -39,6 +41,8 @@ namespace AGSIdentity.Controllers.V1
         /// Return the specified function claims
         /// </summary>
         /// <param name="id"></param>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet("{id}")]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
         public IActionResult Get(string id)
@@ -52,6 +56,8 @@ namespace AGSIdentity.Controllers.V1
         /// Create a function claim. Only users with specified claim are allowed 
         /// </summary>
         /// <param name="functionClaim"></param>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
@@ -65,6 +71,8 @@ namespace AGSIdentity.Controllers.V1
         /// </summary>
         /// <param name="functionClaim"></param>
         /// <param name="id"></param>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPut]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim)
@@ -78,6 +86,8 @@ namespace AGSIdentity.Controllers.V1
         /// Delete a function claim. Only users with specified claim are allowed
         /// </summary>
         /// <param name="id"></param>
+        /// <response code="401">if no token of invalid token is passed</response>          
+        /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpDelete("{id}")]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
         public IActionResult Delete(string id)

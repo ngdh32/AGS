@@ -8,5 +8,7 @@
 /AGSIdentity/bin
 /AGSCommon/bin
 /AGSCommon/obj
+/AGSFlow/bin
+/AGSFlow/obj
 /AGSIdentity.Test/bin
 /AGSIdentity.Test/obj

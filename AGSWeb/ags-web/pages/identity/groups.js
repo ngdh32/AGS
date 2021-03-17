@@ -109,7 +109,7 @@ function GroupUI({ groups, functionClaims }) {
                     <h1>{GetLocalizedString("menu_group_admin_label")}</h1>
                 </div>
                 <div>
-                    <Button onClick={onAddButtonClick} >{GetLocalizedString("label_common_button_add")}</Button>
+                    <Button color="primary" onClick={onAddButtonClick} >{GetLocalizedString("label_common_button_add")}</Button>
                 </div>
             </div>
             <Table hover>

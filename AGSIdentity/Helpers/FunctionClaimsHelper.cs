@@ -31,12 +31,15 @@ namespace AGSIdentity.Helpers
             var result = new List<AGSFunctionClaimEntity>();
 
             var functionClaimIds = _repository.FunctionClaimsRepository.GetAll();
-            foreach (var functionClaimId in functionClaimIds)
+            if (functionClaimIds != null)
             {
-                var entity = _repository.FunctionClaimsRepository.Get(functionClaimId);
-                if (entity != null)
+                foreach (var functionClaimId in functionClaimIds)
                 {
-                    result.Add(entity);
+                    var entity = _repository.FunctionClaimsRepository.Get(functionClaimId);
+                    if (entity != null)
+                    {
+                        result.Add(entity);
+                    }
                 }
             }
 

@@ -146,7 +146,7 @@ export default function UsersEditModal({ editData, setEditData, groups }) {
 function GroupBadge({group, onGroupBadgeRemoveClick}) {
     return (
         <React.Fragment>
-            <Button className="optionBadge" color="secondary" type="button">{group.name} <FontAwesomeIcon icon={faTimes} onClick={() => onGroupBadgeRemoveClick(group.id)}></FontAwesomeIcon></Button>
+            <Button className="optionBadge" color="primary" type="button">{group.name} <FontAwesomeIcon icon={faTimes} onClick={() => onGroupBadgeRemoveClick(group.id)}></FontAwesomeIcon></Button>
         </React.Fragment>
     )
 }

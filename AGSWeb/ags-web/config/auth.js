@@ -7,3 +7,4 @@ export const pkce_cookie_name = 'pkce'
 export const auth_code_params_cookie_name = 'auth_code';
 export const auth_code_id_token_cookie_name = 'id_token';
 export const client_id = "AGS";
+export const request_timeout = 600000;
