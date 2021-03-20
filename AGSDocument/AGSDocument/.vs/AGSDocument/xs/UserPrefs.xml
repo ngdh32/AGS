@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{8522D759-BF1A-4709-A208-5824C698A98E}|Default">
+  <MonoDevelop.Ide.ItemProperties.AGSDocument-Infra FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.AGSDocument-Core FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AGSDocument" expanded="True" selected="True">
+            <Node name="AGSDocument" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.AGSDocument-Web PreferredExecutionTarget="/Applications/Google Chrome.app" />
+</Properties>
