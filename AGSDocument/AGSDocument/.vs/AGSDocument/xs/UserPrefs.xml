@@ -5,8 +5,10 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="AGSDocument" expanded="True" selected="True">
-            <Node name="AGSDocument" expanded="True" />
+          <Node name="AGSDocument" expanded="True">
+            <Node name="AGSDocument-Core" expanded="True" />
+            <Node name="AGSDocument-Infra" expanded="True" selected="True" />
+            <Node name="AGSDocument-Web" expanded="True" />
           </Node>
         </State>
       </Pad>
