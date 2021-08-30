@@ -1,39 +1,34 @@
-﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|AGSIdentity">
+﻿<Properties StartupConfiguration="{B31B1F08-C42B-4E16-AAD8-20834F6F7C60}|Default">
   <MonoDevelop.Ide.ItemProperties.AGSIdentity PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/appsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSIdentity/README.md">
     <Files>
-      <File FileName="AGSIdentity/Models/EntityModels/AGSIdentity/AGSFunctionClaimEntity.cs" Line="10" Column="1" />
-      <File FileName="AGSIdentity/Data/EF/IdentityServerConfig.cs" />
-      <File FileName="AGSIdentity/appsettings.json" Line="18" Column="76" />
-      <File FileName="AGSIdentity/Startup.cs" Line="141" Column="76" />
-      <File FileName="AGSIdentity/Controllers/V1/FunctionClaimsController.cs" />
-      <File FileName="AGSIdentity/Program.cs" />
-      <File FileName="AGSIdentity/appsettings.production.json" Line="20" Column="30" />
-      <File FileName="AGSIdentity/README.md" Line="6" Column="1" />
+      <File FileName="AGSIdentity/appsettings.json" Line="25" Column="29" />
+      <File FileName="AGSIdentity/README.md" Line="14" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGS" expanded="True">
             <Node name="AGSIdentity" expanded="True">
-              <Node name="Data" expanded="True" />
-              <Node name="appsettings.json" selected="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+              <Node name="README.md" selected="True" />
             </Node>
-            <Node name="AGSIdentity.Test" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.AGSIdentity.Test PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.AGSDocument PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>AGSDocument/AGSDocument.csproj</String>
+  </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <Debugger.DebugSourceFolders />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint enabled="false" file="/Users/ngdh32/Desktop/AGS_git/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
-      <Breakpoint file="/Users/ngdh32/Desktop/AGS_git/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
+      <Breakpoint enabled="false" file="/Users/timng/Desktop/ags_git/AGS/AGS/Startup.cs" relfile="AGS/Startup.cs" line="111" column="1" />
+      <Breakpoint enabled="false" file="/Users/timng/Desktop/ags_git/AGS/AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" relfile="AGSIdentity/Services/AuthService/Identity/IdentityAuthService.cs" line="119" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>

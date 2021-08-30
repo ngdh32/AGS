@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  agsidentity:
+    image: ${DOCKER_REGISTRY-}agsidentity
+    build:
+      context: .
+      dockerfile: ./Dockerfile

@@ -6,9 +6,9 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGSDocument" expanded="True">
-            <Node name="AGSDocument-Core" expanded="True" />
-            <Node name="AGSDocument-Infra" expanded="True" selected="True" />
-            <Node name="AGSDocument-Web" expanded="True" />
+            <Node name="AGSDocument-Web" expanded="True">
+              <Node name="WeatherForecast.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
