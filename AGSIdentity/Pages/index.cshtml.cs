@@ -22,13 +22,13 @@ namespace AGSIdentity.Pages
 
         public void OnGet()
         {
-            if (!User.Identity.IsAuthenticated){
+            if (!User.Identity.IsAuthenticated)
+            {
                 Response.Redirect("/login");
                 return;
             }
 
             username = _authService.GetUserIdFromClaims(User.Claims.ToList());
-
         }
     }
 }

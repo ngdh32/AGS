@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using AGSIdentity.Attributes;
 using AGSIdentity.Helpers;
 using AGSIdentity.Models.EntityModels;
 using AGSIdentity.Models.EntityModels.AGSIdentity;
@@ -31,10 +32,11 @@ namespace AGSIdentity.Controllers.V1
         /// Get all groups
         /// </summary>
         [HttpGet]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
-        public IActionResult Get() {
+        public List<AGSGroupEntity> Get() {
             var result = _groupsHelper.GetAllGroups();
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         /// <summary>
@@ -43,11 +45,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet("{id}/functionclaims")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
-        public IActionResult GetFunctionClaims(string id)
+        public List<AGSFunctionClaimEntity> GetFunctionClaims(string id)
         {
             var result = _groupsHelper.GetFunctionClaimsByGroupId(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         /// <summary>
@@ -56,10 +59,11 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet("{id}")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
-                public IActionResult Get(string id) {
+        public AGSGroupEntity Get(string id) {
             var result = _groupsHelper.GetGroupById(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
         
 
@@ -69,10 +73,11 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet("{id}/users")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupReadClaimConstant)]
-        public IActionResult GetAllUsersinGroup(string id) {
+        public List<AGSUserEntity> GetAllUsersinGroup(string id) {
             var result = _groupsHelper.GetUsersByGroupId(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
 
@@ -83,11 +88,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
-        public IActionResult Post([FromBody] AGSGroupEntity group)
+        public string Post([FromBody] AGSGroupEntity group)
         {
             var result = _groupsHelper.CreateGroup(group);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         
@@ -100,11 +106,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPut]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
-        public IActionResult Put([FromBody] AGSGroupEntity group)
+        public int Put([FromBody] AGSGroupEntity group)
         {
             var result = _groupsHelper.UpdateGroup(group);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
 
@@ -115,11 +122,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpDelete("{id}")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSGroupEditClaimConstant)]
-        public IActionResult Delete(string id)
+        public bool Delete(string id)
         {
             _groupsHelper.DeleteGroup(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult();
+            return true;
         }
     }
 }

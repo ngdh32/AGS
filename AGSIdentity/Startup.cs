@@ -44,7 +44,10 @@ using System.Net.Http;
 using System.Security.Authentication;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
+using AGSIdentity.Models.ViewModels.API.Common;
+using IdentityServer4.Extensions;
 
 namespace AGSIdentity
 {
@@ -90,10 +93,10 @@ namespace AGSIdentity
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-                
+
             });
 
-            
+
 
             // Add identity server for OAuth 2.0
             services.AddTransient<IProfileService, IdentityProfileService>(); // customized IProfile servoce
@@ -125,10 +128,10 @@ namespace AGSIdentity
             services.AddAuthentication(options =>
             {
                 // this is for telling asp.net core identity that the user has been logined
-                options.DefaultSignInScheme  = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 // this is for authenticating when calling API
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
             })
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -196,8 +199,8 @@ namespace AGSIdentity
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. <br/>" + 
-                                "Enter 'Bearer' [space] and then your token in the text input below. <br/>" + 
+                    Description = "JWT Authorization header using the Bearer scheme. <br/>" +
+                                "Enter 'Bearer' [space] and then your token in the text input below. <br/>" +
                                 "Example: 'Bearer 12345abcdef'",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
@@ -223,27 +226,42 @@ namespace AGSIdentity
                     }
                 });
             });
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (Configuration["data_initialization"] == "Y") {
+            if (Configuration["data_initialization"] == "Y")
+            {
                 InitializeDatabase(app);
             }
-            
 
-            if (env.IsDevelopment())
+
+            app.UseExceptionHandler(errorApp =>
             {
-                app.UseDeveloperExceptionPage();
-            }else
-            {
-                app.UseExceptionHandler("/error");
-            }
+                errorApp.Run(async context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+
+                    var exception = context.Features.Get<IExceptionHandlerPathFeature>();
+
+                    if (exception?.Error is AGSException agsException)
+                    {
+                        var result = new AGSResponse(agsException.responseCode);
+                        await context.Response.WriteJsonAsync(result);
+                    }
+                    else
+                    {
+                        var result = new AGSResponse(AGSResponse.ResponseCodeEnum.UnknownError);
+                        await context.Response.WriteJsonAsync(result);
+                    }
+                });
+            });
 
             app.UseHttpsRedirection();
-            
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -266,6 +284,8 @@ namespace AGSIdentity
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+
+            
         }
 
         /// <summary>

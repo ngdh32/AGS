@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AGSIdentity.Attributes;
 using AGSIdentity.Helpers;
 using AGSIdentity.Models.EntityModels.AGSIdentity;
 using AGSIdentity.Models.ViewModels.API.Common;
@@ -27,10 +29,11 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>          
         [HttpGet]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
-        public IActionResult Get() {
+        public List<AGSUserEntity> Get() {
             var result = _usersHelper.GetAllUsers();
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         /// <summary>
@@ -39,12 +42,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>     
         [HttpGet("{id}")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
-        public IActionResult Get(string id)
+        public AGSUserEntity Get(string id)
         {
-            var user = _usersHelper.GetUserById(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(user);
-            
+            var result = _usersHelper.GetUserById(id);
+            return result;
         }
 
         /// <summary>
@@ -53,11 +56,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>           
         [HttpGet("{id}/groups")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
-        public IActionResult GetGroups(string id)
+        public List<AGSGroupEntity> GetGroups(string id)
         {
             var result = _usersHelper.GetGroupsByUserId(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         /// <summary>
@@ -66,21 +70,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
-        public IActionResult Post([FromBody] AGSUserEntity user)
+        public string Post([FromBody] AGSUserEntity user)
         {
-            try
-            {
-                var id = _usersHelper.CreateUser(user);
-                return AGSResponseFactory.GetAGSResponseJsonResult(id);
-            }catch(AGSException ex)
-            {
-                return AGSResponseFactory.GetAGSExceptionJsonResult(ex);
-            }catch(Exception ex)
-            {
-                return StatusCode(500);
-            }
-
+            var result = _usersHelper.CreateUser(user);
+            return result;
         }
 
         /// <summary>
@@ -89,19 +84,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPut]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
-        public IActionResult Put([FromBody] AGSUserEntity user) {
-            try
-            {
-                var result = _usersHelper.UpdateUser(user);
-                return AGSResponseFactory.GetAGSResponseJsonResult();
-            }catch(AGSException ex)
-            {
-                return AGSResponseFactory.GetAGSExceptionJsonResult(ex);
-            }catch(Exception ex)
-            {
-                return StatusCode(500);
-            }
+        public int Put([FromBody] AGSUserEntity user)
+        {
+            var result = _usersHelper.UpdateUser(user);
+            return result;
         }
 
         /// <summary>
@@ -110,10 +98,11 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpDelete("{id}")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
-        public IActionResult Delete(string id) {
+        public bool Delete(string id) {
             _usersHelper.DeleteUser(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult();
+            return true;
         }
 
         /// <summary>
@@ -122,11 +111,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost("{id}/resetpw")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserEditClaimConstant)]
-        public IActionResult ResetPW(string id)
+        public bool ResetPW(string id)
         {
             var result = _usersHelper.ResetPassword(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
 
@@ -136,13 +126,14 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost("changepw")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSUserChangePasswordClaimConstant)]
-        public IActionResult ChangePW([FromBody] ChangePasswordRequestModel changePasswordRequest)
+        public bool ChangePW([FromBody] ChangePasswordRequestModel changePasswordRequest)
         {
             var userId = HttpContext?.User?.Claims?.Where(c => c.Type == "sub").FirstOrDefault()?.Value ?? "";
 
             var result = _usersHelper.ChangePassword(userId, changePasswordRequest.OldPassword, changePasswordRequest.NewPassword);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         

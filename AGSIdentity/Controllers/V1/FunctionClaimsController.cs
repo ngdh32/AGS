@@ -7,6 +7,7 @@ using AGSIdentity.Repositories;
 using AGSIdentity.Services.AuthService.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AGSIdentity.Attributes;
 
 namespace AGSIdentity.Controllers.V1
 {
@@ -29,11 +30,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
-        public IActionResult Get()
+        public List<AGSFunctionClaimEntity> Get()
         {
             var result = _functionClaimsHelper.GetAllFunctionClaims();
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
 
@@ -44,11 +46,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpGet("{id}")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimReadClaimConstant)]
-        public IActionResult Get(string id)
+        public AGSFunctionClaimEntity Get(string id)
         {
             var result = _functionClaimsHelper.GetFunctionClaimById(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
 
@@ -59,11 +62,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPost]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
-        public IActionResult Post([FromBody] AGSFunctionClaimEntity functionClaim)
+        public string Post([FromBody] AGSFunctionClaimEntity functionClaim)
         {
             var result = _functionClaimsHelper.CreateFunctionClaim(functionClaim);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
         /// <summary>
@@ -74,11 +78,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpPut]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
-        public IActionResult Put([FromBody] AGSFunctionClaimEntity functionClaim)
+        public int Put([FromBody] AGSFunctionClaimEntity functionClaim)
         {
             var result = _functionClaimsHelper.UpdateFunctionClaim(functionClaim);
-            return AGSResponseFactory.GetAGSResponseJsonResult(result);
+            return result;
         }
 
 
@@ -89,11 +94,12 @@ namespace AGSIdentity.Controllers.V1
         /// <response code="401">if no token of invalid token is passed</response>          
         /// <response code="403">if the logged user doesn't have the correct function claims</response>  
         [HttpDelete("{id}")]
+        [AGSResultActionFilter]
         [Authorize(Policy = CommonConstant.AGSFunctionClaimEditClaimConstant)]
-        public IActionResult Delete(string id)
+        public bool Delete(string id)
         {
             _functionClaimsHelper.DeleteFunctionClaim(id);
-            return AGSResponseFactory.GetAGSResponseJsonResult();
+            return true;
         }
 
     }
