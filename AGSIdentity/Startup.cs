@@ -48,6 +48,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Diagnostics;
 using AGSIdentity.Models.ViewModels.API.Common;
 using IdentityServer4.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace AGSIdentity
 {
@@ -246,17 +248,21 @@ namespace AGSIdentity
                     context.Response.ContentType = "application/json";
 
                     var exception = context.Features.Get<IExceptionHandlerPathFeature>();
-
+                    var serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    var resultString = "";
                     if (exception?.Error is AGSException agsException)
                     {
                         var result = new AGSResponse(agsException.responseCode);
-                        await context.Response.WriteJsonAsync(result);
+                         resultString = JsonConvert.SerializeObject(result, serializerSettings);
+                        
                     }
                     else
                     {
                         var result = new AGSResponse(AGSResponse.ResponseCodeEnum.UnknownError);
-                        await context.Response.WriteJsonAsync(result);
+                        resultString = JsonConvert.SerializeObject(result, serializerSettings);
                     }
+                    await context.Response.WriteAsync(resultString);
                 });
             });
 

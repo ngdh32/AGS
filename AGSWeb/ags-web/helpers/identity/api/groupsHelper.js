@@ -14,10 +14,9 @@ export default class GroupsHelper {
             result = await axios.get(url, this.config)
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
 
@@ -29,10 +28,9 @@ export default class GroupsHelper {
             result = await axios.post(url, group, this.config);
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
 
@@ -44,10 +42,9 @@ export default class GroupsHelper {
             result = await axios.put(url, group, this.config);
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
     
@@ -60,7 +57,7 @@ export default class GroupsHelper {
             
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
         return result.data;

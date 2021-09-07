@@ -14,11 +14,10 @@ export default class FunctionClaimsHelper {
             console.log({url})
             result = await axios.get(url, this.config)
         } catch (err) {
-            console.log(err)
-            return err.response.status;
+            console.log(err);
+            result = response;
         }
     
-        console.log(result.data);
         return result.data;
     }
 
@@ -31,10 +30,9 @@ export default class FunctionClaimsHelper {
             result = await axios.post(url, functionclaim, this.config);
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
 
@@ -46,10 +44,9 @@ export default class FunctionClaimsHelper {
             result = await axios.put(url, functionclaim, this.config);
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
     
@@ -62,7 +59,7 @@ export default class FunctionClaimsHelper {
             
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
         return result.data;

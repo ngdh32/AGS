@@ -15,7 +15,7 @@ export default class UsersHelper {
             
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
         return result.data;
@@ -28,11 +28,10 @@ export default class UsersHelper {
             const url = `${api_url}/v${users_version}/users`;
             result = await axios.post(url, user, this.config);
         } catch (err) {
-            console.log(err);
-            return err;
+            console.log(err)
+            result = err.response;
         }
 
-        console.log(result.data)
         return result.data;
     }
 
@@ -44,10 +43,9 @@ export default class UsersHelper {
             result = await axios.put(url, user, this.config);
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
     
@@ -60,7 +58,7 @@ export default class UsersHelper {
             
         } catch (err) {
             console.log(err);
-            return err;
+            result = response;
         }
 
         return result.data;
@@ -73,9 +71,8 @@ export default class UsersHelper {
             const url = `${api_url}/v${users_version}/users/changepw`;
             result = await axios.post(url, changePWRequest, this.config);
         } catch (err) {
-            console.log("ChangePassword Error")
             console.log(err);
-            return err;
+            result = response;
         }
 
         console.log(result.data)

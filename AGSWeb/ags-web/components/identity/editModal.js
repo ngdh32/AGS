@@ -19,7 +19,6 @@ export default function EditModal({ toggle, isOpen, title, onSaveClick, Concrete
         setIsSaving(true);
 
         const result = await onSaveClick(editData);
-        console.log(result)
         if (result.data.code != resposne_success){
             setError(result.data.code);
             setIsSaving(false)
