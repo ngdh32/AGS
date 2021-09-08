@@ -75,7 +75,6 @@ export default class UsersHelper {
             result = response;
         }
 
-        console.log(result.data)
         return result.data;
     }
 }

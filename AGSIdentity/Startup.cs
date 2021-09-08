@@ -239,6 +239,11 @@ namespace AGSIdentity
                 InitializeDatabase(app);
             }
 
+            if (Configuration["sample_data_initialization"] == "Y")
+            {
+                InitializeDatabaseWithSampleData(app);
+            }
+
 
             app.UseExceptionHandler(errorApp =>
             {
@@ -325,11 +330,6 @@ namespace AGSIdentity
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                //var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<EFApplicationUser>>();
-                //var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<EFApplicationRole>>();
-                //var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<EFApplicationDbContext>();
-                //var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-
                 var dataSeed = serviceScope.ServiceProvider.GetRequiredService<IDataSeed>();
                 dataSeed.RemoveApplicationData();
                 dataSeed.RemoveAuthenticationServerData();
@@ -337,6 +337,17 @@ namespace AGSIdentity
                 dataSeed.InitializeAuthenticationServer();
             }
         }
+
+
+        private void InitializeDatabaseWithSampleData(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var dataSeed = serviceScope.ServiceProvider.GetRequiredService<IDataSeed>();
+                dataSeed.AddSampleDataIntoDatabase();
+            }
+        }
+
 
         /// <summary>
         /// Set up a mapping function to get the correct EF provider

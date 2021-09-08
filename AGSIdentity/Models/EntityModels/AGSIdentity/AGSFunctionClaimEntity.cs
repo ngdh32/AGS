@@ -2,10 +2,8 @@
 
 namespace AGSIdentity.Models.EntityModels.AGSIdentity
 {
-    public class AGSFunctionClaimEntity
+    public class AGSFunctionClaimEntity : AGSBaseEntity
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }

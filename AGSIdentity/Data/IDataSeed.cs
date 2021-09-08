@@ -10,5 +10,7 @@ namespace AGSIdentity.Data
         void RemoveAuthenticationServerData();
 
         void RemoveApplicationData();
+
+        void AddSampleDataIntoDatabase();
     }
 }

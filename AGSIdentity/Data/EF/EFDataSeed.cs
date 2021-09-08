@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
-using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
@@ -20,9 +17,6 @@ namespace AGSIdentity.Data.EF
 
 
         private const string AGSAdminName = "admin";
-        
-        
-
 
         public EFDataSeed(UserManager<EFApplicationUser> userManager, RoleManager<EFApplicationRole> roleManager, EFApplicationDbContext applicationDbContext, ConfigurationDbContext configurationDbContext, IConfiguration configuration)
         {
@@ -35,18 +29,6 @@ namespace AGSIdentity.Data.EF
 
         public void InitializeApplicationData()
         {
-            // add all function claims into Database
-            var ags_identity_constant_type = typeof(CommonConstant);
-            var constant_fields = ags_identity_constant_type.GetFields();
-            foreach (var constant_field in constant_fields)
-            {
-                if (constant_field.Name.EndsWith("ClaimConstant"))
-                {
-                    var claimValue = (string)(constant_field.GetValue(null));
-                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = CommonConstant.GenerateId(), Name = claimValue });
-                }
-            }
-
             // create admin user 
             var userName = AGSAdminName;
             var email = _configuration["default_user_email"];
@@ -59,32 +41,9 @@ namespace AGSIdentity.Data.EF
                 NormalizedEmail = email,
                 NormalizedUserName = userName,
                 Email = email,
-                First_Name = "Tim",
-                Last_Name = "Ng",
-                Title = "Developer",
                 SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
             };
             _ = _userManager.CreateAsync(user, userPassword).Result;
-            
-
-            var group1 = new EFApplicationRole
-            {
-                Id = CommonConstant.GenerateId(),
-                Name = "Group_1_Test",
-                NormalizedName = "Group_1_Test",
-                ConcurrencyStamp = CommonConstant.GenerateId()
-            };
-            var group2 = new EFApplicationRole
-            {
-                Id = CommonConstant.GenerateId(),
-                Name = "Group_2_Test",
-                NormalizedName = "Group_2_Test",
-                ConcurrencyStamp = CommonConstant.GenerateId()
-            };
-
-            _ = _roleManager.CreateAsync(group1).Result;
-            _ = _roleManager.CreateAsync(group2).Result;
-            _applicationDbContext.SaveChanges();
 
         }
 
@@ -130,7 +89,7 @@ namespace AGSIdentity.Data.EF
                 {
                     _configurationDbContext.Clients.Remove(client);
                 }
-            }
+            } 
 
             if (_configurationDbContext.IdentityResources.Any())
             {
@@ -190,6 +149,52 @@ namespace AGSIdentity.Data.EF
                     _applicationDbContext.FunctionClaims.Remove(functionClaim);
                 }
             }
+
+            if (_applicationDbContext.Departments.Any())
+            {
+                foreach (var department in _applicationDbContext.Departments.ToList())
+                {
+                    _applicationDbContext.Departments.Remove(department);
+                }
+            }
+
+            _applicationDbContext.SaveChanges();
+        }
+
+        public void AddSampleDataIntoDatabase()
+        {
+            // add all asg-identity related function claims into Database
+            var ags_identity_constant_type = typeof(CommonConstant);
+            var constant_fields = ags_identity_constant_type.GetFields();
+            var agsUserChangePasswordClaimConstantId = "";
+            foreach (var constant_field in constant_fields)
+            {
+                if (constant_field.Name.EndsWith("ClaimConstant"))
+                {
+                    var claimValue = (string)(constant_field.GetValue(null));
+                    var functionClaimId = CommonConstant.GenerateId();
+                    if (claimValue == CommonConstant.AGSUserChangePasswordClaimConstant)
+                    {
+                        agsUserChangePasswordClaimConstantId = functionClaimId;
+                    }
+                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = functionClaimId, Name = claimValue });
+                }
+            }
+            _applicationDbContext.SaveChanges();
+
+            var normalUserGroup = new EFApplicationRole
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = "Normal User",
+                NormalizedName = "Normal User",
+                ConcurrencyStamp = CommonConstant.GenerateId()
+            };
+
+            _ = _roleManager.CreateAsync(normalUserGroup).Result;
+
+
+
+            _ = _roleManager.AddClaimAsync(normalUserGroup, new System.Security.Claims.Claim(CommonConstant.FunctionClaimTypeConstant, agsUserChangePasswordClaimConstantId)).Result;
 
             _applicationDbContext.SaveChanges();
         }

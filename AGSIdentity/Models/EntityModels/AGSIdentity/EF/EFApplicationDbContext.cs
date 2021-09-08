@@ -9,5 +9,7 @@ namespace AGSIdentity.Models.EntityModels.AGSIdentity.EF
         public EFApplicationDbContext(DbContextOptions<EFApplicationDbContext> options) : base(options) { }
 
         public DbSet<EFFunctionClaim> FunctionClaims { get; set; }
+
+        public DbSet<EFDepartment> Departments { get; set; }
     }
 }

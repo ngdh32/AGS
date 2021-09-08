@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace AGSIdentity.Models.EntityModels.AGSIdentity
 {
-    public class AGSUserEntity
+    public class AGSUserEntity : AGSBaseEntity
     {
-        public string Id { get; set; }
-
         public string Username { get; set; }
 
         public string Email { get; set; }
