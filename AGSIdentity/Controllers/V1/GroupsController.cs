@@ -16,14 +16,11 @@ using Microsoft.Extensions.Configuration;
 namespace AGSIdentity.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class GroupsController : ControllerBase 
+    public class GroupsController : AGSBaseController 
     {
         private readonly GroupsHelper _groupsHelper;
 
-        public GroupsController(GroupsHelper groupsHelper)
+        public GroupsController(GroupsHelper groupsHelper) : base()
         {
             _groupsHelper = groupsHelper;
         }

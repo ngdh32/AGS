@@ -12,14 +12,11 @@ using AGSIdentity.Attributes;
 namespace AGSIdentity.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class FunctionClaimsController : ControllerBase
+    public class FunctionClaimsController : AGSBaseController
     {
         private readonly FunctionClaimsHelper _functionClaimsHelper;
 
-        public FunctionClaimsController(FunctionClaimsHelper functionClaimsHelper)
+        public FunctionClaimsController(FunctionClaimsHelper functionClaimsHelper) : base()
         {
             _functionClaimsHelper = functionClaimsHelper;
         }

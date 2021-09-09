@@ -12,13 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace AGSIdentity.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : AGSBaseController
     {
         private readonly UsersHelper _usersHelper;
 
-        public UsersController(UsersHelper usersHelper)
+        public UsersController(UsersHelper usersHelper) : base()
         {
             _usersHelper = usersHelper;
         }
