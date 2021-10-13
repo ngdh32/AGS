@@ -96,5 +96,33 @@ namespace AGSIdentity.Helpers
             _repository.DepartmentsRepository.Delete(id);
             _repository.Save();
         }
+
+        public List<AGSUserEntity> GetAllUsersByDepartmentId(string id)
+        {
+            var result = new List<AGSUserEntity>();
+
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var selected = _repository.DepartmentsRepository.Get(id);
+            if (selected == null)
+            {
+                throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
+            }
+
+            foreach(var userId in selected.UserIds)
+            {
+                var user = _repository.UsersRepository.Get(userId);
+
+                if (user != null)
+                {
+                    result.Add(user);
+                }
+            }
+
+            return result;
+        }
     }
 }

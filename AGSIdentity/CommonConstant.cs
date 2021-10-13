@@ -22,7 +22,11 @@ namespace AGSIdentity
         public const string AGSUserMenuClaimConstant = "ags_identity_user_menu";
         public const string AGSUserEditClaimConstant = "ags_identity_user_edit";
         public const string AGSUserReadClaimConstant = "ags_identity_user_read";
-
+        // for AGS Identity Department menu, edit & read
+        public const string AGSDepartmentMenuClaimConstant = "ags_identity_department_menu";
+        public const string AGSDepartmentEditClaimConstant = "ags_identity_department_edit";
+        public const string AGSDepartmentReadClaimConstant = "ags_identity_department_read";
+        // for AGS Identity Changing password
         public const string AGSUserChangePasswordClaimConstant = "ags_identity_user_change_password";
 
         public static string GenerateId()

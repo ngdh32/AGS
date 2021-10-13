@@ -125,6 +125,29 @@ namespace AGSIdentity.Data.EF
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     RequirePkce = true
+                },
+                new Client
+                {
+                    ClientId = CommonConstant.AGSClientIdConstant + "_Test",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    RequireConsent = false,
+                    // secret for authentication
+                    ClientSecrets =
+                    {
+                        new Secret(_configuration["ags_web_secret"].Sha256())
+                    },
+
+                    // scopes that client has access to
+                    AllowedScopes = {
+                        AGSDocumentScopeConstant
+                        ,CommonConstant.AGSIdentityScopeConstant
+                        ,IdentityServerConstants.StandardScopes.OpenId
+                        ,IdentityServerConstants.StandardScopes.Profile
+                        ,IdentityServerConstants.StandardScopes.Email
+                        ,AGSFunctionClaimResouceConstant
+                    },
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                 }
             };
         }

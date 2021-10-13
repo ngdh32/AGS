@@ -177,6 +177,24 @@ namespace AGSIdentity.Helpers
             return result;
         }
 
+        public List<AGSDepartmentEntity> GetDepartmentsByUserId(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var selected = _repository.UsersRepository.Get(userId);
+            if (selected == null)
+            {
+                throw new AGSException(AGSResponse.ResponseCodeEnum.ModelNotFound);
+            }
+
+            var result = _repository.DepartmentsRepository.GetDepartmentsByUserId(userId);
+
+            return result;
+        }
+
         public List<AGSUserEntity> GetAllUsers()
         {
             var result = new List<AGSUserEntity>();

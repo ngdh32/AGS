@@ -29,12 +29,14 @@ namespace AGSIdentity.Models.ViewModels.API.Common
         {
             Done = 10000,
             UsernameOrPasswordError = 90000,
-            RedirectUrlError = 90001,
-            ModelNotFound = 90002,
-            DefaultPasswordNotFound = 90003,
-            NoPermissionError = 90004,
-            TokenExpiredError = 90005,
-            UsernameDuplicate = 90006,
+            RedirectUrlError,
+            ModelNotFound,
+            DefaultPasswordNotFound ,
+            NoPermissionError,
+            TokenExpiredError,
+            UsernameDuplicate,
+            UserNotFound,
+            DepartmentNotFound,
 
             UnknownError = 99999
         }

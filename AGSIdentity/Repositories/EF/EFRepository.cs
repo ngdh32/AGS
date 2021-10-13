@@ -28,7 +28,7 @@ namespace AGSIdentity.Repositories.EF
             _userRepository = new EFUsersRepository(_applicationDbContext, userManager, roleManager, signInManager);
             _groupRepository = new EFGroupsRepository(_applicationDbContext, roleManager);
             _functionClaimRepository = new EFFunctionClaimsRepository(_applicationDbContext);
-            _departmentsRepository = new EFDepartmentsRepository(_applicationDbContext);
+            _departmentsRepository = new EFDepartmentsRepository(_applicationDbContext, userManager);
         }
 
         public IUsersRepository UsersRepository

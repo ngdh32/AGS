@@ -170,10 +170,12 @@ namespace AGSIdentity
             services.AddTransient(typeof(FunctionClaimsHelper));
             services.AddTransient(typeof(GroupsHelper));
             services.AddTransient(typeof(UsersHelper));
+            services.AddTransient(typeof(DepartmentsHelepr));
             services.AddTransient<IRepository, EFRepository>();
             services.AddTransient<IFunctionClaimsRepository, EFFunctionClaimsRepository>();
             services.AddTransient<IGroupsRepository, EFGroupsRepository>();
             services.AddTransient<IUsersRepository, EFUsersRepository>();
+            services.AddTransient<IDepartmentsRepository, EFDepartmentsRepository>();
 
             // for data initialization
             services.AddTransient<IDataSeed, EFDataSeed>();

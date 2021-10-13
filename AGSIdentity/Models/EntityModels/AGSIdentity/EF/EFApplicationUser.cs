@@ -11,5 +11,7 @@ namespace AGSIdentity.Models.EntityModels.AGSIdentity.EF
         public string Last_Name { get; set; }
 
         public string Title { get; set; }
+
+        public ICollection<EFApplicationUserDepartment> UserDepartments { get; set; }
     }
 }

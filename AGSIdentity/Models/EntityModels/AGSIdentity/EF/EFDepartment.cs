@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AGSIdentity.Models.EntityModels.AGSIdentity.EF
@@ -13,5 +14,7 @@ namespace AGSIdentity.Models.EntityModels.AGSIdentity.EF
         public string ParentDepartmentId { get; set; }
 
         public string HeadUserId { get; set; }
+
+        public ICollection<EFApplicationUserDepartment> UserDepartments { get; set; }
     }
-}
+}   

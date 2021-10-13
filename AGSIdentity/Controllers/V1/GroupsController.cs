@@ -15,8 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AGSIdentity.Controllers.V1
 {
-    [ApiVersion("1.0")]
-    public class GroupsController : AGSBaseController 
+    public class GroupsController : V1BaseController
     {
         private readonly GroupsHelper _groupsHelper;
 

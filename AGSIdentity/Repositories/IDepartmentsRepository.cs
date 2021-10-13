@@ -13,5 +13,8 @@ namespace AGSIdentity.Repositories
         string Create(AGSDepartmentEntity departmentEntity);
         // return how many records are updated.
         int Update(AGSDepartmentEntity departmentEntity);
+        void AddUserToDepartment(string userId, string departmentId);
+        void RemoveUserFromDepartment(string userId, string departmentId);
+        List<AGSDepartmentEntity> GetDepartmentsByUserId(string userId);
     }
 }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AGSIdentity.Controllers
 {
-    [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]

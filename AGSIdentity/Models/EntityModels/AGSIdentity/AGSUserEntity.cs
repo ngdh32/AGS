@@ -18,6 +18,8 @@ namespace AGSIdentity.Models.EntityModels.AGSIdentity
 
         public List<string> GroupIds { get; set; } = new List<string>();
 
+        public List<string> DepartmentIds { get; set; } = new List<string>();
+
         public AGSUserEntity()
         {
         }

@@ -41,12 +41,7 @@ namespace AGSIdentity.Repositories.EF
 
         public List<string> GetAll()
         {
-            var result = new List<string>();
-            foreach (var user in _applicationDbContext.Users)
-            {
-                result.Add(user.Id);
-            }
-            return result;
+            return _applicationDbContext?.Users?.Select(x => x.Id)?.ToList();
         }
 
         public AGSUserEntity GetByUsername(string username)
@@ -66,6 +61,7 @@ namespace AGSIdentity.Repositories.EF
             var selected = _applicationDbContext.Users.Where(x => x.Id == id).FirstOrDefault();
             if (selected != null)
             {
+
                 _ = _userManager.DeleteAsync(selected).Result;
             }
         }
@@ -92,10 +88,27 @@ namespace AGSIdentity.Repositories.EF
                 
                 foreach(var groupId in user.GroupIds)
                 {
-                    Console.WriteLine($"Adding group:{groupId}");
                     this.AddUserToGroup(appUser, groupId);
                 }
             }
+
+            // update the departments
+            if (user.DepartmentIds != null)
+            {
+                foreach(var departmentId in user.DepartmentIds)
+                {
+                    var selectedDepartment = _applicationDbContext.Departments.FirstOrDefault(x => x.Id == departmentId);
+                    if (selectedDepartment != null)
+                    {
+                        _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+                        {
+                            Department = selectedDepartment,
+                            User = appUser
+                        });
+                    }
+                }
+            }
+
 
             return appUser.Id;
         }
@@ -142,6 +155,30 @@ namespace AGSIdentity.Repositories.EF
                 foreach (var groupId in user.GroupIds)
                 {
                     this.AddUserToGroup(selected.Id, groupId);
+                }
+            }
+
+            // remove all the existing associated departments
+            var relatedUserDepartments = _applicationDbContext.UserDepartments?.Where(x => x.UserId == selected.Id)?.ToList();
+            if (relatedUserDepartments != null)
+            {
+                _applicationDbContext.UserDepartments.RemoveRange(relatedUserDepartments);
+            }
+
+            // update the departments
+            if (user.DepartmentIds != null)
+            {
+                foreach (var departmentId in user.DepartmentIds)
+                {
+                    var selectedDepartment = _applicationDbContext.Departments.FirstOrDefault(x => x.Id == departmentId);
+                    if (selectedDepartment != null)
+                    {
+                        _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+                        {
+                            Department = selectedDepartment,
+                            User = selected
+                        });
+                    }
                 }
             }
 
@@ -220,7 +257,8 @@ namespace AGSIdentity.Repositories.EF
                 First_Name = user.First_Name,
                 Last_Name = user.Last_Name,
                 Title = user.Title,
-                GroupIds = new List<string>()
+                GroupIds = new List<string>(),
+                DepartmentIds = _applicationDbContext.UserDepartments?.Where(x => x.UserId == user.Id)?.Select(y => y.DepartmentId)?.ToList() ?? new List<string>()
             };
 
             // get the associated groups
@@ -269,6 +307,15 @@ namespace AGSIdentity.Repositories.EF
             var hashedPassword = _userManager.PasswordHasher.HashPassword(selected, newPassword);
             selected.PasswordHash = hashedPassword;
             return true;
+        }
+
+        public void RemoveAllDepartmentsByUserId(string userId)
+        {
+            var selectedUserDepartments = _applicationDbContext.UserDepartments.Where(x => x.UserId == userId);
+            if (selectedUserDepartments != null)
+            {
+                _applicationDbContext.UserDepartments.RemoveRange(selectedUserDepartments);
+            }
         }
     }
 }

@@ -11,8 +11,7 @@ using AGSIdentity.Attributes;
 
 namespace AGSIdentity.Controllers.V1
 {
-    [ApiVersion("1.0")]
-    public class FunctionClaimsController : AGSBaseController
+    public class FunctionClaimsController : V1BaseController
     {
         private readonly FunctionClaimsHelper _functionClaimsHelper;
 

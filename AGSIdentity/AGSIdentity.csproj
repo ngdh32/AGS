@@ -53,6 +53,14 @@
     <Folder Include="Helpers\" />
     <Folder Include="Models\ViewModels\Pages\" />
     <Folder Include="Models\ViewModels\Pages\Login\" />
+    <Folder Include="Models\ViewModels\API\Groups\" />
+    <Folder Include="Models\ViewModels\API\FunctionClaims\" />
+    <Folder Include="Models\ViewModels\API\Departments\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Models\ViewModels\API\Groups\" />
+    <None Remove="Models\ViewModels\API\FunctionClaims\" />
+    <None Remove="Models\ViewModels\API\Departments\" />
   </ItemGroup>
   <ItemGroup>
      <None Update="vgt.pfx" CopyToPublishDirectory="Always" />

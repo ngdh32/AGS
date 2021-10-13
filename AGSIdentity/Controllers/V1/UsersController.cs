@@ -11,8 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AGSIdentity.Controllers.V1
 {
-    [ApiVersion("1.0")]
-    public class UsersController : AGSBaseController
+    public class UsersController : V1BaseController
     {
         private readonly UsersHelper _usersHelper;
 
@@ -59,6 +58,15 @@ namespace AGSIdentity.Controllers.V1
         public List<AGSGroupEntity> GetGroups(string id)
         {
             var result = _usersHelper.GetGroupsByUserId(id);
+            return result;
+        }
+
+        [HttpGet("{id}/departments")]
+        [AGSResultActionFilter]
+        [Authorize(Policy = CommonConstant.AGSUserReadClaimConstant)]
+        public List<AGSDepartmentEntity> GetDepartments(string id)
+        {
+            var result = _usersHelper.GetDepartmentsByUserId(id);
             return result;
         }
 

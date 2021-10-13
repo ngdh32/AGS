@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AGSIdentity.Models.EntityModels.AGSIdentity.EF;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
@@ -9,11 +10,13 @@ namespace AGSIdentity.Data.EF
 {
     public class EFDataSeed : IDataSeed
     {
-        private UserManager<EFApplicationUser> _userManager { get; set; }
-        private RoleManager<EFApplicationRole> _roleManager { get; set; }
-        private EFApplicationDbContext _applicationDbContext { get; set; }
-        private ConfigurationDbContext _configurationDbContext { get; set; }
-        private IConfiguration _configuration { get; set; }
+        private readonly UserManager<EFApplicationUser> _userManager;
+        private readonly RoleManager<EFApplicationRole> _roleManager;
+        private readonly EFApplicationDbContext _applicationDbContext;
+        private readonly ConfigurationDbContext _configurationDbContext;
+        private readonly IConfiguration _configuration;
+        private readonly string _defaultPassword;
+        private const string _normalUserGroupName = "Normal User";
 
 
         private const string AGSAdminName = "admin";
@@ -25,6 +28,7 @@ namespace AGSIdentity.Data.EF
             _applicationDbContext = applicationDbContext;
             _configurationDbContext = configurationDbContext;
             _configuration = configuration;
+            _defaultPassword = _configuration["default_user_password"];
         }
 
         public void InitializeApplicationData()
@@ -32,7 +36,6 @@ namespace AGSIdentity.Data.EF
             // create admin user 
             var userName = AGSAdminName;
             var email = _configuration["default_user_email"];
-            var userPassword = _configuration["default_user_password"];
 
             var user = new EFApplicationUser
             {
@@ -43,7 +46,37 @@ namespace AGSIdentity.Data.EF
                 Email = email,
                 SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
             };
-            _ = _userManager.CreateAsync(user, userPassword).Result;
+            _ = _userManager.CreateAsync(user, _defaultPassword).Result;
+
+            // add all asg-identity related function claims into Database
+            var ags_identity_constant_type = typeof(CommonConstant);
+            var constant_fields = ags_identity_constant_type.GetFields();
+            var agsUserChangePasswordClaimConstantId = "";
+            foreach (var constant_field in constant_fields)
+            {
+                if (constant_field.Name.EndsWith("ClaimConstant"))
+                {
+                    var claimValue = (string)(constant_field.GetValue(null));
+                    var functionClaimId = CommonConstant.GenerateId();
+                    if (claimValue == CommonConstant.AGSUserChangePasswordClaimConstant)
+                    {
+                        agsUserChangePasswordClaimConstantId = functionClaimId;
+                    }
+                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = functionClaimId, Name = claimValue });
+                }
+            }
+            _applicationDbContext.SaveChanges();
+
+            var normalUserGroup = new EFApplicationRole
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = _normalUserGroupName,
+                NormalizedName = _normalUserGroupName,
+                ConcurrencyStamp = CommonConstant.GenerateId()
+            };
+
+            _ = _roleManager.CreateAsync(normalUserGroup).Result;
+            _ = _roleManager.AddClaimAsync(normalUserGroup, new System.Security.Claims.Claim(CommonConstant.FunctionClaimTypeConstant, agsUserChangePasswordClaimConstantId)).Result;
 
         }
 
@@ -144,18 +177,17 @@ namespace AGSIdentity.Data.EF
 
             if (_applicationDbContext.FunctionClaims.Any())
             {
-                foreach (var functionClaim in _applicationDbContext.FunctionClaims.ToList())
-                {
-                    _applicationDbContext.FunctionClaims.Remove(functionClaim);
-                }
+                _applicationDbContext.FunctionClaims.RemoveRange(_applicationDbContext.FunctionClaims);
+            }
+
+            if (_applicationDbContext.UserDepartments.Any())
+            {
+                _applicationDbContext.UserDepartments.RemoveRange(_applicationDbContext.UserDepartments);
             }
 
             if (_applicationDbContext.Departments.Any())
             {
-                foreach (var department in _applicationDbContext.Departments.ToList())
-                {
-                    _applicationDbContext.Departments.Remove(department);
-                }
+                _applicationDbContext.Departments.RemoveRange(_applicationDbContext.Departments);
             }
 
             _applicationDbContext.SaveChanges();
@@ -163,39 +195,158 @@ namespace AGSIdentity.Data.EF
 
         public void AddSampleDataIntoDatabase()
         {
-            // add all asg-identity related function claims into Database
-            var ags_identity_constant_type = typeof(CommonConstant);
-            var constant_fields = ags_identity_constant_type.GetFields();
-            var agsUserChangePasswordClaimConstantId = "";
-            foreach (var constant_field in constant_fields)
-            {
-                if (constant_field.Name.EndsWith("ClaimConstant"))
-                {
-                    var claimValue = (string)(constant_field.GetValue(null));
-                    var functionClaimId = CommonConstant.GenerateId();
-                    if (claimValue == CommonConstant.AGSUserChangePasswordClaimConstant)
-                    {
-                        agsUserChangePasswordClaimConstantId = functionClaimId;
-                    }
-                    _applicationDbContext.FunctionClaims.Add(new EFFunctionClaim() { Id = functionClaimId, Name = claimValue });
-                }
-            }
-            _applicationDbContext.SaveChanges();
-
-            var normalUserGroup = new EFApplicationRole
+            var userTim = new EFApplicationUser
             {
                 Id = CommonConstant.GenerateId(),
-                Name = "Normal User",
-                NormalizedName = "Normal User",
-                ConcurrencyStamp = CommonConstant.GenerateId()
+                UserName = "tim",
+                NormalizedEmail = "tim@ags.com",
+                NormalizedUserName = "tim",
+                Email = "tim@ags.com",
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
+            };
+            _ = _userManager.CreateAsync(userTim, _defaultPassword).Result;
+
+            var userTom = new EFApplicationUser
+            {
+                Id = CommonConstant.GenerateId(),
+                UserName = "tom",
+                NormalizedEmail = "tom@ags.com",
+                NormalizedUserName = "tom",
+                Email = "tom@ags.com",
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
+            };
+            _ = _userManager.CreateAsync(userTom, _defaultPassword).Result;
+
+            var userChris = new EFApplicationUser
+            {
+                Id = CommonConstant.GenerateId(),
+                UserName = "chris",
+                NormalizedEmail = "chris@ags.com",
+                NormalizedUserName = "chris",
+                Email = "chris@ags.com",
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
+            };
+            _ = _userManager.CreateAsync(userChris, _defaultPassword).Result;
+
+            var userJack = new EFApplicationUser
+            {
+                Id = CommonConstant.GenerateId(),
+                UserName = "jack",
+                NormalizedEmail = "jack@ags.com",
+                NormalizedUserName = "jack",
+                Email = "jack@ags.com",
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
+            };
+            _ = _userManager.CreateAsync(userJack, _defaultPassword).Result;
+
+            var userPeter = new EFApplicationUser
+            {
+                Id = CommonConstant.GenerateId(),
+                UserName = "peter",
+                NormalizedEmail = "peter@ags.com",
+                NormalizedUserName = "peter",
+                Email = "peter@ags.com",
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
+            };
+            _ = _userManager.CreateAsync(userPeter, _defaultPassword).Result;
+
+            var userLouis = new EFApplicationUser
+            {
+                Id = CommonConstant.GenerateId(),
+                UserName = "louis",
+                NormalizedEmail = "louis@ags.com",
+                NormalizedUserName = "louis",
+                Email = "louis@ags.com",
+                SecurityStamp = CommonConstant.GenerateId(), // need to add this !!!
+            };
+            _ = _userManager.CreateAsync(userLouis, _defaultPassword).Result;
+
+            var itDepartment = new EFDepartment()
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = "IT Department",
+                ParentDepartmentId = null,
+                HeadUserId = userChris.Id,
             };
 
-            _ = _roleManager.CreateAsync(normalUserGroup).Result;
+            var itApplicationDepartment = new EFDepartment()
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = "IT Application Department",
+                ParentDepartmentId = itDepartment.Id,
+                HeadUserId = userJack.Id,
+            };
+
+            var hrDepartment = new EFDepartment()
+            {
+                Id = CommonConstant.GenerateId(),
+                Name = "IT Application Department",
+                ParentDepartmentId = itDepartment.Id,
+                HeadUserId = userLouis.Id,
+            };
+
+            _applicationDbContext.Departments.Add(itDepartment);
+            _applicationDbContext.Departments.Add(itApplicationDepartment);
+            _applicationDbContext.Departments.Add(hrDepartment);    
+
+            // add users into deparments
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = itDepartment,
+                User = userTim
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = itApplicationDepartment,
+                User = userTim
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = itDepartment,
+                User = userTom
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = itDepartment,
+                User = userJack
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = itApplicationDepartment,
+                User = userJack
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = itDepartment,
+                User = userChris
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = hrDepartment,
+                User = userLouis
+            });
+
+            _applicationDbContext.UserDepartments.Add(new EFApplicationUserDepartment()
+            {
+                Department = hrDepartment,
+                User = userPeter
+            });
 
 
-
-            _ = _roleManager.AddClaimAsync(normalUserGroup, new System.Security.Claims.Claim(CommonConstant.FunctionClaimTypeConstant, agsUserChangePasswordClaimConstantId)).Result;
-
+            // add all users into group Normal_user
+            _userManager.AddToRoleAsync(userTim, _normalUserGroupName).Wait();
+            _userManager.AddToRoleAsync(userTom, _normalUserGroupName).Wait();
+            _userManager.AddToRoleAsync(userChris, _normalUserGroupName).Wait();
+            _userManager.AddToRoleAsync(userJack, _normalUserGroupName).Wait();
+            _userManager.AddToRoleAsync(userPeter, _normalUserGroupName).Wait();
+            _userManager.AddToRoleAsync(userLouis, _normalUserGroupName).Wait();
+            
             _applicationDbContext.SaveChanges();
         }
     }
