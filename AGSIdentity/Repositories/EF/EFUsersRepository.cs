@@ -242,8 +242,8 @@ namespace AGSIdentity.Repositories.EF
             efApplicationUser.Email = userEntity.Email;
             efApplicationUser.NormalizedEmail = userEntity.Email;
             efApplicationUser.SecurityStamp = userEntity.Id;
-            efApplicationUser.First_Name = userEntity.First_Name;
-            efApplicationUser.Last_Name = userEntity.Last_Name;
+            efApplicationUser.First_Name = userEntity.FirstName;
+            efApplicationUser.Last_Name = userEntity.LastName;
             efApplicationUser.Title = userEntity.Title;
         }
 
@@ -254,8 +254,8 @@ namespace AGSIdentity.Repositories.EF
                 Id = user.Id,
                 Email = user.Email,
                 Username = user.UserName,
-                First_Name = user.First_Name,
-                Last_Name = user.Last_Name,
+                FirstName = user.First_Name,
+                LastName = user.Last_Name,
                 Title = user.Title,
                 GroupIds = new List<string>(),
                 DepartmentIds = _applicationDbContext.UserDepartments?.Where(x => x.UserId == user.Id)?.Select(y => y.DepartmentId)?.ToList() ?? new List<string>()

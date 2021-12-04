@@ -5,3 +5,9 @@ DEV:
 
 PRODUCTION:
 docker build -t ngdh32/ags-web-production -f Dockerfile.production .
+
+
+1. what is agsContext
+2. what is InitializePageWithMaster
+3. how to construct AgsResponse
+4. where to configure the environment variables
