@@ -20,6 +20,7 @@ import { UserItemType } from '../../models/identity/userItemType'
 import { GroupItemType } from '../../models/identity/groupItemType'
 import EditModalResult from '../../models/common/editModalResult'
 import { UserEditModalProps } from '../../models/components/identity/userEditModalProps'
+import AGSResponse from '../../models/common/agsResponse'
 
 const default_user_id = "";
 
@@ -79,8 +80,8 @@ function UsersUI({ users, groups }: { users: UserItemType[], groups: GroupItemTy
     const onDeleteClick = async (e: React.MouseEvent<HTMLElement>, userId: string, username: string) => {
         const confirmDelete = confirm(`${GetLocalizedString("label_identity_confirm_delete")}: ${username}`);
         if (confirmDelete){
-            const result = await axios.delete(`/api/identity/users/${userId}`);
-            if (result.data.code == resposne_success){
+            const result:AGSResponse = await axios.delete(`/api/identity/users/${userId}`);
+            if (result.data.isSuccessful){
                 alert(GetLocalizedString("label_common_response_delete_succeeded"))
                 location.reload();
             } else {
@@ -143,7 +144,7 @@ function UsersUI({ users, groups }: { users: UserItemType[], groups: GroupItemTy
                     toggle={toggle} 
                     title={ selectedUser == null ? GetLocalizedString("label_identity_user_create_modal_title") : `${GetLocalizedString("label_identity_user_table_username")}: ${selectedUser.username}` }
                     onSaveClick={onEditModalSaveClick}
-                    concreteEditModal={UsersEditModal}
+                    ConcreteEditModal={UsersEditModal}
                     concreteEditModalProps={{groups}}
                     inputData={selectedUser}
                     defaultInputData={defaultUser}

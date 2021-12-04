@@ -18,6 +18,7 @@ import { errorCodeNotAuthenticated, errorCodeSuccess } from '../../config/common
 import { GroupItemType } from '../../models/identity/groupItemType'
 import { FunctionClaimItemType } from '../../models/identity/functionClaimItemType'
 import EditModalResult from '../../models/common/editModalResult'
+import AGSResponse from '../../models/common/agsResponse'
 
 const default_group_id = "";
 
@@ -72,8 +73,9 @@ function GroupUI({ groups, functionClaims }: { groups: GroupItemType[], function
     const onDeleteClick = async (e: React.MouseEvent<HTMLElement>, groupId: string, groupName: string) => {
         const confirmDelete = confirm(`${GetLocalizedString("label_identity_confirm_delete")}: ${groupName}`);
         if (confirmDelete) {
-            const result = await axios.delete(`/api/identity/groups/${groupId}`);
-            if (result.data.code == resposne_success) {
+            const result:AGSResponse = await axios.delete(`/api/identity/groups/${groupId}`);
+            console.log({result})
+            if (result.data.isSuccessful) {
                 alert(GetLocalizedString("label_common_response_delete_succeeded"))
                 location.reload();
             } else {

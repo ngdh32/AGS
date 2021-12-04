@@ -17,6 +17,7 @@ import { MasterPageDataType } from '../../models/pages/masterPageDataType'
 import { errorCodeSuccess, errorCodeNotAuthenticated } from '../../config/common'
 import { FunctionClaimItemType } from '../../models/identity/functionClaimItemType'
 import EditModalResult from '../../models/common/editModalResult'
+import AGSResponse from '../../models/common/agsResponse'
 
 const default_functionClaim_id = "";
 
@@ -72,8 +73,8 @@ function FunctionClaimUI({ functionClaims } : { functionClaims: FunctionClaimIte
     const onDeleteClick = async (e: React.MouseEvent<HTMLElement>, functionClaimId: string, functionClaimName: string) => {
         const confirmDelete = confirm(`${GetLocalizedString("label_identity_confirm_delete")}: ${functionClaimName}`);
         if (confirmDelete) {
-            const result = await axios.delete(`/api/identity/functionClaims/${functionClaimId}`);
-            if (result.data.code == resposne_success) {
+            const result:AGSResponse = await axios.delete(`/api/identity/functionClaims/${functionClaimId}`);
+            if (result.data.isSuccessful) {
                 alert(GetLocalizedString("label_common_response_delete_succeeded"))
                 location.reload();
             } else {

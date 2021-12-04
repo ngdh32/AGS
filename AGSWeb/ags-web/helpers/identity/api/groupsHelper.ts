@@ -65,6 +65,7 @@ export default class GroupsHelper {
         } catch (err) {
             result.SetUnsuccessfulResponseWithError(err);
         }
+        console.log(result)
         return result;
     }
 }
