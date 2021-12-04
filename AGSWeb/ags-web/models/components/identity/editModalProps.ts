@@ -7,7 +7,7 @@ export interface EditModalProps
     isOpen: boolean
     title: string
     onSaveClick: (editData: any) => Promise<EditModalResult>
-    ConcreteEditModal: ComponentType<{editData: any, setEditData: React.Dispatch<any>, concreteEditModalProps: any}>
+    ConcreteEditModal: ComponentType<{editData: any, setEditData: React.Dispatch<any>}>
     concreteEditModalProps: any
     inputData: any
     defaultInputData: any

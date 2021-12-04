@@ -35,7 +35,7 @@ export default function EditModal({ toggle, isOpen, title, onSaveClick, Concrete
             <ModalHeader toggle={toggle}>
                 {title}
             </ModalHeader>
-            <ConcreteEditModal editData={editData} setEditData={setEditData} concreteEditModalProps={concreteEditModalProps} />
+            <ConcreteEditModal editData={editData} setEditData={setEditData} {...concreteEditModalProps} />
             <ModalFooter>
                 <Label className="text-danger">{error}</Label>
                 <Button disabled={isSaving} color="primary" onClick={onEditSaveClick} type="button">{GetLocalizedString("label_common_button_confirm")}</Button>

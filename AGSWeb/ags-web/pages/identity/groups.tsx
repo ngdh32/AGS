@@ -138,7 +138,7 @@ function GroupUI({ groups, functionClaims }: { groups: GroupItemType[], function
                     toggle={toggle}
                     title={selectedGroup == null ? GetLocalizedString("label_identity_group_create_modal_title") : `${GetLocalizedString("label_identity_group_table_name")}: ${selectedGroup.name}`}
                     onSaveClick={onEditModalSaveClick}
-                    concreteEditModal={GroupsEditModal}
+                    ConcreteEditModal={GroupsEditModal}
                     concreteEditModalProps={{ functionClaims }}
                     inputData={selectedGroup}
                     defaultInputData={defaultGroup}
