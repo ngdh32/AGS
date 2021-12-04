@@ -6,13 +6,14 @@ import { AGSContext } from '../../helpers/common/agsContext'
 import axios from 'axios'
 import { GetLocalizedString } from '../../helpers/common/localizationHelper'
 import { resposne_success } from '../../config/identity'
-import { ChangePasswordProps } from '../../models/pages/identity/changePasswordProps';
+import {angePasswordProps } from '../../models/pages/identity/changePasswordProps';
 import { IncomingMessage } from 'http';
 import { ServerResponse } from 'http';
 import { GetStaticPropsResult, GetServerSidePropsResult } from 'next';
 import { MasterPageDataType } from '../../models/pages/masterPageDataType';
 import { PageDataType } from '../../models/pages/pageDataType';
 import { errorCodeSuccess } from '../../config/common';
+import AGSResponse from '../../models/common/agsResponse';
 
 
 export default function ChangePasswordUIWithMaster({ agsContext, pageData }: MasterPageDataType) {
@@ -46,13 +47,13 @@ function ChangePasswordUI(){
             return ;
         }
 
-        const result = await axios.post("/api/identity/users/changepw", { changePWReuqest: {oldPassword, newPassword }});
-        if (result.data.code == resposne_success) {
+        const result:AGSResponse = await axios.post("/api/identity/users/changepw", { changePWReuqest: {oldPassword, newPassword }});
+        if (result.data.isSuccessful) {
             alert(GetLocalizedString("label_common_save_succeeded"))
             location.reload();
         } else {
             alert(GetLocalizedString("label_common_save_failed"))
-            setError(result.data.code);
+            setError(result.data.responseCode);
         }
 
         setIsSaving(false);
