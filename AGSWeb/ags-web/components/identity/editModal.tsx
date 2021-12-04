@@ -6,7 +6,7 @@ import { GetLocalizedString } from '../../helpers/common/localizationHelper'
 import { EditModalProps } from '../../models/components/identity/editModalProps'
 
 
-export default function EditModal({ toggle, isOpen, title, onSaveClick, concreteEditModal, concreteEditModalProps, inputData, defaultInputData } : EditModalProps) {
+export default function EditModal({ toggle, isOpen, title, onSaveClick, ConcreteEditModal, concreteEditModalProps, inputData, defaultInputData } : EditModalProps) {
     const [error, setError] = useState("");
     const [editData, setEditData] = useState(inputData == null? JSON.parse(JSON.stringify(defaultInputData)) : JSON.parse(JSON.stringify(inputData)));
     const [isSaving, setIsSaving] = useState(false);
@@ -29,14 +29,13 @@ export default function EditModal({ toggle, isOpen, title, onSaveClick, concrete
         location.reload();
     }
 
-    const ConcreteEditModal : React.FC = () => <>{concreteEditModal}</>
 
     return (
         <Modal isOpen={isOpen} toggle={toggle} keyboard={false} backdrop={false} title={title}>
             <ModalHeader toggle={toggle}>
                 {title}
             </ModalHeader>
-            <ConcreteEditModal editData={editData} setEditData={setEditData} {...concreteEditModalProps} />
+            <ConcreteEditModal editData={editData} setEditData={setEditData} concreteEditModalProps={concreteEditModalProps} />
             <ModalFooter>
                 <Label className="text-danger">{error}</Label>
                 <Button disabled={isSaving} color="primary" onClick={onEditSaveClick} type="button">{GetLocalizedString("label_common_button_confirm")}</Button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, ComponentType } from "react";
 import EditModalResult from "../../common/editModalResult";
 
 export interface EditModalProps
@@ -7,7 +7,7 @@ export interface EditModalProps
     isOpen: boolean
     title: string
     onSaveClick: (editData: any) => Promise<EditModalResult>
-    concreteEditModal: React.ReactNode
+    ConcreteEditModal: ComponentType<{editData: any, setEditData: React.Dispatch<any>, concreteEditModalProps: any}>
     concreteEditModalProps: any
     inputData: any
     defaultInputData: any

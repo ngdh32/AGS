@@ -132,7 +132,7 @@ function FunctionClaimUI({ functionClaims } : { functionClaims: FunctionClaimIte
                         toggle={toggle}
                         title={selectedFunctionClaim == null ? GetLocalizedString("label_identity_functionClaims_create_modal_title") : `${GetLocalizedString("label_identity_functionClaims_table_functionClaim")}: ${selectedFunctionClaim.name}`}
                         onSaveClick={onEditModalSaveClick}
-                        concreteEditModal={FunctionClaimsEditModal}
+                        ConcreteEditModal={FunctionClaimsEditModal}
                         concreteEditModalProps={null}
                         inputData={selectedFunctionClaim}
                         defaultInputData={defaultFunctionClaim}

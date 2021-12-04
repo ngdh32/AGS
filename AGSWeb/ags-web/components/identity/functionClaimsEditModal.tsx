@@ -11,6 +11,7 @@ import { InputEventProps } from '../../models/common/inputEventProps';
 
 
 export default function FunctionClaimsEditModal({editData, setEditData}: FunctionClaimEditModalProps){
+    console.log({editData, setEditData})
     const onValueChange = (e: InputEventProps) => {
         editData[e.target.getAttribute("name")] = e.target.value;
         setEditData({ ...editData })
