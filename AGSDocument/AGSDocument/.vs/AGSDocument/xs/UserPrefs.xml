@@ -1,13 +1,22 @@
-﻿<Properties StartupConfiguration="{8522D759-BF1A-4709-A208-5824C698A98E}|Default">
-  <MonoDevelop.Ide.ItemProperties.AGSDocument-Infra FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.AGSDocument-Core FirstBuild="True" />
-  <MonoDevelop.Ide.Workbench>
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Models/Entities/AGSEntity.cs">
+    <Files>
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSUser.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSDepartment.cs" Line="6" Column="1" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSEntity.cs" Line="6" Column="13" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGSDocument" expanded="True">
-            <Node name="AGSDocument-Web" expanded="True">
-              <Node name="WeatherForecast.cs" selected="True" />
+            <Node name="AGSDocumentCore" expanded="True">
+              <Node name="Models" expanded="True">
+                <Node name="Entities" expanded="True">
+                  <Node name="AGSEntity.cs" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>
@@ -20,5 +29,4 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.AGSDocument-Web PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

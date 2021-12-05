@@ -1,0 +1,10 @@
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/bin/Debug/netstandard2.0/AGSDocumentCore.deps.json
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/bin/Debug/netstandard2.0/AGSDocumentCore.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/bin/Debug/netstandard2.0/AGSDocumentCore.pdb
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.csproj.AssemblyReference.cache
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.GeneratedMSBuildEditorConfig.editorconfig
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.AssemblyInfoInputs.cache
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.AssemblyInfo.cs
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.csproj.CoreCompileInputs.cache
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/Debug/netstandard2.0/AGSDocumentCore.pdb
