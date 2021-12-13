@@ -19,6 +19,10 @@
     <None Remove="Models\Enums\" />
     <None Remove="Models\DTOs\Queries\" />
     <None Remove="Models\DTOs\Commands\" />
+    <None Remove="Models\DTOs\QueryResults\" />
+    <None Remove="Interfaces\Services\" />
+    <None Remove="Interfaces\Repositories\" />
+    <None Remove="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -29,5 +33,9 @@
     <Folder Include="Models\Enums\" />
     <Folder Include="Models\DTOs\Queries\" />
     <Folder Include="Models\DTOs\Commands\" />
+    <Folder Include="Models\DTOs\QueryResults\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 </Project>

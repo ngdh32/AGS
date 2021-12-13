@@ -1,30 +1,26 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Interfaces/IAGSDocumentUpdateService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Repositories/FolderRepository.cs">
     <Files>
-      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="16" Column="50" />
-      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="7" Column="28" />
-      <File FileName="AGSDocumentCore/Models/DTOs/UpdateAGSFileRequest.cs" Line="2" Column="47" />
-      <File FileName="AGSDocumentCore/Interfaces/IAGSDocumentService.cs" Line="20" Column="2" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFileToFolderRequest.cs" Line="2" Column="47" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/CreateAGSFolderRequest.cs" Line="5" Column="47" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/DeleteAGSFileRequest.cs" Line="2" Column="47" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UpdateAGSFolderRequest.cs" Line="5" Column="47" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UploadAGSFileRequest.cs" Line="2" Column="47" />
-      <File FileName="AGSDocumentCore/Interfaces/IAGSDocumentQueryService.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="17" Column="44" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="15" Column="30" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFileToFolderCommand.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Models/DTOs/QueryResults/GetAGSFolderQueryResult.cs" Line="7" Column="37" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IFileService.cs" Line="4" Column="46" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/CreateAGSFolderCommand.cs" Line="7" Column="124" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSDocumentUpdateService.cs" Line="15" Column="1" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UpdateAGSFolderCommand.cs" Line="7" Column="123" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSPermission.cs" Line="6" Column="18" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSEntity.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Interfaces/Repositories/IFolderRepository.cs" Line="8" Column="44" />
+      <File FileName="AGSDocumentCore/Repositories/FolderRepository.cs" Line="4" Column="54" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGSDocument" expanded="True">
             <Node name="AGSDocumentCore" expanded="True">
-              <Node name="Interfaces" expanded="True">
-                <Node name="IAGSDocumentUpdateService.cs" selected="True" />
-              </Node>
-              <Node name="Models" expanded="True">
-                <Node name="DTOs" expanded="True">
-                  <Node name="Commands" expanded="True" />
-                </Node>
-                <Node name="Entities" expanded="True" />
+              <Node name="Repositories" expanded="True">
+                <Node name="FolderRepository.cs" selected="True" />
               </Node>
             </Node>
           </Node>

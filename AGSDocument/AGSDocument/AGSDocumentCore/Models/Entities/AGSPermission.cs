@@ -5,8 +5,8 @@ namespace AGSDocumentCore.Models.Entities
 {
     public class AGSPermission
     {
-        private string DepartmentId { get; set; }
-        private AGSPermissionType PermissionType { get; set; }
+        public string DepartmentId { get; init; }
+        public AGSPermissionType PermissionType { get; init; }
 
 
         public AGSPermission()
