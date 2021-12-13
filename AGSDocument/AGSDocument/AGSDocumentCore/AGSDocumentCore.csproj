@@ -1,15 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Interface\" />
     <None Remove="Services\" />
     <None Remove="Models\" />
     <None Remove="Models\Entities\" />
     <None Remove="Models\DTOs\" />
+    <None Remove="Models\Enums\" />
+    <None Remove="Models\DTOs\Queries\" />
+    <None Remove="Models\DTOs\Commands\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -17,5 +26,8 @@
     <Folder Include="Models\" />
     <Folder Include="Models\Entities\" />
     <Folder Include="Models\DTOs\" />
+    <Folder Include="Models\Enums\" />
+    <Folder Include="Models\DTOs\Queries\" />
+    <Folder Include="Models\DTOs\Commands\" />
   </ItemGroup>
 </Project>

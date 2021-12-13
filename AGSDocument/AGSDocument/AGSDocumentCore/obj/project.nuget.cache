@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jN44WgHeuTCTQmJhCkV6xGS1UPkH5a00T1rivq76W+ByB+iAl2rK+2z5Pj5GXPCI4z4JKC5SaCnhaLHmUsjpTw==",
+  "dgSpecHash": "S+O8jLLAFy4BheP5U/YiWNBs4/Fgv3OWayqTP6U2xeo+QHoGwjbTRxy0sgwbfo/vxlmF1fiRRqwSdRgG48++kw==",
   "success": true,
   "projectFilePath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj",
-  "expectedPackageFiles": [
-    "/Users/timng/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "/Users/timng/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
