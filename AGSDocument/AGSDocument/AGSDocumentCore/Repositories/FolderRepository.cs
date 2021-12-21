@@ -10,6 +10,11 @@ namespace AGSDocumentCore.Repositories
         {
         }
 
+        public AGSFolder GetById(string folderId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Save(AGSFolder folder)
         {
             throw new NotImplementedException();

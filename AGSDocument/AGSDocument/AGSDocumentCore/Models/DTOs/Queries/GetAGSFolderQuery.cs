@@ -1,5 +1,5 @@
 ﻿using System;
 namespace AGSDocumentCore.Models.DTOs.Queries
 {
-    public record GetAGSFolderQuery(string folderId);
+    public record GetAGSFolderQuery(string folderId, string userId);
 }
