@@ -1,16 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Repositories/FolderRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/AGSDocumentQueryService.cs">
     <Files>
       <File FileName="AGSDocumentCore/Interfaces/Services/IAGSDocumentQueryService.cs" Line="1" Column="1" />
       <File FileName="AGSDocumentCore/Interfaces/Services/IAGSDocumentUpdateService.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" Line="58" Column="1" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" Line="7" Column="70" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSIdentityService.cs" Line="9" Column="41" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Queries/AGSFileIndexSearchQuery.cs" Line="8" Column="1" />
-      <File FileName="AGSDocumentCore/Models/Enums/SearchTypeEnum.cs" Line="4" Column="31" />
-      <File FileName="AGSDocumentCore/Models/Enums/AGSPermissionEnum.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Models/Enums/FileExtensionType.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Repositories/FolderRepository.cs" Line="7" Column="37" />
+      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" Line="34" Column="31" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IFileIndexingService.cs" Line="8" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,10 +23,10 @@
                 <Node name="Entities" expanded="True" />
                 <Node name="Enums" expanded="True" />
               </Node>
-              <Node name="Repositories" expanded="True">
-                <Node name="FolderRepository.cs" selected="True" />
+              <Node name="Repositories" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="AGSDocumentQueryService.cs" selected="True" />
               </Node>
-              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>

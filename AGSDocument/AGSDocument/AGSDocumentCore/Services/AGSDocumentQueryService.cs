@@ -25,13 +25,39 @@ namespace AGSDocumentCore.Services
 
         public List<AGSFileQueryView> AGSFileIndexSearch(AGSFileIndexSearchQuery agsFileIndexSearchQuery)
         {
+            var users = _identityService.GetUsers();
+            var user = users.FirstOrDefault(x => x.userId == agsFileIndexSearchQuery.userId);
+            if (user == null)
+                return null;
+
             var result = new List<AGSFileQueryView>();
-            
+            var fileIds = new List<string>();
+            switch(agsFileIndexSearchQuery.searchType)
+            {
+                case Models.Enums.SearchTypeEnum.FileContent:
+                    fileIds = _fileIndexingService.FileSearchingByContent(agsFileIndexSearchQuery.keyword);
+                    break;
+                case Models.Enums.SearchTypeEnum.Filename:
+                default:
+                    fileIds = _folderRepository.SearchFilesByName(agsFileIndexSearchQuery.keyword);
+                    break;
+            }
 
+            foreach (var fileId in fileIds)
+            {
+                var (file, folderId) = _folderRepository.GetFileById(fileId);
+                var folder = _folderRepository.GetFolderById(folderId);
+                var checkPermission = CheckIfUserHasPermissionToAccess(user, folder.Permissions.ToList());
+                if (!checkPermission)
+                    return null;
 
+                var fileCreatedUsername = users.FirstOrDefault(x => x.userId == file.Id)?.username ?? file.CreatedBy;
+                result.Add(new AGSFileQueryView(file.Id, file.Description, file.SizeInByte, file.CreatedDate, fileCreatedUsername));
+            }
             return result;
         }
 
+        // just one level of children folders
         public AGSFolderQueryView GetAGSFolder(GetAGSFolderQuery getAGSFolderQuery)
         {
             var users = _identityService.GetUsers();
@@ -40,7 +66,7 @@ namespace AGSDocumentCore.Services
             if (retrievingUser == null)
                 return null;
 
-            var folder = _folderRepository.GetById(getAGSFolderQuery.folderId);
+            var folder = _folderRepository.GetFolderById(getAGSFolderQuery.folderId);
             if (folder == null)
                 return null;
 

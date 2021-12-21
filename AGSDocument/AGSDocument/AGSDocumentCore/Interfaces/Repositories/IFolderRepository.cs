@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using AGSDocumentCore.Models.Entities;
 
 namespace AGSDocumentCore.Interfaces.Repositories
 {
     public interface IFolderRepository
     {
-        public AGSFolder GetById(string folderId);
+        public AGSFolder GetFolderById(string folderId);
 
-        public void Save(AGSFolder folder);
+        public void SaveFolder(AGSFolder folder);
+
+        public (AGSFile file, string folderId) GetFileById(string fileId);
+
+        public List<string> SearchFilesByName(string keyword);
     }
 }
