@@ -5,18 +5,20 @@ namespace AGSDocumentCore.Interfaces.Services
 {
     public interface IAGSDocumentUpdateService
     {
-        public void CreateAGSFolder(CreateAGSFolderCommand createAGSFolderCommand);
+        public void CreateAGSFolder(CreateAGSFolderCommand command);
 
-        public void UpdateAGSFolder(UpdateAGSFolderCommand updateAGSFolderCommand);
+        public void AddAGSFolder(AddAGSFolderToFolderCommand command);
 
-        public void AddAGSFileToFolder(AddAGSFileToFolderCommand addAGSFileToFolderCommand);
+        public void UpdateAGSFolder(UpdateAGSFolderCommand command);
 
-        public void SetAGSFolderPermission(SetAGSFolderPermissionsCommand setAGSFolderPermissionsCommand);
+        public void AddAGSFileToFolder(AddAGSFileToFolderCommand command);
 
-        public void UpdateAGSFile(UpdateAGSFileCommand updateAGSFileCommand);
+        public void SetAGSFolderPermission(SetAGSFolderPermissionsCommand command);
 
-        public void DeleteAGSFile(DeleteAGSFileCommand deleteAGSFileCommand);
+        public void UpdateAGSFile(UpdateAGSFileCommand command);
 
-        public void DeleteAGSFolder(string folderId);
+        public void DeleteAGSFile(DeleteAGSFileCommand command);
+
+        public void DeleteAGSFolder(DeleteAGSFolderCommand command);
     }
 }

@@ -9,7 +9,7 @@ namespace AGSDocumentCore.Models.Entities
         public int SizeInByte { get; private set; }
         public string FilePath { get; private set; }
         public string CreatedBy { get; private set; }
-        public DateTime CreatedDate { get; private set; }
+        public DateTime CreatedDate { get; private set; } = DateTime.Now;
 
         public void UpdateFile(string name, string fileExtension, string description, int sizeInByte, string createdBy, DateTime createdDate)
         {
@@ -21,8 +21,9 @@ namespace AGSDocumentCore.Models.Entities
             this.CreatedDate = createdDate;
         }
 
-        public AGSFile(string name, string description, string fileExtension, int sizeInByte, string filePath, string createdBy, DateTime createdDate)
+        public AGSFile(string id, string name, string description, string fileExtension, int sizeInByte, string filePath, string createdBy, DateTime createdDate)
         {
+            this.Id = id;
             this.Name = name;
             this.FileExtension = fileExtension;
             this.Description = description;
@@ -30,6 +31,16 @@ namespace AGSDocumentCore.Models.Entities
             this.FilePath = filePath;
             this.CreatedBy = createdBy;
             this.CreatedDate = createdDate;
+        }
+
+        public AGSFile(string name, string description, string fileExtension, int sizeInByte, string filePath, string createdBy)
+        {
+            this.Name = name;
+            this.FileExtension = fileExtension;
+            this.Description = description;
+            this.SizeInByte = sizeInByte;
+            this.FilePath = filePath;
+            this.CreatedBy = createdBy;
         }
     }
 }
