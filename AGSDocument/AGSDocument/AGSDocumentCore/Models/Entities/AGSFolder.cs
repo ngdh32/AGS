@@ -26,16 +26,10 @@ namespace AGSDocumentCore.Models.Entities
             _childrenFolders.Add(new AGSFolder(name, description, createdBy, permissions));
         }
 
-        public void DeleteFolder(string folderId)
-        {
-            
-        }
-
-        public void UpdateFolder(string name, string description, List<AGSPermission> permissions)
+        public void UpdateFolder(string name, string description)
         {
             this.Name = name;
             this.Description = description;
-            this._permissions = permissions;
         }
 
         public void AddNewFile(AGSFile file)

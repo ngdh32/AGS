@@ -14,6 +14,8 @@ namespace AGSDocumentCore.Interfaces.Repositories
 
         public (AGSFile file, string folderId) GetFileById(string fileId);
 
+        public void SaveFile(AGSFile file);
+
         public List<string> SearchFilesByName(string keyword);
     }
 }

@@ -11,14 +11,14 @@ namespace AGSDocumentCore.Models.Entities
         public string CreatedBy { get; private set; }
         public DateTime CreatedDate { get; private set; } = DateTime.Now;
 
-        public void UpdateFile(string name, string fileExtension, string description, int sizeInByte, string createdBy, DateTime createdDate)
+        public void UpdateFile(string name, string fileExtension, string description, int sizeInByte, string createdBy)
         {
             this.Name = name;
             this.FileExtension = fileExtension;
             this.Description = description;
             this.SizeInByte = sizeInByte;
             this.CreatedBy = createdBy;
-            this.CreatedDate = createdDate;
+            this.CreatedDate = DateTime.Now;
         }
 
         public AGSFile(string id, string name, string description, string fileExtension, int sizeInByte, string filePath, string createdBy, DateTime createdDate)

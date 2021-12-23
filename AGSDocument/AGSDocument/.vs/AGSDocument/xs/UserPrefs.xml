@@ -1,12 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/AGSDocumentUpdateService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Repositories/FolderRepository.cs">
     <Files>
       <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" Line="27" Column="10" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" Line="50" Column="49" />
-      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="31" Column="13" />
-      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="36" Column="38" />
+      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" Line="86" Column="28" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="27" Column="10" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="21" Column="44" />
       <File FileName="AGSDocumentCore/Models/Entities/AGSEntity.cs" Line="4" Column="27" />
       <File FileName="AGSDocumentCore/Models/DTOs/Commands/CreateAGSFolderCommand.cs" Line="7" Column="124" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UpdateAGSFileCommand.cs" Line="6" Column="2" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFolderToFolderCommand.cs" Line="7" Column="154" />
+      <File FileName="AGSDocumentCore/Repositories/FolderRepository.cs" Line="8" Column="37" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,10 +29,10 @@
                 <Node name="Entities" expanded="True" />
                 <Node name="Enums" expanded="True" />
               </Node>
-              <Node name="Repositories" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="AGSDocumentUpdateService.cs" selected="True" />
+              <Node name="Repositories" expanded="True">
+                <Node name="FolderRepository.cs" selected="True" />
               </Node>
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>
