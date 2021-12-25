@@ -1,5 +1,8 @@
 ﻿using System;
 namespace AGSDocumentCore.Models.DTOs.Commands
 {
-    public record DeleteAGSFolderCommand(string folderId);
+    public class DeleteAGSFolderCommand
+    {
+        public string FolderId { get; init; }
+    }
 }

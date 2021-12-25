@@ -4,5 +4,11 @@ using AGSDocumentCore.Models.Entities;
 
 namespace AGSDocumentCore.Models.DTOs.Commands
 {
-    public record UpdateAGSFolderCommand(string folderId, string name, string description, List<AGSPermission> permissions);
+    public class UpdateAGSFolderCommand
+    {
+        public string FolderId { get; init; }
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public List<AGSPermission> Permissions { get; init; }
+    }
 }

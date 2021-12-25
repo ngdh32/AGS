@@ -4,5 +4,11 @@ using AGSDocumentCore.Models.Entities;
 
 namespace AGSDocumentCore.Models.DTOs.Commands
 {
-    public record CreateAGSFolderCommand(string name, string description, string createdBy, List<AGSPermission> permissions);
+    public class CreateAGSFolderCommand
+    {
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public string CreatedBy { get; init; }
+        public List<AGSPermission> Permissions { get; init; }
+    }
 }

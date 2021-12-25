@@ -18,39 +18,39 @@ namespace AGSDocumentCore.Services
         #region Folder
         public void AddAGSFolder(AddAGSFolderToFolderCommand command)
         {
-            var folder = _folderRepository.GetFolderById(command.parentFolderId);
-            folder.AddNewFolder(command.name, command.description, command.createdBy, command.permissions);
+            var folder = _folderRepository.GetFolderById(command.ParentFolderId);
+            folder.AddNewFolder(command.Name, command.Description, command.CreatedBy, command.Permissions);
             _folderRepository.SaveFolder(folder);
         }
 
         public void CreateAGSFolder(CreateAGSFolderCommand command)
         {
-            var folder = new AGSFolder(command.name, command.description, command.createdBy, command.permissions);
+            var folder = new AGSFolder(command.Name, command.Description, command.CreatedBy, command.Permissions);
             _folderRepository.SaveFolder(folder);
         }
 
         public void UpdateAGSFolder(UpdateAGSFolderCommand command)
         {
-            var folder = _folderRepository.GetFolderById(command.folderId);
-            folder.UpdateFolder(command.name, command.description);
+            var folder = _folderRepository.GetFolderById(command.FolderId);
+            folder.UpdateFolder(command.Name, command.Description);
             _folderRepository.SaveFolder(folder);
         }
 
         public void DeleteAGSFolder(DeleteAGSFolderCommand command)
         {
-            _folderRepository.DeleteFolder(command.folderId);
+            _folderRepository.DeleteFolder(command.FolderId);
         }
 
         public void SetAGSFolderPermission(SetAGSFolderPermissionsCommand command)
         {
-            var folder = _folderRepository.GetFolderById(command.folderId);
+            var folder = _folderRepository.GetFolderById(command.FolderId);
             var permissions = new List<AGSPermission>();
-            foreach (var permission in command.permissions)
+            foreach (var permission in command.Permissions)
             {
                 permissions.Add(new AGSPermission()
                 {
-                    DepartmentId = permission.departmentId,
-                    PermissionType = permission.permissionType
+                    DepartmentId = permission.DepartmentId,
+                    PermissionType = permission.PermissionType
                 });
             }
             folder.SetPermissions(permissions);
@@ -62,14 +62,14 @@ namespace AGSDocumentCore.Services
         #region File
         public void AddAGSFileToFolder(AddAGSFileToFolderCommand command)
         {
-            var folder = _folderRepository.GetFolderById(command.folderId);
+            var folder = _folderRepository.GetFolderById(command.FolderId);
             folder.AddNewFile(new AGSFile(
-                command.name
-                , command.description
-                , command.fileExtension
-                , command.sizeInBytes
-                , command.filepath
-                , command.createdBy
+                command.Name
+                , command.Description
+                , command.FileExtension
+                , command.SizeInByte
+                , command.FilePath
+                , command.CreatedBy
             ));
 
             _folderRepository.SaveFolder(folder);
@@ -77,16 +77,16 @@ namespace AGSDocumentCore.Services
 
         public void DeleteAGSFile(DeleteAGSFileCommand command)
         {
-            var (file, folderId) = _folderRepository.GetFileById(command.fileId);
+            var (file, folderId) = _folderRepository.GetFileById(command.FileId);
             var folder = _folderRepository.GetFolderById(folderId);
-            folder.DeleteFile(command.fileId);
+            folder.DeleteFile(command.FileId);
             _folderRepository.SaveFolder(folder);
         }
 
         public void UpdateAGSFile(UpdateAGSFileCommand command)
         {
-            var (file, folderId) = _folderRepository.GetFileById(command.fileId);
-            file.UpdateFile(command.name, command.fileExtension, command.description, command.sizeInByte, command.createdBy);
+            var (file, folderId) = _folderRepository.GetFileById(command.FileId);
+            file.UpdateFile(command.Name, command.FileExtension, command.Description, command.SizeInByte, command.CreatedBy);
             _folderRepository.SaveFile(file);
         }
 

@@ -26,20 +26,20 @@ namespace AGSDocumentCore.Services
         public List<AGSFileQueryView> AGSFileIndexSearch(AGSFileIndexSearchQuery agsFileIndexSearchQuery)
         {
             var users = _identityService.GetUsers();
-            var user = users.FirstOrDefault(x => x.userId == agsFileIndexSearchQuery.userId);
+            var user = users.FirstOrDefault(x => x.UserId == agsFileIndexSearchQuery.UserId);
             if (user == null)
                 return null;
 
             var result = new List<AGSFileQueryView>();
             var fileIds = new List<string>();
-            switch(agsFileIndexSearchQuery.searchType)
+            switch(agsFileIndexSearchQuery.SearchType)
             {
                 case Models.Enums.SearchTypeEnum.FileContent:
-                    fileIds = _fileIndexingService.FileSearchingByContent(agsFileIndexSearchQuery.keyword);
+                    fileIds = _fileIndexingService.FileSearchingByContent(agsFileIndexSearchQuery.Keyword);
                     break;
                 case Models.Enums.SearchTypeEnum.Filename:
                 default:
-                    fileIds = _folderRepository.SearchFilesByName(agsFileIndexSearchQuery.keyword);
+                    fileIds = _folderRepository.SearchFilesByName(agsFileIndexSearchQuery.Keyword);
                     break;
             }
 
@@ -51,8 +51,15 @@ namespace AGSDocumentCore.Services
                 if (!checkPermission)
                     return null;
 
-                var fileCreatedUsername = users.FirstOrDefault(x => x.userId == file.Id)?.username ?? file.CreatedBy;
-                result.Add(new AGSFileQueryView(file.Id, file.Description, file.SizeInByte, file.CreatedDate, fileCreatedUsername));
+                var fileCreatedUsername = users.FirstOrDefault(x => x.UserId == file.Id)?.Username ?? file.CreatedBy;
+                result.Add(new AGSFileQueryView()
+                {
+                    FileId = file.Id,
+                    Description = file.Description,
+                    SizeInByte = file.SizeInByte,
+                    CreatedDate = file.CreatedDate,
+                    CreatedUsername = fileCreatedUsername
+                });
             }
             return result;
         }
@@ -62,11 +69,11 @@ namespace AGSDocumentCore.Services
         {
             var users = _identityService.GetUsers();
 
-            var retrievingUser = users.FirstOrDefault(x => x.userId == getAGSFolderQuery.userId);
+            var retrievingUser = users.FirstOrDefault(x => x.UserId == getAGSFolderQuery.UserId);
             if (retrievingUser == null)
                 return null;
 
-            var folder = _folderRepository.GetFolderById(getAGSFolderQuery.folderId);
+            var folder = _folderRepository.GetFolderById(getAGSFolderQuery.FolderId);
             if (folder == null)
                 return null;
 
@@ -74,7 +81,7 @@ namespace AGSDocumentCore.Services
             if (!permissionChecking)
                 return null;
 
-            var createdUsername = users.FirstOrDefault(x => x.userId == folder.CreatedBy)?.username ?? folder.CreatedBy;
+            var createdUsername = users.FirstOrDefault(x => x.UserId == folder.CreatedBy)?.Username ?? folder.CreatedBy;
             var childrenFolders = new List<AGSChildrenFolderQueryView>();
             foreach (var childrenFolder in folder.ChildrenFolders)
             {
@@ -82,22 +89,47 @@ namespace AGSDocumentCore.Services
                 if (!childrenFolderPermissionChecking)
                     continue;
 
-                var childrenFolderCreatedUsername = users.FirstOrDefault(x => x.userId == childrenFolder.CreatedBy)?.username ?? childrenFolder.CreatedBy;
-                childrenFolders.Add(new AGSChildrenFolderQueryView(childrenFolder.Id, childrenFolder.Name, childrenFolder.Description, childrenFolder.CreatedDate, childrenFolderCreatedUsername, childrenFolder.Permissions.ToList()));
+                var childrenFolderCreatedUsername = users.FirstOrDefault(x => x.UserId == childrenFolder.CreatedBy)?.Username ?? childrenFolder.CreatedBy;
+                childrenFolders.Add(new AGSChildrenFolderQueryView()
+                {
+                    FolderId = childrenFolder.Id,
+                    Name = childrenFolder.Name,
+                    Description = childrenFolder.Description,
+                    CreatedDate = childrenFolder.CreatedDate,
+                    CreatedUsername = childrenFolderCreatedUsername,
+                    Permissions = childrenFolder.Permissions.ToList()
+                });
             }
             var files = new List<AGSFileQueryView>();
             foreach (var file in folder.Files)
             {
-                var fileCreatedUser = users.FirstOrDefault(x => x.userId == file.CreatedBy)?.username ?? file.CreatedBy;
-                files.Add(new AGSFileQueryView(file.Id, file.Description, file.SizeInByte, file.CreatedDate, fileCreatedUser));
+                var fileCreatedUser = users.FirstOrDefault(x => x.UserId == file.CreatedBy)?.Username ?? file.CreatedBy;
+                files.Add(new AGSFileQueryView()
+                {
+                    FileId = file.Id,
+                    Description = file.Description,
+                    SizeInByte = file.SizeInByte,
+                    CreatedDate = file.CreatedDate,
+                    CreatedUsername = fileCreatedUser
+                });
             }
-            var result = new AGSFolderQueryView(folder.Id, folder.Name, folder.Description, folder.CreatedDate, createdUsername, folder.Permissions.ToList(), childrenFolders, files);
+            var result = new AGSFolderQueryView()
+            {
+                FolderId = folder.Id,
+                Name = folder.Name,
+                Description = folder.Description,
+                CreatedDate = folder.CreatedDate,
+                CreatedUsername = createdUsername,
+                Permissions = folder.Permissions.ToList(),
+                ChildrenFolders = childrenFolders,
+                Files = files
+            };
             return result;
         }
 
         private bool CheckIfUserHasPermissionToAccess(AGSUser user, List<AGSPermission> permissions)
         {
-            var result = permissions.Any(x => user.departments.Any(y => y.departmentId == x.DepartmentId));
+            var result = permissions.Any(x => user.Departments.Any(y => y.DepartmentId == x.DepartmentId));
             return result;
         }
     }

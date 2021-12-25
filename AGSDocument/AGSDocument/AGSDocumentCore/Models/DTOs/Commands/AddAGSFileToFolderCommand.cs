@@ -1,5 +1,14 @@
 ﻿using System;
 namespace AGSDocumentCore.Models.DTOs.Commands
 {
-    public record AddAGSFileToFolderCommand(string folderId, string name, string fileExtension, string description, int sizeInBytes, string filepath, string createdBy);
+    public class AddAGSFileToFolderCommand
+    {
+        public string FolderId { get; init; }
+        public string Name { get; init; }
+        public string FileExtension { get; init; }
+        public string Description { get; init; }
+        public int SizeInByte { get; init; }
+        public string FilePath { get; init; }
+        public string CreatedBy { get; init; }
+    }
 }

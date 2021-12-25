@@ -4,7 +4,15 @@ using AGSDocumentCore.Models.Enums;
 
 namespace AGSDocumentCore.Models.DTOs.Commands
 {
-    public record SetAGSFolderPermissionsCommand(string folderId, List<AGSFolderPermissionView> permissions);
+    public class SetAGSFolderPermissionsCommand
+    {
+        public string FolderId { get; set; }
+        public List<AGSFolderPermissionView> Permissions { get; init; }
+    }
 
-    public record AGSFolderPermissionView(string departmentId, AGSPermissionType permissionType);
+    public class AGSFolderPermissionView
+    {
+        public string DepartmentId { get; set; }
+        public AGSPermissionType PermissionType { get; init; }
+    }
 }

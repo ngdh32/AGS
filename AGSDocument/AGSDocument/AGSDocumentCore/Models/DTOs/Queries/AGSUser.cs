@@ -3,7 +3,16 @@ using System.Collections.Generic;
 
 namespace AGSDocumentCore.Models.DTOs.Queries
 {
-    public record AGSUser(string userId, string username, List<AGSDepartment> departments);
+    public class AGSUser
+    {
+        public string UserId { get; init; }
+        public string Username { get; init; }
+        public List<AGSDepartment> Departments { get; init; }
+    }
 
-    public record AGSDepartment(string departmentId, string departmentName);
+    public class AGSDepartment
+    {
+        public string DepartmentId { get; init; }
+        public string DepartmentName { get; init; }
+    }
 }

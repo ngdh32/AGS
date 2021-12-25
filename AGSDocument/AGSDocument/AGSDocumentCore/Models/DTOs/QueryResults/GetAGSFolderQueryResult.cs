@@ -4,9 +4,34 @@ using AGSDocumentCore.Models.Entities;
 
 namespace AGSDocumentCore.Models.DTOs.QueryResults
 {
-    public record AGSFolderQueryView(string folderId, string name, string description, DateTime createdDate, string createdUsername, List<AGSPermission> permissions, List<AGSChildrenFolderQueryView> childrenFolders, List<AGSFileQueryView> files);
+    public class AGSFolderQueryView
+    {
+        public string FolderId { get; init; }
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public DateTime CreatedDate { get; init; }
+        public string CreatedUsername { get; init; }
+        public List<AGSPermission> Permissions { get; init; }
+        public List<AGSChildrenFolderQueryView> ChildrenFolders { get; init; }
+        public List<AGSFileQueryView> Files { get; init; }
+    }
 
-    public record AGSChildrenFolderQueryView(string folderId, string name, string description, DateTime createdDate, string createdUsername, List<AGSPermission> permissions);
+    public class AGSChildrenFolderQueryView
+    {
+        public string FolderId { get; init; }
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public DateTime CreatedDate { get; init; }
+        public string CreatedUsername { get; init; }
+        public List<AGSPermission> Permissions { get; init; }
+    }
 
-    public record AGSFileQueryView(string fileId, string description, int sizeInByte, DateTime createdDate, string createdUsername);
+    public class AGSFileQueryView
+    {
+        public string FileId { get; init; }
+        public string Description { get; init; }
+        public int SizeInByte { get; init; }
+        public DateTime CreatedDate { get; init; }
+        public string CreatedUsername { get; init; }
+    }
 }
