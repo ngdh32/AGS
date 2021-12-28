@@ -49,8 +49,15 @@ namespace AGSDocumentCore.Models.Entities
             _permissions = permissions;
         }
 
-        public AGSFolder()
+        public AGSFolder(string id, string name, string createdBy, DateTime createdDate, List<AGSFile> files, List<AGSFolder> childrenFolders, List<AGSPermission> permissions)
         {
+            this.Id = id;
+            this.Name = name;
+            this.CreatedBy = createdBy;
+            this.CreatedDate = createdDate;
+            this._files = files;
+            this._childrenFolders = childrenFolders;
+            this._permissions = permissions;
         }
 
         public AGSFolder(string name, string description, string createdBy, List<AGSPermission> permissions)

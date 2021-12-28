@@ -1,22 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Models/DTOs/Queries/GetAGSFolderQuery.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentInfrastructureEF/EFFolderRepository.cs">
     <Files>
-      <File FileName="AGSDocumentCore/Models/DTOs/QueryResults/GetAGSFolderQueryResult.cs" Line="29" Column="18" />
+      <File FileName="AGSDocumentCore/Models/DTOs/QueryResults/GetAGSFolderQueryResult.cs" Line="34" Column="26" />
       <File FileName="AGSDocumentCore/CommonUtility.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" Line="57" Column="1" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFileToFolderCommand.cs" Line="11" Column="43" />
       <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFolderToFolderCommand.cs" Line="13" Column="59" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/CreateAGSFolderCommand.cs" Line="12" Column="59" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/DeleteAGSFileCommand.cs" Line="6" Column="41" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/DeleteAGSFolderCommand.cs" Line="6" Column="43" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/SetAGSFolderPermissionsCommand.cs" Line="16" Column="60" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UpdateAGSFileCommand.cs" Line="14" Column="2" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UpdateAGSFolderCommand.cs" Line="12" Column="59" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UploadAGSFileCommand.cs" Line="7" Column="46" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Queries/AGSFileIndexSearchQuery.cs" Line="10" Column="53" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Queries/AGSUser.cs" Line="16" Column="49" />
       <File FileName="AGSDocumentCore/Models/DTOs/Queries/GetAGSFolderQuery.cs" Line="7" Column="41" />
+      <File FileName="AGSDocumentInfrastructureEF/Entities/AGSFolder.cs" Line="12" Column="37" />
+      <File FileName="AGSDocumentInfrastructureEF/Entities/AGSFile.cs" Line="15" Column="39" />
+      <File FileName="AGSDocumentInfrastructureEF/Entities/EFAGSEntity.cs" Line="8" Column="2" />
+      <File FileName="AGSDocumentInfrastructureEF/EFFolderRepository.cs" Line="83" Column="98" />
+      <File FileName="AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj" Line="4" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,21 +18,20 @@
             <Node name="AGSDocumentCore" expanded="True">
               <Node name="Interfaces" expanded="True">
                 <Node name="Repositories" expanded="True" />
-                <Node name="Services" expanded="True" />
               </Node>
               <Node name="Models" expanded="True">
                 <Node name="DTOs" expanded="True">
                   <Node name="Commands" expanded="True" />
-                  <Node name="Queries" expanded="True">
-                    <Node name="GetAGSFolderQuery.cs" selected="True" />
-                  </Node>
+                  <Node name="Queries" expanded="True" />
                   <Node name="QueryResults" expanded="True" />
                 </Node>
                 <Node name="Entities" expanded="True" />
                 <Node name="Enums" expanded="True" />
               </Node>
-              <Node name="Repositories" expanded="True" />
-              <Node name="Services" expanded="True" />
+            </Node>
+            <Node name="AGSDocumentInfrastructureEF" expanded="True">
+              <Node name="Entities" expanded="True" />
+              <Node name="EFFolderRepository.cs" selected="True" />
             </Node>
           </Node>
         </State>
