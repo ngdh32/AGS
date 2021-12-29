@@ -115,7 +115,7 @@ namespace AGSDocumentInfrastructureEF
 
                 foreach (var file in folder.Files.Where(x => _dbContext.Files.Where(y => y.FolderId == folder.Id).All(z => z.Id != x.Id)))
                 {
-                    EFAGSFile efFile = new ();
+                    EFAGSFile efFile = new EFAGSFile();
                     efFile.Name = file.Name;
                     efFile.FileExtension = file.FileExtension;
                     efFile.Description = file.Description;
@@ -165,19 +165,19 @@ namespace AGSDocumentInfrastructureEF
 
         private AGSFile GetAGSFileFromEntity(EFAGSFile file)
         {
-            return new(file.Id, file.Name, file.Description, file.FileExtension, file.SizeInByte, file.FilePath, file.CreatedBy, file.CreatedDate);
+            return new AGSFile(file.Id, file.Name, file.Description, file.FileExtension, file.SizeInByte, file.FilePath, file.CreatedBy, file.CreatedDate);
         }
 
         private AGSPermission GetAGSPermissionFromEntity(EFAGSFolderPermission permission)
         {
-            return new(permission.DepartmentId, permission.PermissionType);
+            return new AGSPermission(permission.DepartmentId, permission.PermissionType);
         }
 
         private AGSFolder GetAGSFolderFromEntity(EFAGSFolder folder, List<AGSFolder> childrenFolders)
         {
             var agsFiles = folder.EFAGSFiles.Select(x => GetAGSFileFromEntity(x));
             var agsPermissions = folder.EFAGSFolderPermissions.Select(x => GetAGSPermissionFromEntity(x));
-            return new(folder.Id, folder.Name, folder.CreatedBy, folder.CreatedDate, agsFiles.ToList(), childrenFolders.ToList(), agsPermissions.ToList());
+            return new AGSFolder(folder.Id, folder.Name, folder.CreatedBy, folder.CreatedDate, agsFiles.ToList(), childrenFolders.ToList(), agsPermissions.ToList());
         }
     }
 }
