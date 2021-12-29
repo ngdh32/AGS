@@ -5,6 +5,6 @@ namespace AGSDocumentCore.Interfaces.Services
 {
     public interface IParseDocumentService
     {
-        public string PrasePDFFile(byte[] fileContent, FileExtensionType fileExtensionType);
+        public string PrasePDFFile(byte[] fileContent);
     }
 }

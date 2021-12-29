@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AGSDocumentCore\AGSDocumentCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="itext7" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="itext7" Version="7.2.0" />
+  </ItemGroup>
+</Project>
