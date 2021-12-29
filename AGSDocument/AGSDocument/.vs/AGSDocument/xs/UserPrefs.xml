@@ -3,13 +3,14 @@
     <Files>
       <File FileName="AGSDocumentCore/Models/DTOs/QueryResults/GetAGSFolderQueryResult.cs" Line="34" Column="26" />
       <File FileName="AGSDocumentCore/CommonUtility.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFolderToFolderCommand.cs" Line="13" Column="59" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Queries/GetAGSFolderQuery.cs" Line="7" Column="41" />
-      <File FileName="AGSDocumentInfrastructureEF/Entities/AGSFolder.cs" Line="12" Column="37" />
-      <File FileName="AGSDocumentInfrastructureEF/Entities/AGSFile.cs" Line="15" Column="39" />
       <File FileName="AGSDocumentInfrastructureEF/Entities/EFAGSEntity.cs" Line="8" Column="2" />
-      <File FileName="AGSDocumentInfrastructureEF/EFFolderRepository.cs" Line="83" Column="98" />
+      <File FileName="AGSDocumentInfrastructureEF/EFFolderRepository.cs" Line="88" Column="27" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="14" Column="32" />
       <File FileName="AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj" Line="4" Column="36" />
+      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" Line="68" Column="21" />
+      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="20" Column="27" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFileToFolderCommand.cs" Line="1" Column="1" />
+      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,6 +19,7 @@
             <Node name="AGSDocumentCore" expanded="True">
               <Node name="Interfaces" expanded="True">
                 <Node name="Repositories" expanded="True" />
+                <Node name="Services" expanded="True" />
               </Node>
               <Node name="Models" expanded="True">
                 <Node name="DTOs" expanded="True">
@@ -28,6 +30,7 @@
                 <Node name="Entities" expanded="True" />
                 <Node name="Enums" expanded="True" />
               </Node>
+              <Node name="Services" expanded="True" />
             </Node>
             <Node name="AGSDocumentInfrastructureEF" expanded="True">
               <Node name="Entities" expanded="True" />
