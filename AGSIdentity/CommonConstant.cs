@@ -5,8 +5,10 @@ namespace AGSIdentity
     {
         public const string AGSAdminName = "admin";
         public const string FunctionClaimTypeConstant = "FunctionClaim";
+        public const string AGSFunctionClaimResouceConstant = "FunctionClaimResource";
         public const string AGSClientIdConstant = "AGS";
         public const string AGSIdentityScopeConstant = "ags.identity";
+        public const string AGSDocumentScopeConstant = "ags.document";
 
         
         // Please make sure function claim properties end with "ClaimConstant"

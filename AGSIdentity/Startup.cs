@@ -55,9 +55,12 @@ namespace AGSIdentity
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -273,7 +276,7 @@ namespace AGSIdentity
                 });
             });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -315,7 +318,11 @@ namespace AGSIdentity
             {
                 certPath = Environment.GetEnvironmentVariable("HOME") + @"\site\wwwroot";
             }
-
+            else
+            {
+                certPath = _env.ContentRootPath + certPath;
+            }
+            
             cert = new X509Certificate2(certPath, Configuration["cert_pw"], X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
             return cert;
         }

@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "S+O8jLLAFy4BheP5U/YiWNBs4/Fgv3OWayqTP6U2xeo+QHoGwjbTRxy0sgwbfo/vxlmF1fiRRqwSdRgG48++kw==",
+  "dgSpecHash": "k9OhN89higFajwGwzmz5UGWnOXvYfzERcg45Fe96L8qhrvDLEwJfZuT3uhkOOmGaN5K23sCnP6Llf7DH0trY5g==",
   "success": true,
   "projectFilePath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/timng/.nuget/packages/microsoft.extensions.configuration/6.0.0/microsoft.extensions.configuration.6.0.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/microsoft.extensions.configuration.abstractions/6.0.0/microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
+    "/Users/timng/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/Users/timng/.nuget/packages/system.numerics.vectors/4.4.0/system.numerics.vectors.4.4.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

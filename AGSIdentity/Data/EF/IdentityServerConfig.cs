@@ -9,12 +9,6 @@ namespace AGSIdentity.Data.EF
 {
     public class IdentityServerConfig
     {
-        
-        
-        private const string AGSDocumentScopeConstant = "ags.document";
-        private const string AGSFunctionClaimResouceConstant = "FunctionClaimResource";
-
-
         private IConfiguration _configuration { get; set; }
 
         public IdentityServerConfig(IConfiguration configuration)
@@ -26,7 +20,7 @@ namespace AGSIdentity.Data.EF
         {
             // add roles and role-related claims to identity resource
             var roleResource = new IdentityResource(
-                name: AGSFunctionClaimResouceConstant,
+                name: CommonConstant.AGSFunctionClaimResouceConstant,
                 displayName: "User's roles and role-related claims",
                 claimTypes: new[] { CommonConstant.FunctionClaimTypeConstant, JwtClaimTypes.Role });
 
@@ -56,7 +50,7 @@ namespace AGSIdentity.Data.EF
                                ,JwtClaimTypes.Subject
                                ,JwtClaimTypes.Email
                                ,JwtClaimTypes.Profile
-                               ,AGSFunctionClaimResouceConstant
+                               ,CommonConstant.AGSFunctionClaimResouceConstant
                             }
 
                         }
@@ -64,20 +58,20 @@ namespace AGSIdentity.Data.EF
                 }
                 ,
                 new ApiResource{
-                    Name = AGSDocumentScopeConstant,
+                    Name = CommonConstant.AGSDocumentScopeConstant,
 
                     Scopes =
                     {
                         new Scope()
                         {
-                            Name = AGSDocumentScopeConstant,
+                            Name = CommonConstant.AGSDocumentScopeConstant,
                             DisplayName = "Full access to ags.document",
                             UserClaims = {
                                 JwtClaimTypes.Id
                                ,JwtClaimTypes.Name
                                ,JwtClaimTypes.Email
                                ,JwtClaimTypes.Profile
-                               ,AGSFunctionClaimResouceConstant
+                               ,CommonConstant.AGSFunctionClaimResouceConstant
                             }
 
                         }
@@ -114,12 +108,12 @@ namespace AGSIdentity.Data.EF
 
                     // scopes that client has access to
                     AllowedScopes = {
-                        AGSDocumentScopeConstant
+                        CommonConstant.AGSDocumentScopeConstant
                         ,CommonConstant.AGSIdentityScopeConstant
                         ,IdentityServerConstants.StandardScopes.OpenId
                         ,IdentityServerConstants.StandardScopes.Profile
                         ,IdentityServerConstants.StandardScopes.Email
-                        ,AGSFunctionClaimResouceConstant
+                        ,CommonConstant.AGSFunctionClaimResouceConstant
                     },
                     
                     AllowAccessTokensViaBrowser = true,
@@ -139,12 +133,35 @@ namespace AGSIdentity.Data.EF
 
                     // scopes that client has access to
                     AllowedScopes = {
-                        AGSDocumentScopeConstant
+                        CommonConstant.AGSDocumentScopeConstant
                         ,CommonConstant.AGSIdentityScopeConstant
                         ,IdentityServerConstants.StandardScopes.OpenId
                         ,IdentityServerConstants.StandardScopes.Profile
                         ,IdentityServerConstants.StandardScopes.Email
-                        ,AGSFunctionClaimResouceConstant
+                        ,CommonConstant.AGSFunctionClaimResouceConstant
+                    },
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                },
+                new Client
+                {
+                    ClientId = CommonConstant.AGSClientIdConstant + "_Document",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    RequireConsent = false,
+                    // secret for authentication
+                    ClientSecrets =
+                    {
+                        new Secret(_configuration["ags_web_secret"].Sha256())
+                    },
+
+                    // scopes that client has access to
+                    AllowedScopes = {
+                        CommonConstant.AGSDocumentScopeConstant
+                        ,CommonConstant.AGSIdentityScopeConstant
+                        ,IdentityServerConstants.StandardScopes.OpenId
+                        ,IdentityServerConstants.StandardScopes.Profile
+                        ,IdentityServerConstants.StandardScopes.Email
+                        ,CommonConstant.AGSFunctionClaimResouceConstant
                     },
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,

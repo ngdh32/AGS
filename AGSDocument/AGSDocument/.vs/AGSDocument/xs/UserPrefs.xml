@@ -1,34 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/AGSIdentityService.cs">
     <Files>
-      <File FileName="AGSDocumentCore/Models/DTOs/QueryResults/GetAGSFolderQueryResult.cs" Line="34" Column="26" />
-      <File FileName="AGSDocumentCore/CommonUtility.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentInfrastructureEF/Entities/EFAGSEntity.cs" Line="8" Column="2" />
-      <File FileName="AGSDocumentInfrastructureEF/EFFolderRepository.cs" Line="164" Column="10" />
-      <File FileName="AGSDocumentCore/Models/Entities/AGSFolder.cs" Line="14" Column="32" />
-      <File FileName="AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj" Line="4" Column="36" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" Line="68" Column="21" />
-      <File FileName="AGSDocumentCore/Models/Entities/AGSFile.cs" Line="20" Column="27" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Commands/AddAGSFileToFolderCommand.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSIdentityService.cs" Line="7" Column="41" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IFileService.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IFileIndexingService.cs" Line="1" Column="1" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IParseDocumentService.cs" Line="8" Column="54" />
-      <File FileName="AGSDocumentParseDocument/IDocufyParseDocumentService.cs" Line="15" Column="10" />
-      <File FileName="AGSDocumentCore/Services/AGSIdentityService.cs" Line="6" Column="58" />
+      <File FileName="AGSDocumentCore/Services/AGSIdentityService.cs" Line="33" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGSDocument" expanded="True">
-            <Node name="AGSDocumentCore" expanded="True">
+            <Node name="AGSDocumentCore" expanded="True" selected="True">
               <Node name="Interfaces" expanded="True">
                 <Node name="Services" expanded="True" />
               </Node>
-              <Node name="Services" expanded="True">
-                <Node name="AGSIdentityService.cs" selected="True" />
-              </Node>
+              <Node name="Services" expanded="True" />
             </Node>
             <Node name="AGSDocumentParseDocument" expanded="True" />
           </Node>
