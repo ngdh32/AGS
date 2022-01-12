@@ -1,0 +1,26 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  ags-identity-dev:
+    build:
+      context: ./AGSIdentity/
+      dockerfile: Dockerfile
+    environment: 
+      - ASPNETCORE_URLS=https://+
+      - ASPNETCORE_ENVIRONMENT=docker
+      - ASPNETCORE_HTTPS_PORT=8964
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=115500
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+      - "8964:8964"
+    volumes: 
+      - ${HOME}/.aspnet/https:/https/
+  ags-web-dev:
+    build: 
+      context: ./AGSWeb/ags-web/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+    depends_on: 
+      - "ags-identity-dev"
