@@ -8,7 +8,6 @@
     ],
     "types": [
       "node",
-      "openid-connect"
     ],
     "allowJs": true,
     "skipLibCheck": true,

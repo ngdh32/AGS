@@ -1,8 +1,5 @@
-
-
-
-FROM node:latest
-
+FROM node:16
+ENV NODE_ENV=docker
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -20,4 +17,4 @@ COPY . /usr/src/app
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "docker" ]

@@ -19,11 +19,15 @@ export default class FunctionClaimsHelper {
     async GetFunctionClaims() : Promise<AGSResponse> {
         const result = new AGSResponse();
         const axios = require('axios');
+        console.log("Function Claim start")
         try {
             const url = `${api_url}/v${function_claims_version}/functionclaims`;
             const response = await axios.get(url, this.config)
+            console.log("Function Claim Response")
+            console.log({response})
             result.SetSuccessfulResponse(response);
         } catch (err) {
+            console.log({err})
             result.SetUnsuccessfulResponseWithError(err);
         }
         return result;
@@ -35,6 +39,7 @@ export default class FunctionClaimsHelper {
         const axios = require('axios');
         try {
             const url = `${api_url}/v${function_claims_version}/functionclaims`;
+            console.log({config: this.config})
             const response = await axios.post(url, functionclaim, this.config);
             result.SetSuccessfulResponse(response);
         } catch (err) {

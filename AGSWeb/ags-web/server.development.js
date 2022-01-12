@@ -18,6 +18,10 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(3000, (err) => {
     if (err) throw err;
+    console.log("Node Environment:" + process.env.NODE_ENV)
+    console.log(`NODE_TLS_REJECT_UNAUTHORIZED: ${process.env.NODE_TLS_REJECT_UNAUTHORIZED}`)
+    console.log("AGS Identity Url:" + process.env.ags_identity_authentication_url)
+    console.log("AGS Web Url:" + process.env.ags_web_host)
     console.log("> Server started on https://localhost:3000");
   });
 });

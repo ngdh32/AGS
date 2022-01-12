@@ -10,3 +10,4 @@ LICENSE
 .vscode
 *.pem
 .next
+.env.local

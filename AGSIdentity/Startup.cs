@@ -74,6 +74,7 @@ namespace AGSIdentity
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             string connectionString = Configuration.GetConnectionString("Database");
+            Console.WriteLine($"Connection String:{connectionString}");
 
             #region Setup Identity Server
             string database_type = Configuration["database_provider"];
@@ -101,8 +102,6 @@ namespace AGSIdentity
 
             });
 
-
-
             // Add identity server for OAuth 2.0
             services.AddTransient<IProfileService, IdentityProfileService>(); // customized IProfile servoce
 
@@ -111,6 +110,7 @@ namespace AGSIdentity
                 // set up the login page url
                 options.UserInteraction.LoginUrl = "/login";
                 options.UserInteraction.LogoutUrl = "/logout";
+                options.IssuerUri = Configuration["auth_url"];
             })
             .AddConfigurationStore(options =>
             {
@@ -144,11 +144,6 @@ namespace AGSIdentity
             {
                 options.Authority = Configuration["auth_url"];
                 options.Audience = CommonConstant.AGSIdentityScopeConstant;
-                //options.TokenValidationParameters = new TokenValidationParameters()
-                //{
-                //    ValidateIssuerSigningKey = false,
-                //    d
-                //};
                 options.BackchannelHttpHandler = GetJWTBearerTokenHandler();
                 options.RequireHttpsMetadata = false;
             });
@@ -399,6 +394,11 @@ namespace AGSIdentity
                         policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                         policy.RequireAssertion(context =>
                         {
+                            Console.WriteLine($"The count of User claims: {context.User.Claims.Count() }");
+                            foreach(var claim in context.User.Claims)
+                            {
+                                Console.WriteLine($"Claim: {claim.Type}~{claim.Value}");
+                            }
                             var hasClaim = context.User.HasClaim(claim =>
                                 claim.Type == CommonConstant.FunctionClaimTypeConstant
                                 && claim.Value == (string)claimValue);

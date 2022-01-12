@@ -6,7 +6,7 @@ import { AGSContext } from '../../helpers/common/agsContext'
 import axios from 'axios'
 import { GetLocalizedString } from '../../helpers/common/localizationHelper'
 import { resposne_success } from '../../config/identity'
-import {angePasswordProps } from '../../models/pages/identity/changePasswordProps';
+import { ChangePasswordProps } from '../../models/pages/identity/changePasswordProps';
 import { IncomingMessage } from 'http';
 import { ServerResponse } from 'http';
 import { GetStaticPropsResult, GetServerSidePropsResult } from 'next';

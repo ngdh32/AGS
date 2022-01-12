@@ -148,6 +148,7 @@ export async function getServerSideProps(context: { req: NextApiRequest; res: Ne
     const result = await InitializePageWithMaster(context.req, context.res, async () => {
         const functionClaimsHelper = new FunctionClaimsHelper(context.req, context.res);
         const functionClaimResult = await functionClaimsHelper.GetFunctionClaims();
+        
         if (CheckIfUnauthorizedResponse(functionClaimResult)){
             return {
                 errorCode: errorCodeNotAuthenticated,

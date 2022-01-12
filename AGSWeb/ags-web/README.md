@@ -1,6 +1,6 @@
 DEV:
 1. docker build -t ngdh32/ags-web-dev .
-2. docker run -p 3000:3000 --name ags-web-dev -d ngdh32/ags-web-dev
+2. docker run --rm -it -p 3000:3000 --name ags-web-dev ngdh32/ags-web-dev
 
 
 PRODUCTION:

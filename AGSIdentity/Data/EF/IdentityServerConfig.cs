@@ -115,7 +115,6 @@ namespace AGSIdentity.Data.EF
                         ,IdentityServerConstants.StandardScopes.Email
                         ,CommonConstant.AGSFunctionClaimResouceConstant
                     },
-                    
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     RequirePkce = true
