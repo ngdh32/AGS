@@ -7,8 +7,8 @@ namespace AGSDocumentCore.Interfaces.Services
     {
         public string UploadAGSFile(UploadAGSFileCommand uploadAGSFileRequest);
 
-        public byte[] GetAGSFileContent(string fileId);
+        public byte[] GetAGSFileContent(string filepath);
 
-        public void RemoveAGSFile(string fileId);
+        public void RemoveAGSFile(string filepath);
     }
 }

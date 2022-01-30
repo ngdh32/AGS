@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentInfrastructureEF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentParseDocument", "AGSDocumentParseDocument\AGSDocumentParseDocument.csproj", "{CF97404C-1450-4B9C-9E60-7157430C3C32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentGraphQL", "AGSDocumentGraphQL\AGSDocumentGraphQL.csproj", "{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentFileService", "AGSDocumentFileService\AGSDocumentFileService.csproj", "{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{CF97404C-1450-4B9C-9E60-7157430C3C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF97404C-1450-4B9C-9E60-7157430C3C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF97404C-1450-4B9C-9E60-7157430C3C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

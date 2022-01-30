@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lu8SZL6aZAaNMLtscxTWXt3pjxzpmBXKaJFql58XbkBtf2k1rHsxd/nvSAojgmLU/wC/qJW0lnm8uR7H0BTAAQ==",
+  "dgSpecHash": "eBGTdLVzRNfUV03iTaoyBv5TA4sOawwGK12F6bjv+Nnn446kpj2QTW2VfosIdTJf8EP+Z7hApaE1addEIvxn1Q==",
   "success": true,
   "projectFilePath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "/Users/timng/.nuget/packages/microsoft.extensions.logging.abstractions/5.0.0/microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.options/5.0.0/microsoft.extensions.options.5.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/timng/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/Users/timng/.nuget/packages/system.collections.immutable/5.0.0/system.collections.immutable.5.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",

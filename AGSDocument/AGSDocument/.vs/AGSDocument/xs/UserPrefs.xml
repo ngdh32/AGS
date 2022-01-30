@@ -1,24 +1,38 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/AGSIdentityService.cs">
+﻿<Properties StartupConfiguration="{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}|Default">
+  <MonoDevelop.Ide.ItemProperties.AGSDocumentFileService FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/FIleIndexingService.cs">
     <Files>
-      <File FileName="AGSDocumentCore/Services/AGSIdentityService.cs" Line="33" Column="40" />
+      <File FileName="AGSDocumentCore/Services/AGSIdentityService.cs" Line="48" Column="30" />
+      <File FileName="AGSDocumentParseDocument/ITextParseDocumentService.cs" Line="15" Column="10" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSIdentityService.cs" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Queries/AGSUser.cs" />
+      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" />
+      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSDocumentUpdateService.cs" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IFileIndexingService.cs" />
+      <File FileName="AGSDocumentFileService/FileService.cs" Line="21" Column="25" />
+      <File FileName="AGSDocumentCore/Services/FIleIndexingService.cs" Line="4" Column="60" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGSDocument" expanded="True">
-            <Node name="AGSDocumentCore" expanded="True" selected="True">
+            <Node name="AGSDocumentCore" expanded="True">
               <Node name="Interfaces" expanded="True">
                 <Node name="Services" expanded="True" />
               </Node>
-              <Node name="Services" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="FIleIndexingService.cs" selected="True" />
+              </Node>
             </Node>
+            <Node name="AGSDocumentFileService" expanded="True" />
             <Node name="AGSDocumentParseDocument" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.AGSDocumentGraphQL FirstBuild="True" PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

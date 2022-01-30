@@ -25,7 +25,7 @@ namespace AGSDocumentCore.Services
 
         public List<AGSFileQueryView> AGSFileIndexSearch(AGSFileIndexSearchQuery agsFileIndexSearchQuery)
         {
-            var users = _identityService.GetUsers();
+            var users = _identityService.GetUsers().Result;
             var user = users.FirstOrDefault(x => x.UserId == agsFileIndexSearchQuery.UserId);
             if (user == null)
                 return null;
@@ -67,7 +67,7 @@ namespace AGSDocumentCore.Services
         // just one level of children folders
         public AGSFolderQueryView GetAGSFolder(GetAGSFolderQuery getAGSFolderQuery)
         {
-            var users = _identityService.GetUsers();
+            var users = _identityService.GetUsers().Result;
 
             var retrievingUser = users.FirstOrDefault(x => x.UserId == getAGSFolderQuery.UserId);
             if (retrievingUser == null)
