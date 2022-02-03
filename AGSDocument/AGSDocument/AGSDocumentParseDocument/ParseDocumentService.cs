@@ -8,7 +8,7 @@ using iText.Kernel.Pdf.Canvas.Parser.Listener;
 
 namespace AGSDocumentParseDocument
 {
-    public class ITextParseDocumentService : IParseDocumentService
+    public class ParseDocumentService : IParseDocumentService
     {
         public ITextParseDocumentService()
         {

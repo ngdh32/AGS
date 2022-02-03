@@ -1,9 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "jCM9aO9iuMNSKENU3EbTU++JMo9U9PTk/UbijXy0D2H+TKbgy0brnaa5fuiNlgTd5Gn/SQN83uTSWAvcvm3+HQ==",
+  "dgSpecHash": "yyOEsn0KKXa6fOsXVSlZ27bwW/s271e4nW+h4lfPTG6S97QdHycbe6oi/Sv7ObLi/EPI+4BPMoFV0cr9qQCVpw==",
   "success": true,
   "projectFilePath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj",
   "expectedPackageFiles": [
+    "/Users/timng/.nuget/packages/j2n/2.0.0-beta-0017/j2n.2.0.0-beta-0017.nupkg.sha512",
+    "/Users/timng/.nuget/packages/lucene.net/4.8.0-beta00015/lucene.net.4.8.0-beta00015.nupkg.sha512",
+    "/Users/timng/.nuget/packages/lucene.net.analysis.common/4.8.0-beta00015/lucene.net.analysis.common.4.8.0-beta00015.nupkg.sha512",
+    "/Users/timng/.nuget/packages/lucene.net.queries/4.8.0-beta00015/lucene.net.queries.4.8.0-beta00015.nupkg.sha512",
+    "/Users/timng/.nuget/packages/lucene.net.queryparser/4.8.0-beta00015/lucene.net.queryparser.4.8.0-beta00015.nupkg.sha512",
+    "/Users/timng/.nuget/packages/lucene.net.sandbox/4.8.0-beta00015/lucene.net.sandbox.4.8.0-beta00015.nupkg.sha512",
+    "/Users/timng/.nuget/packages/microsoft.csharp/4.4.0/microsoft.csharp.4.4.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.configuration/6.0.0/microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.configuration.abstractions/6.0.0/microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",

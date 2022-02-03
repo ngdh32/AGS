@@ -1,4 +1,4 @@
-﻿<Properties StartupConfiguration="{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}|Default">
+﻿<Properties StartupConfiguration="{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AGSDocumentFileService FirstBuild="True" />
   <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/FIleIndexingService.cs">
     <Files>

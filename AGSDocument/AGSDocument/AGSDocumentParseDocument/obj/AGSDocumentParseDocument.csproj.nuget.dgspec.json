@@ -38,6 +38,22 @@
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
           "dependencies": {
+            "Lucene.Net": {
+              "target": "Package",
+              "version": "[4.8.0-beta00015, )"
+            },
+            "Lucene.Net.Analysis.Common": {
+              "target": "Package",
+              "version": "[4.8.0-beta00015, )"
+            },
+            "Lucene.Net.Queries": {
+              "target": "Package",
+              "version": "[4.8.0-beta00015, )"
+            },
+            "Lucene.Net.QueryParser": {
+              "target": "Package",
+              "version": "[4.8.0-beta00015, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[6.0.0, )"

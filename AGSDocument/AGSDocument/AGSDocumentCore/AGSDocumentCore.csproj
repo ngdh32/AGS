@@ -25,6 +25,10 @@
     <None Remove="Repositories\" />
     <None Remove="Microsoft.Extensions.Configuration" />
     <None Remove="Newtonsoft.Json" />
+    <None Remove="Lucene.Net" />
+    <None Remove="Lucene.Net.QueryParser" />
+    <None Remove="Lucene.Net.Analysis.Common" />
+    <None Remove="Lucene.Net.Queries" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -43,5 +47,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Lucene.Net" Version="4.8.0-beta00015" />
+    <PackageReference Include="Lucene.Net.QueryParser" Version="4.8.0-beta00015" />
+    <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00015" />
+    <PackageReference Include="Lucene.Net.Queries" Version="4.8.0-beta00015" />
   </ItemGroup>
 </Project>
