@@ -5,7 +5,7 @@ namespace AGSDocumentCore.Interfaces.Services
 {
     public interface IFileIndexingService
     {
-        public void FileIndexing(string filename, string fileContent);
+        public void FileIndexing(string fileId, string filename, string fileContent);
 
         public List<string> FileSearchingByContent(string keyword);
     }

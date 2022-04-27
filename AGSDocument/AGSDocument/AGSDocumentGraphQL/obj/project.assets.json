@@ -284,6 +284,78 @@
           "lib/net5.0/HotChocolate.Validation.dll": {}
         }
       },
+      "J2N/2.0.0-beta-0017": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/J2N.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/J2N.dll": {}
+        }
+      },
+      "Lucene.Net/4.8.0-beta00015": {
+        "type": "package",
+        "dependencies": {
+          "J2N": "2.0.0-beta-0017",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.dll": {}
+        }
+      },
+      "Lucene.Net.Analysis.Common/4.8.0-beta00015": {
+        "type": "package",
+        "dependencies": {
+          "Lucene.Net": "4.8.0-beta00015"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll": {}
+        }
+      },
+      "Lucene.Net.Queries/4.8.0-beta00015": {
+        "type": "package",
+        "dependencies": {
+          "Lucene.Net": "4.8.0-beta00015"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.Queries.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.Queries.dll": {}
+        }
+      },
+      "Lucene.Net.QueryParser/4.8.0-beta00015": {
+        "type": "package",
+        "dependencies": {
+          "Lucene.Net.Analysis.Common": "4.8.0-beta00015",
+          "Lucene.Net.Queries": "4.8.0-beta00015",
+          "Lucene.Net.Sandbox": "4.8.0-beta00015"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.QueryParser.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.QueryParser.dll": {}
+        }
+      },
+      "Lucene.Net.Sandbox/4.8.0-beta00015": {
+        "type": "package",
+        "dependencies": {
+          "Lucene.Net": "4.8.0-beta00015"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.Sandbox.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.Sandbox.dll": {}
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
         "type": "package",
         "compile": {
@@ -291,6 +363,31 @@
         },
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Primitives": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         }
       },
       "Microsoft.Extensions.DependencyInjection/3.1.4": {
@@ -348,16 +445,22 @@
           "lib/netcoreapp3.1/Microsoft.Extensions.Options.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/3.1.4": {
+      "Microsoft.Extensions.Primitives/6.0.0": {
         "type": "package",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {}
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {}
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Newtonsoft.Json/12.0.3": {
+      "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -402,6 +505,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "System.Runtime.CompilerServices.Unsafe/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/System.Runtime.CompilerServices.Unsafe.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/System.Runtime.CompilerServices.Unsafe.dll": {}
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
       "System.Text.Json/4.7.0": {
         "type": "package",
         "compile": {
@@ -427,6 +542,24 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "AGSDocumentCore/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Lucene.Net": "4.8.0-beta00015",
+          "Lucene.Net.Analysis.Common": "4.8.0-beta00015",
+          "Lucene.Net.Queries": "4.8.0-beta00015",
+          "Lucene.Net.QueryParser": "4.8.0-beta00015",
+          "Microsoft.Extensions.Configuration": "6.0.0",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "bin/placeholder/AGSDocumentCore.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AGSDocumentCore.dll": {}
         }
       }
     }
@@ -884,6 +1017,148 @@
         "strawberryshake-signet.png"
       ]
     },
+    "J2N/2.0.0-beta-0017": {
+      "sha512": "e4pqijIEpLXaHEuYW2PHGNXNWaBn2GzRQNSSbS0Z5BHIHWzZgZU7GbkfjxKQrd0R9ZYSmWSOvMXcGu3xpbf8gg==",
+      "type": "package",
+      "path": "j2n/2.0.0-beta-0017",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "j2n-icon-100x100.png",
+        "j2n.2.0.0-beta-0017.nupkg.sha512",
+        "j2n.nuspec",
+        "lib/net40/J2N.dll",
+        "lib/net40/J2N.xml",
+        "lib/net45/J2N.dll",
+        "lib/net45/J2N.xml",
+        "lib/net5.0/J2N.dll",
+        "lib/net5.0/J2N.xml",
+        "lib/net6.0/J2N.dll",
+        "lib/net6.0/J2N.xml",
+        "lib/netcoreapp3.0/J2N.dll",
+        "lib/netcoreapp3.0/J2N.xml",
+        "lib/netstandard2.0/J2N.dll",
+        "lib/netstandard2.0/J2N.xml",
+        "lib/netstandard2.1/J2N.dll",
+        "lib/netstandard2.1/J2N.xml"
+      ]
+    },
+    "Lucene.Net/4.8.0-beta00015": {
+      "sha512": "ssGeodtg4DUoOFhjcZlfsIxsQrTMC8krg5DRVwqo+N8ymZX48FaCFi7W2AObUcSGRIYo97lxM2nxccdEcg/ipw==",
+      "type": "package",
+      "path": "lucene.net/4.8.0-beta00015",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "analyzers/dotnet/cs/Lucene.Net.CodeAnalysis.CSharp.dll",
+        "analyzers/dotnet/vb/Lucene.Net.CodeAnalysis.VisualBasic.dll",
+        "lib/net45/Lucene.Net.dll",
+        "lib/net45/Lucene.Net.xml",
+        "lib/net6.0/Lucene.Net.dll",
+        "lib/net6.0/Lucene.Net.xml",
+        "lib/netstandard2.0/Lucene.Net.dll",
+        "lib/netstandard2.0/Lucene.Net.xml",
+        "lib/netstandard2.1/Lucene.Net.dll",
+        "lib/netstandard2.1/Lucene.Net.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.4.8.0-beta00015.nupkg.sha512",
+        "lucene.net.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "Lucene.Net.Analysis.Common/4.8.0-beta00015": {
+      "sha512": "Q2VaJ51dWlRKRnHn+flzJmrZnySCwtdoqmpLkZ2bH/UEyxCdwLHLr6J8l1U1xUls88aV1q+cH4I9IYrB7j3KUQ==",
+      "type": "package",
+      "path": "lucene.net.analysis.common/4.8.0-beta00015",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "lib/net45/Lucene.Net.Analysis.Common.dll",
+        "lib/net45/Lucene.Net.Analysis.Common.xml",
+        "lib/net6.0/Lucene.Net.Analysis.Common.dll",
+        "lib/net6.0/Lucene.Net.Analysis.Common.xml",
+        "lib/netstandard2.0/Lucene.Net.Analysis.Common.dll",
+        "lib/netstandard2.0/Lucene.Net.Analysis.Common.xml",
+        "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll",
+        "lib/netstandard2.1/Lucene.Net.Analysis.Common.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.analysis.common.4.8.0-beta00015.nupkg.sha512",
+        "lucene.net.analysis.common.nuspec"
+      ]
+    },
+    "Lucene.Net.Queries/4.8.0-beta00015": {
+      "sha512": "hELB0SP88M4nWP1aWbtT2Ch0nB87UobMqdbzc6b+ZZz4aMNMRWb6tub1+zDqzOsa+vggnBWl33MHSqzdkkfUPg==",
+      "type": "package",
+      "path": "lucene.net.queries/4.8.0-beta00015",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "lib/net45/Lucene.Net.Queries.dll",
+        "lib/net45/Lucene.Net.Queries.xml",
+        "lib/net6.0/Lucene.Net.Queries.dll",
+        "lib/net6.0/Lucene.Net.Queries.xml",
+        "lib/netstandard2.0/Lucene.Net.Queries.dll",
+        "lib/netstandard2.0/Lucene.Net.Queries.xml",
+        "lib/netstandard2.1/Lucene.Net.Queries.dll",
+        "lib/netstandard2.1/Lucene.Net.Queries.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.queries.4.8.0-beta00015.nupkg.sha512",
+        "lucene.net.queries.nuspec"
+      ]
+    },
+    "Lucene.Net.QueryParser/4.8.0-beta00015": {
+      "sha512": "lIM0JLHCr8SbOWllop85U9Ui9cgZyh+kH3WGESUHCjO2eOJCkvf8Y+0q2HSHMJkWiBWA5h5bmLR+SgCem4xB8A==",
+      "type": "package",
+      "path": "lucene.net.queryparser/4.8.0-beta00015",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "lib/net45/Lucene.Net.QueryParser.dll",
+        "lib/net45/Lucene.Net.QueryParser.xml",
+        "lib/net6.0/Lucene.Net.QueryParser.dll",
+        "lib/net6.0/Lucene.Net.QueryParser.xml",
+        "lib/netstandard2.0/Lucene.Net.QueryParser.dll",
+        "lib/netstandard2.0/Lucene.Net.QueryParser.xml",
+        "lib/netstandard2.1/Lucene.Net.QueryParser.dll",
+        "lib/netstandard2.1/Lucene.Net.QueryParser.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.queryparser.4.8.0-beta00015.nupkg.sha512",
+        "lucene.net.queryparser.nuspec"
+      ]
+    },
+    "Lucene.Net.Sandbox/4.8.0-beta00015": {
+      "sha512": "YiiFNH0z6bdPxGExlW3kwSeyRajHPxur62XkdDESske3aEE/mSL4kVmVX1wKhkYAys7I/G1GS4CR8orfWwBONg==",
+      "type": "package",
+      "path": "lucene.net.sandbox/4.8.0-beta00015",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "lib/net45/Lucene.Net.Sandbox.dll",
+        "lib/net45/Lucene.Net.Sandbox.xml",
+        "lib/net6.0/Lucene.Net.Sandbox.dll",
+        "lib/net6.0/Lucene.Net.Sandbox.xml",
+        "lib/netstandard2.0/Lucene.Net.Sandbox.dll",
+        "lib/netstandard2.0/Lucene.Net.Sandbox.xml",
+        "lib/netstandard2.1/Lucene.Net.Sandbox.dll",
+        "lib/netstandard2.1/Lucene.Net.Sandbox.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.sandbox.4.8.0-beta00015.nupkg.sha512",
+        "lucene.net.sandbox.nuspec"
+      ]
+    },
     "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
       "sha512": "1Am6l4Vpn3/K32daEqZI+FFr96OlZkgwK2LcT3pZ2zWubR5zTPW3/FkO1Rat9kb7oQOa4rxgl9LJHc5tspCWfg==",
       "type": "package",
@@ -906,6 +1181,44 @@
         "ref/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Microsoft.Extensions.Configuration/6.0.0": {
+      "sha512": "tq2wXyh3fL17EMF2bXgRhU7JrbO3on93MRKYxzz4JzzvuGSA1l0W3GI9/tl8EO89TH+KWEymP7bcFway6z9fXg==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Extensions.Configuration.dll",
+        "lib/net461/Microsoft.Extensions.Configuration.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.xml",
+        "microsoft.extensions.configuration.6.0.0.nupkg.sha512",
+        "microsoft.extensions.configuration.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
+      "sha512": "qWzV9o+ZRWq+pGm+1dF+R7qTgTYoXvbyowRoBxQJGfqTpqDun2eteerjRQhq5PQ/14S+lqto3Ft4gYaRyl4rdQ==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Extensions.Configuration.Abstractions.dll",
+        "lib/net461/Microsoft.Extensions.Configuration.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
+        "microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "Microsoft.Extensions.DependencyInjection/3.1.4": {
@@ -990,26 +1303,35 @@
         "microsoft.extensions.options.nuspec"
       ]
     },
-    "Microsoft.Extensions.Primitives/3.1.4": {
-      "sha512": "tLR9n5ltwA56nr1t5M6q5IBfGLXtMS+XgumtqVENmtPQOWUD+m0Kgo1U6GWr06Y875WUN3sOGnmqkvW4an7fYA==",
+    "Microsoft.Extensions.Primitives/6.0.0": {
+      "sha512": "9+PnzmQFfEFNR9J2aDTfJGGupShHjOuGw4VUv+JB044biSHrnmCIMD+mJHmb2H7YryrfBEXDurxQ47gJZdCKNQ==",
       "type": "package",
-      "path": "microsoft.extensions.primitives/3.1.4",
+      "path": "microsoft.extensions.primitives/6.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Primitives.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/Microsoft.Extensions.Primitives.dll",
+        "lib/net461/Microsoft.Extensions.Primitives.xml",
+        "lib/net6.0/Microsoft.Extensions.Primitives.dll",
+        "lib/net6.0/Microsoft.Extensions.Primitives.xml",
         "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll",
         "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
-        "microsoft.extensions.primitives.3.1.4.nupkg.sha512",
-        "microsoft.extensions.primitives.nuspec"
+        "microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+        "microsoft.extensions.primitives.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
-    "Newtonsoft.Json/12.0.3": {
-      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "type": "package",
-      "path": "newtonsoft.json/12.0.3",
+      "path": "newtonsoft.json/13.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1028,11 +1350,7 @@
         "lib/netstandard1.3/Newtonsoft.Json.xml",
         "lib/netstandard2.0/Newtonsoft.Json.dll",
         "lib/netstandard2.0/Newtonsoft.Json.xml",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
@@ -1198,6 +1516,31 @@
         "version.txt"
       ]
     },
+    "System.Runtime.CompilerServices.Unsafe/6.0.0": {
+      "sha512": "/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
+      "type": "package",
+      "path": "system.runtime.compilerservices.unsafe/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/net461/System.Runtime.CompilerServices.Unsafe.xml",
+        "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/net6.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "lib/netcoreapp3.1/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/netcoreapp3.1/System.Runtime.CompilerServices.Unsafe.xml",
+        "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+        "system.runtime.compilerservices.unsafe.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "System.Text.Json/4.7.0": {
       "sha512": "IPq/x/d5nAcnD3vIyM3AbPOaTgcqrh0AqPSx7U53UFu3M6k1TH1u/eXc9/h4jm/3mpP1WRUpevlPY4PACd7AWw==",
       "type": "package",
@@ -1276,10 +1619,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "AGSDocumentCore/1.0.0": {
+      "type": "project",
+      "path": "../AGSDocumentCore/AGSDocumentCore.csproj",
+      "msbuildProject": "../AGSDocumentCore/AGSDocumentCore.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "AGSDocumentCore >= 1.0.0",
       "HotChocolate >= 12.5.0",
       "HotChocolate.AspNetCore >= 12.5.0"
     ]
@@ -1308,7 +1657,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj": {
+              "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

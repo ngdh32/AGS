@@ -18,4 +18,7 @@
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)hotchocolate.aspnetcore/12.5.0/build/HotChocolate.AspNetCore.props" Condition="Exists('$(NuGetPackageRoot)hotchocolate.aspnetcore/12.5.0/build/HotChocolate.AspNetCore.props')" />
   </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgLucene_Net Condition=" '$(PkgLucene_Net)' == '' ">/Users/timng/.nuget/packages/lucene.net/4.8.0-beta00015</PkgLucene_Net>
+  </PropertyGroup>
 </Project>

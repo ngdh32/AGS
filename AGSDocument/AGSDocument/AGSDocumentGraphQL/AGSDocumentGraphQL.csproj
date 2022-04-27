@@ -7,9 +7,26 @@
   <ItemGroup>
     <None Remove="HotChocolate" />
     <None Remove="HotChocolate.AspNetCore" />
+    <None Remove="Types\" />
+    <None Remove="Models\Types\" />
+    <None Remove="Models\Queries\" />
+    <None Remove="Models\Mutations\" />
+    <None Remove="Resolvers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HotChocolate" Version="12.5.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="12.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Models\Types\" />
+    <Folder Include="Models\Queries\" />
+    <Folder Include="Models\Mutations\" />
+    <Folder Include="Resolvers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AGSDocumentCore\AGSDocumentCore.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

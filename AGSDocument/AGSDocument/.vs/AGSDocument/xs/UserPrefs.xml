@@ -1,38 +1,33 @@
 ﻿<Properties StartupConfiguration="{1638DC50-0CDD-4F8C-BBFE-A37B4A645EA9}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.ItemProperties.AGSDocumentFileService FirstBuild="True" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentCore/Services/FIleIndexingService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AGSDocumentGraphQL/Models/Queries/FolderQueryType.cs">
     <Files>
-      <File FileName="AGSDocumentCore/Services/AGSIdentityService.cs" Line="48" Column="30" />
-      <File FileName="AGSDocumentParseDocument/ITextParseDocumentService.cs" Line="15" Column="10" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSIdentityService.cs" />
-      <File FileName="AGSDocumentCore/Models/DTOs/Queries/AGSUser.cs" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentQueryService.cs" />
-      <File FileName="AGSDocumentCore/Services/AGSDocumentUpdateService.cs" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IAGSDocumentUpdateService.cs" />
-      <File FileName="AGSDocumentCore/Interfaces/Services/IFileIndexingService.cs" />
-      <File FileName="AGSDocumentFileService/FileService.cs" Line="21" Column="25" />
-      <File FileName="AGSDocumentCore/Services/FIleIndexingService.cs" Line="4" Column="60" />
+      <File FileName="AGSDocumentFileService/FileService.cs" Line="20" Column="74" />
+      <File FileName="AGSDocumentCore/Models/DTOs/Commands/UploadAGSFileCommand.cs" />
+      <File FileName="AGSDocumentCore/Interfaces/Services/IFileService.cs" />
+      <File FileName="AGSDocumentGraphQL/appsettings.json" />
+      <File FileName="AGSDocumentTest/UnitTest1.cs" Line="15" Column="1" />
+      <File FileName="AGSDocumentGraphQL/Controllers/WeatherForecastController.cs" Line="26" Column="6" />
+      <File FileName="AGSDocumentGraphQL/Models/Queries/FolderQueryType.cs" Line="13" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AGSDocument" expanded="True">
-            <Node name="AGSDocumentCore" expanded="True">
-              <Node name="Interfaces" expanded="True">
-                <Node name="Services" expanded="True" />
-              </Node>
-              <Node name="Services" expanded="True">
-                <Node name="FIleIndexingService.cs" selected="True" />
+            <Node name="AGSDocumentGraphQL" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Queries" expanded="True">
+                  <Node name="FolderQueryType.cs" selected="True" />
+                </Node>
               </Node>
             </Node>
-            <Node name="AGSDocumentFileService" expanded="True" />
-            <Node name="AGSDocumentParseDocument" expanded="True" />
+            <Node name="AGSDocumentTest" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.AGSDocumentGraphQL FirstBuild="True" PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.AGSDocumentGraphQL PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

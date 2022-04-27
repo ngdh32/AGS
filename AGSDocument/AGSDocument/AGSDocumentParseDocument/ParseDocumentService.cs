@@ -10,7 +10,7 @@ namespace AGSDocumentParseDocument
 {
     public class ParseDocumentService : IParseDocumentService
     {
-        public ITextParseDocumentService()
+        public ParseDocumentService()
         {
         }
 

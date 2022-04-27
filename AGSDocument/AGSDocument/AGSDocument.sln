@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentGraphQL", "AGSDo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentFileService", "AGSDocumentFileService\AGSDocumentFileService.csproj", "{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGSDocumentTest", "AGSDocumentTest\AGSDocumentTest.csproj", "{6C15D44C-44FD-4449-928A-75BB587A0CC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5168D910-CA5C-4EBF-811E-6F5AB19FDD0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C15D44C-44FD-4449-928A-75BB587A0CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C15D44C-44FD-4449-928A-75BB587A0CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C15D44C-44FD-4449-928A-75BB587A0CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C15D44C-44FD-4449-928A-75BB587A0CC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

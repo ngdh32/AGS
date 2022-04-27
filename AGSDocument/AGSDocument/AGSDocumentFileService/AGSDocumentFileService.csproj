@@ -9,8 +9,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Entities\" />
+    <None Remove="Azure.Storage.Blobs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.11.0" />
   </ItemGroup>
 </Project>
