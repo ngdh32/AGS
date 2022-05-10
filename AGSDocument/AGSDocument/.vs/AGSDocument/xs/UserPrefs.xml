@@ -7,7 +7,7 @@
       <File FileName="AGSDocumentGraphQL/appsettings.json" />
       <File FileName="AGSDocumentTest/UnitTest1.cs" Line="15" Column="1" />
       <File FileName="AGSDocumentGraphQL/Controllers/WeatherForecastController.cs" Line="26" Column="6" />
-      <File FileName="AGSDocumentGraphQL/Models/Queries/FolderQueryType.cs" Line="13" Column="1" />
+      <File FileName="AGSDocumentGraphQL/Models/Queries/FolderQueryType.cs" Line="16" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
