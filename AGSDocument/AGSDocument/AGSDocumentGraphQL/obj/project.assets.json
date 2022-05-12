@@ -1646,7 +1646,7 @@
       "outputPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/timng/.config/NuGet/NuGet.Config"
+        "/Users/timng/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"

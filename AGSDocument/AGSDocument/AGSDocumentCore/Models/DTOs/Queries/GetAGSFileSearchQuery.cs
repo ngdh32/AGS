@@ -3,7 +3,7 @@ using AGSDocumentCore.Models.Enums;
 
 namespace AGSDocumentCore.Models.DTOs.Queries
 {
-    public class AGSFileIndexSearchQuery
+    public class GetAGSFileSearchQuery
     {
         public string Keyword { get; init; }
         public string UserId { get; init; }

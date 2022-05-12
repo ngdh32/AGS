@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AGSDocumentCore.Models.DTOs.Queries
+namespace AGSDocumentCore.Models.DTOs.Services
 {
-    public class AGSUser
+    public class AGSUserViewModel
     {
         public string UserId { get; init; }
         public string Username { get; init; }
-        public List<AGSDepartment> Departments { get; init; }
+        public List<AGSDepartmentViewModel> Departments { get; init; }
     }
 
-    public class AGSDepartment
+    public class AGSDepartmentViewModel
     {
         public string DepartmentId { get; init; }
         public string DepartmentName { get; init; }

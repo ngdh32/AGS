@@ -9,6 +9,6 @@ namespace AGSDocumentCore.Interfaces.Services
     {
         public AGSFolderQueryView GetAGSFolder(GetAGSFolderQuery getAGSFolderQuery);
 
-        public List<AGSFileQueryView> AGSFileIndexSearch(AGSFileIndexSearchQuery agsFileIndexSearchQuery);
+        public List<AGSFileQueryView> AGSFileIndexSearch(GetAGSFileSearchQuery agsFileIndexSearchQuery);
     }
 }

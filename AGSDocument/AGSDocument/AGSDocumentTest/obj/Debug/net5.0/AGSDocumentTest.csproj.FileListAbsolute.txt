@@ -96,3 +96,4 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentTest/obj/Debug/net5.0/ref/AGSDocumentTest.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentTest/obj/Debug/net5.0/AGSDocumentTest.pdb
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentTest/obj/Debug/net5.0/AGSDocumentTest.genruntimeconfig.cache
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentTest/obj/Debug/net5.0/AGSDocumentTest.csproj.AssemblyReference.cache

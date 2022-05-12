@@ -1,5 +1,5 @@
 ﻿using System;
-namespace AGSDocumentCore.Models.DTOs.QueryResults
+namespace AGSDocumentCore.Models.DTOs.Services
 {
     public class AGSUserResponse<T>
     {

@@ -14,7 +14,7 @@
         "outputPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/timng/.config/NuGet/NuGet.Config"
+          "/Users/timng/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.1"

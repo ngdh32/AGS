@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AGSDocumentCore.Interfaces.Services;
-using AGSDocumentCore.Models.DTOs.Queries;
-using AGSDocumentCore.Models.DTOs.QueryResults;
+using AGSDocumentCore.Models.DTOs.Services;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -26,7 +25,7 @@ namespace AGSDocumentCore.Services
             _credentials.Add("scope", configuration["AGSIdentityScope"]);
         }
 
-        public async Task<List<AGSUser>> GetUsers()
+        public async Task<List<AGSUserViewModel>> GetUsers()
         {
             HttpRequestMessage tokenRequest = new HttpRequestMessage(HttpMethod.Post, $"{_agsIdentityUrl}/connect/token");
 
@@ -47,7 +46,7 @@ namespace AGSDocumentCore.Services
                     HttpRequestMessage usersRequest = new HttpRequestMessage(HttpMethod.Get, $"{_agsIdentityUrl}/api/v1/users");
                     usersRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.access_token);
                     var usersResponse = await _httpClient.SendAsync(usersRequest);
-                    var userResult = JsonConvert.DeserializeObject<AGSUserResponse<List<AGSUser>>>(await usersResponse.Content.ReadAsStringAsync());
+                    var userResult = JsonConvert.DeserializeObject<AGSUserResponse<List<AGSUserViewModel>>>(await usersResponse.Content.ReadAsStringAsync());
                     return userResult.Data;
                 }
                 else

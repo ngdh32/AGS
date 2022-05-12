@@ -5,6 +5,7 @@ using AGSDocumentCore.Interfaces.Repositories;
 using AGSDocumentCore.Interfaces.Services;
 using AGSDocumentCore.Models.DTOs.Queries;
 using AGSDocumentCore.Models.DTOs.QueryResults;
+using AGSDocumentCore.Models.DTOs.Services;
 using AGSDocumentCore.Models.Entities;
 
 namespace AGSDocumentCore.Services
@@ -23,7 +24,7 @@ namespace AGSDocumentCore.Services
             _identityService = identityService;
         }
 
-        public List<AGSFileQueryView> AGSFileIndexSearch(AGSFileIndexSearchQuery agsFileIndexSearchQuery)
+        public List<AGSFileQueryView> AGSFileIndexSearch(GetAGSFileSearchQuery agsFileIndexSearchQuery)
         {
             var users = _identityService.GetUsers().Result;
             var user = users.FirstOrDefault(x => x.UserId == agsFileIndexSearchQuery.UserId);
@@ -127,7 +128,7 @@ namespace AGSDocumentCore.Services
             return result;
         }
 
-        private bool CheckIfUserHasPermissionToAccess(AGSUser user, List<AGSPermission> permissions)
+        private bool CheckIfUserHasPermissionToAccess(AGSUserViewModel user, List<AGSPermission> permissions)
         {
             var result = permissions.Any(x => user.Departments.Any(y => y.DepartmentId == x.DepartmentId));
             return result;
