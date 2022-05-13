@@ -8,6 +8,5 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/Debug/netstandard2.1/AGSDocumentFileService.AssemblyInfoInputs.cache
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/Debug/netstandard2.1/AGSDocumentFileService.AssemblyInfo.cs
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/Debug/netstandard2.1/AGSDocumentFileService.csproj.CoreCompileInputs.cache
-/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/Debug/netstandard2.1/AGSDocumentFileService.csproj.CopyComplete
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/Debug/netstandard2.1/AGSDocumentFileService.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/Debug/netstandard2.1/AGSDocumentFileService.pdb

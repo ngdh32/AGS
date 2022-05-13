@@ -119,16 +119,6 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "dependencies": {
-            "HotChocolate": {
-              "target": "Package",
-              "version": "[12.5.0, )"
-            },
-            "HotChocolate.AspNetCore": {
-              "target": "Package",
-              "version": "[12.5.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

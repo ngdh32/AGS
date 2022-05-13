@@ -8,6 +8,5 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/Debug/netstandard2.1/AGSDocumentInfrastructureEF.AssemblyInfoInputs.cache
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/Debug/netstandard2.1/AGSDocumentInfrastructureEF.AssemblyInfo.cs
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/Debug/netstandard2.1/AGSDocumentInfrastructureEF.csproj.CoreCompileInputs.cache
-/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/Debug/netstandard2.1/AGSDocumentInfrastructureEF.csproj.CopyComplete
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/Debug/netstandard2.1/AGSDocumentInfrastructureEF.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/Debug/netstandard2.1/AGSDocumentInfrastructureEF.pdb
