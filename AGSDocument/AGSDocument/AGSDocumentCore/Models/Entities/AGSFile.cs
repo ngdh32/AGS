@@ -13,6 +13,7 @@ namespace AGSDocumentCore.Models.Entities
 
         public void UpdateFile(string name, string fileExtension, string description, int sizeInByte, string createdBy)
         {
+            // add validation here...
             this.Name = name;
             this.FileExtension = fileExtension;
             this.Description = description;
@@ -23,6 +24,7 @@ namespace AGSDocumentCore.Models.Entities
 
         public AGSFile(string id, string name, string description, string fileExtension, int sizeInByte, string filePath, string createdBy, DateTime createdDate)
         {
+            // add validation here...
             this.Id = id;
             this.Name = name;
             this.FileExtension = fileExtension;
@@ -35,6 +37,7 @@ namespace AGSDocumentCore.Models.Entities
 
         public AGSFile(string name, string description, string fileExtension, int sizeInByte, string filePath, string createdBy)
         {
+            // add validation here...
             this.Name = name;
             this.FileExtension = fileExtension;
             this.Description = description;

@@ -10,3 +10,4 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentParseDocument/obj/Debug/netstandard2.1/AGSDocumentParseDocument.csproj.CoreCompileInputs.cache
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentParseDocument/obj/Debug/netstandard2.1/AGSDocumentParseDocument.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentParseDocument/obj/Debug/netstandard2.1/AGSDocumentParseDocument.pdb
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentParseDocument/obj/Debug/netstandard2.1/AGSDocumentParseDocument.csproj.CopyComplete

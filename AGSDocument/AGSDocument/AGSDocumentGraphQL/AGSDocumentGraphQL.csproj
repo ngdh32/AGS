@@ -25,4 +25,7 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GraphQL" Version="5.2.0" />
+  </ItemGroup>
 </Project>

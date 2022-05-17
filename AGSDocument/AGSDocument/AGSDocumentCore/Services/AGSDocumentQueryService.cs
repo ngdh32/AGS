@@ -65,7 +65,6 @@ namespace AGSDocumentCore.Services
             return result;
         }
 
-        // just one level of children folders
         public AGSFolderQueryView GetAGSFolder(GetAGSFolderQuery getAGSFolderQuery)
         {
             var users = _identityService.GetUsers().Result;
@@ -83,24 +82,7 @@ namespace AGSDocumentCore.Services
                 return null;
 
             var createdUsername = users.FirstOrDefault(x => x.UserId == folder.CreatedBy)?.Username ?? folder.CreatedBy;
-            var childrenFolders = new List<AGSChildrenFolderQueryView>();
-            foreach (var childrenFolder in folder.ChildrenFolders)
-            {
-                var childrenFolderPermissionChecking = CheckIfUserHasPermissionToAccess(retrievingUser, childrenFolder.Permissions.ToList());
-                if (!childrenFolderPermissionChecking)
-                    continue;
-
-                var childrenFolderCreatedUsername = users.FirstOrDefault(x => x.UserId == childrenFolder.CreatedBy)?.Username ?? childrenFolder.CreatedBy;
-                childrenFolders.Add(new AGSChildrenFolderQueryView()
-                {
-                    FolderId = childrenFolder.Id,
-                    Name = childrenFolder.Name,
-                    Description = childrenFolder.Description,
-                    CreatedDate = childrenFolder.CreatedDate,
-                    CreatedUsername = childrenFolderCreatedUsername,
-                    Permissions = childrenFolder.Permissions.ToList()
-                });
-            }
+            var childrenFolderIds = folder.ChildrenFolders.Where(x => CheckIfUserHasPermissionToAccess(retrievingUser, x.Permissions.ToList())).Select(y => y.Id).ToList();
             var files = new List<AGSFileQueryView>();
             foreach (var file in folder.Files)
             {
@@ -122,7 +104,7 @@ namespace AGSDocumentCore.Services
                 CreatedDate = folder.CreatedDate,
                 CreatedUsername = createdUsername,
                 Permissions = folder.Permissions.ToList(),
-                ChildrenFolders = childrenFolders,
+                ChildrenFolderIds = childrenFolderIds,
                 Files = files
             };
             return result;

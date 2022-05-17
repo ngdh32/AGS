@@ -1,19 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "EdjODWOoqJtPiMzWa+J7J3LNRRcqw0lmmVJmSqBH3HAe7IgFVeEGu5nESyqgNxIIik4bwZR93Lj8AkVPG/kzPw==",
+  "dgSpecHash": "MhFApZehrSHLe+1ZROBEVnvahIo4pPicA0GknL+J65Wz1miqJALIUMPheBLeYLM29ALvjVTUnsPLS5Eks66dMQ==",
   "success": true,
   "projectFilePath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/AGSDocumentGraphQL.csproj",
   "expectedPackageFiles": [
+    "/Users/timng/.nuget/packages/graphql/5.2.0/graphql.5.2.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/graphql-parser/8.0.0/graphql-parser.8.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/j2n/2.0.0-beta-0017/j2n.2.0.0-beta-0017.nupkg.sha512",
     "/Users/timng/.nuget/packages/lucene.net/4.8.0-beta00015/lucene.net.4.8.0-beta00015.nupkg.sha512",
     "/Users/timng/.nuget/packages/lucene.net.analysis.common/4.8.0-beta00015/lucene.net.analysis.common.4.8.0-beta00015.nupkg.sha512",
     "/Users/timng/.nuget/packages/lucene.net.queries/4.8.0-beta00015/lucene.net.queries.4.8.0-beta00015.nupkg.sha512",
     "/Users/timng/.nuget/packages/lucene.net.queryparser/4.8.0-beta00015/lucene.net.queryparser.4.8.0-beta00015.nupkg.sha512",
     "/Users/timng/.nuget/packages/lucene.net.sandbox/4.8.0-beta00015/lucene.net.sandbox.4.8.0-beta00015.nupkg.sha512",
+    "/Users/timng/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.configuration/6.0.0/microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.configuration.abstractions/6.0.0/microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
+    "/Users/timng/.nuget/packages/system.componentmodel.annotations/4.7.0/system.componentmodel.annotations.4.7.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
