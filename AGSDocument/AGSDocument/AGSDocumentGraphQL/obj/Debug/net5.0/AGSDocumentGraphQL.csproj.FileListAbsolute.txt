@@ -35,4 +35,3 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/Debug/net5.0/AGSDocumentGraphQL.genruntimeconfig.cache
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQL.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQLParser.dll
-/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/Debug/net5.0/AGSDocumentGraphQL.csproj.CopyComplete
