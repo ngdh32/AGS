@@ -12,7 +12,7 @@ pool:
 
 variables:
   solution: 'AGSDocument.sln'
-  targetProject: 'AGSDocumentGraphQL/AGSDocumentGraphQL.csproj'
+  targetProject: '**/AGSDocumentGraphQL.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
