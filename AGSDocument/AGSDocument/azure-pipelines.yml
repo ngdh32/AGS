@@ -37,27 +37,21 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
 
 
-# # ...
-# # do this after other tasks such as building
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: test
-#     projects: '**/*AGSIdentity_Test.csproj'
-#     arguments: '--configuration $(buildConfiguration)'
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: publish
-#     publishWebProjects: true
-#     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-#     zipAfterPublish: True
-#     projects: |
-#       **/AGSIdentity.csproj
-#     modifyOutputPath: false
+# ...
+# do this after other tasks such as building
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+    projects: |
+      **/AGSDocumentGraphQL.csproj
+    modifyOutputPath: false
 
 
-# # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-#     artifactName: 'AGSIdentity'
+# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'AGSDocument'
