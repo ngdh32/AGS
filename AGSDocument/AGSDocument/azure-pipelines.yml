@@ -46,7 +46,7 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
     projects: |
-      **/AGSDocumentGraphQL.csproj
+      $(targetProject)
     modifyOutputPath: false
 
 
