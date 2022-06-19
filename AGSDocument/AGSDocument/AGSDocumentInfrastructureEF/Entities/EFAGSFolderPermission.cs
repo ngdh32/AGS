@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AGSDocumentInfrastructureEF.Entities
 {
-    public class EFAGSFolderPermission
+    public class EFAGSFolderPermission : EFAGSEntity
     {
         public string FolderId { get; set; }
         public int PermissionType { get; set; }

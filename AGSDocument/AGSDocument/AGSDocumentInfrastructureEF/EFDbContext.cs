@@ -10,8 +10,10 @@ namespace AGSDocumentInfrastructureEF
         public DbSet<EFAGSFile> Files { get; set; }
         public DbSet<EFAGSFolderPermission> FolderPermissions { get; set; }
 
-        public EFDbContext()
+        public EFDbContext(DbContextOptions<EFDbContext> options)
+        : base(options)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

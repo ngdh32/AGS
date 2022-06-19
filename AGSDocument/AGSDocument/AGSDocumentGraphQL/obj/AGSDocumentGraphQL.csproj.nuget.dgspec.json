@@ -106,6 +106,9 @@
             "projectReferences": {
               "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj": {
                 "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj"
+              },
+              "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj": {
+                "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj"
               }
             }
           }
@@ -123,6 +126,20 @@
             "GraphQL": {
               "target": "Package",
               "version": "[5.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[5.0.4, )"
             }
           },
           "imports": [
@@ -140,6 +157,68 @@
               "privateAssets": "none"
             },
             "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj",
+        "projectName": "AGSDocumentInfrastructureEF",
+        "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj",
+        "packagesPath": "/Users/timng/.nuget/packages/",
+        "outputPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/timng/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj": {
+                "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.13, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
