@@ -38,6 +38,7 @@ namespace AGSDocumentGraphQL
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseGraphQLGraphiQL();
 
             app.UseEndpoints(endpoints =>
             {

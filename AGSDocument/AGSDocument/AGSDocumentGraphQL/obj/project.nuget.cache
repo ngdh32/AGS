@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "5Sc9NHp47bk/NNAkS+ZRHMehUg8OKz0gAa/8fBMwGVwb4xHr5NLPZmBqofNO9bSU2IhBrips08Jg+OXAaObYEw==",
+  "dgSpecHash": "T+mDScx1ar7xL8xKQ8kLNDV1YP9Gbz00mtX+Mgt47TGmPcDFTgeC7sKKKnDvG7+c+mZsiSAWSF7pQAL/aRRvWw==",
   "success": true,
   "projectFilePath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/AGSDocumentGraphQL.csproj",
   "expectedPackageFiles": [
     "/Users/timng/.nuget/packages/graphql/5.2.0/graphql.5.2.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/graphql-parser/8.0.0/graphql-parser.8.0.0.nupkg.sha512",
+    "/Users/timng/.nuget/packages/graphql.server.ui.graphiql/6.1.0/graphql.server.ui.graphiql.6.1.0.nupkg.sha512",
     "/Users/timng/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/timng/.nuget/packages/j2n/2.0.0-beta-0017/j2n.2.0.0-beta-0017.nupkg.sha512",
     "/Users/timng/.nuget/packages/lucene.net/4.8.0-beta00015/lucene.net.4.8.0-beta00015.nupkg.sha512",

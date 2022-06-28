@@ -26,6 +26,18 @@
           "lib/netstandard2.1/GraphQLParser.dll": {}
         }
       },
+      "GraphQL.Server.Ui.GraphiQL/6.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/GraphQL.Server.Ui.GraphiQL.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/GraphQL.Server.Ui.GraphiQL.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -450,6 +462,25 @@
         "lib/netstandard2.0/GraphQLParser.xml",
         "lib/netstandard2.1/GraphQLParser.dll",
         "lib/netstandard2.1/GraphQLParser.xml",
+        "logo.64x64.png"
+      ]
+    },
+    "GraphQL.Server.Ui.GraphiQL/6.1.0": {
+      "sha512": "hJEobET39N1MvgAMfboSzAIoRzXBD0JuB8/UdNy71/3MLnw1Jk88NI9vY2eZHHztjwuuCdNON9ELOkfYXyb2bw==",
+      "type": "package",
+      "path": "graphql.server.ui.graphiql/6.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "graphql.server.ui.graphiql.6.1.0.nupkg.sha512",
+        "graphql.server.ui.graphiql.nuspec",
+        "lib/net5.0/GraphQL.Server.Ui.GraphiQL.dll",
+        "lib/net5.0/GraphQL.Server.Ui.GraphiQL.xml",
+        "lib/net6.0/GraphQL.Server.Ui.GraphiQL.dll",
+        "lib/net6.0/GraphQL.Server.Ui.GraphiQL.xml",
+        "lib/netcoreapp3.1/GraphQL.Server.Ui.GraphiQL.dll",
+        "lib/netcoreapp3.1/GraphQL.Server.Ui.GraphiQL.xml",
         "logo.64x64.png"
       ]
     },
@@ -1219,6 +1250,7 @@
       "AGSDocumentCore >= 1.0.0",
       "AGSDocumentInfrastructureEF >= 1.0.0",
       "GraphQL >= 5.2.0",
+      "GraphQL.Server.Ui.GraphiQL >= 6.1.0",
       "Microsoft.EntityFrameworkCore >= 5.0.17",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.17",
       "Pomelo.EntityFrameworkCore.MySql >= 5.0.4"
@@ -1271,6 +1303,10 @@
           "GraphQL": {
             "target": "Package",
             "version": "[5.2.0, )"
+          },
+          "GraphQL.Server.Ui.GraphiQL": {
+            "target": "Package",
+            "version": "[6.1.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
