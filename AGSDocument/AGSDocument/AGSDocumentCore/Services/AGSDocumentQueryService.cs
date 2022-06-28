@@ -15,18 +15,18 @@ namespace AGSDocumentCore.Services
         private readonly IFolderRepository _folderRepository;
         private readonly IFileIndexingService _fileIndexingService;
         private readonly IFileService _fileService;
-        private readonly IAGSIdentityService _identityService;
-        public AGSDocumentQueryService(IFolderRepository folderRepository, IFileIndexingService fileIndexingService, IFileService fileService, IAGSIdentityService identityService)
+        private readonly IUserRepository _userRepository;
+        public AGSDocumentQueryService(IFolderRepository folderRepository, IFileIndexingService fileIndexingService, IFileService fileService, IUserRepository userRepository)
         {
             _folderRepository = folderRepository;
             _fileIndexingService = fileIndexingService;
             _fileService = fileService;
-            _identityService = identityService;
+            _userRepository = userRepository;
         }
 
         public List<AGSFileQueryView> AGSFileIndexSearch(GetAGSFileSearchQuery agsFileIndexSearchQuery)
         {
-            var users = _identityService.GetUsers().Result;
+            var users = _userRepository.GetUsers().Result;
             var user = users.FirstOrDefault(x => x.UserId == agsFileIndexSearchQuery.UserId);
             if (user == null)
                 return null;
@@ -67,7 +67,7 @@ namespace AGSDocumentCore.Services
 
         public AGSFolderQueryView GetAGSFolder(GetAGSFolderQuery getAGSFolderQuery)
         {
-            var users = _identityService.GetUsers().Result;
+            var users = _userRepository.GetUsers().Result;
 
             var retrievingUser = users.FirstOrDefault(x => x.UserId == getAGSFolderQuery.UserId);
             if (retrievingUser == null)

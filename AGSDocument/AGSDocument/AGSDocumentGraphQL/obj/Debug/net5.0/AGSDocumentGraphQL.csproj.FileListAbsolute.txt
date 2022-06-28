@@ -46,3 +46,4 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Microsoft.EntityFrameworkCore.Design.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/MySqlConnector.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Pomelo.EntityFrameworkCore.MySql.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/Debug/net5.0/AGSDocumentGraphQL.csproj.CopyComplete

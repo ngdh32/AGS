@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AGSDocumentCore.Interfaces.Repositories;
 using AGSDocumentCore.Interfaces.Services;
 using AGSDocumentCore.Models.DTOs.Services;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace AGSDocumentCore.Services
+namespace AGSDocumentCore.Repositories
 {
-    public class AGSIdentityService : IAGSIdentityService
+    public class AGSUserRepository : IUserRepository
     {
         private readonly HttpClient _httpClient;
         private readonly string _agsIdentityUrl;
         private readonly Dictionary<string, string> _credentials = new Dictionary<string, string>();
 
-        public AGSIdentityService(IConfiguration configuration)
+        public AGSUserRepository(IConfiguration configuration)
         {
             _httpClient = new HttpClient();
             _agsIdentityUrl = configuration["AGSIdentityUrl"];

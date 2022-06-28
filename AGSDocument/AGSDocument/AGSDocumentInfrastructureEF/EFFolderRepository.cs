@@ -170,7 +170,7 @@ namespace AGSDocumentInfrastructureEF
 
         private AGSPermission GetAGSPermissionFromEntity(EFAGSFolderPermission permission)
         {
-            return new AGSPermission(permission.DepartmentId, permission.PermissionType);
+            return new AGSPermission(permission.Id, permission.DepartmentId, permission.PermissionType);
         }
 
         private AGSFolder GetAGSFolderFromEntity(EFAGSFolder folder, List<AGSFolder> childrenFolders)
