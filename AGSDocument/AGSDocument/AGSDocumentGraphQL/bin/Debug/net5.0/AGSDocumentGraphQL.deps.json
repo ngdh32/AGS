@@ -35,7 +35,12 @@
         "dependencies": {
           "AGSDocumentCore": "1.0.0",
           "AGSDocumentInfrastructureEF": "1.0.0",
-          "GraphQL": "5.2.0",
+          "GraphQL": "5.3.1",
+          "GraphQL.MicrosoftDI": "5.3.1",
+          "GraphQL.NewtonsoftJson": "5.3.1",
+          "GraphQL.Server.Transports.AspNetCore": "6.1.0",
+          "GraphQL.Server.Ui.Playground": "6.1.0",
+          "GraphQL.SystemTextJson": "5.3.1",
           "Microsoft.EntityFrameworkCore": "5.0.17",
           "Microsoft.EntityFrameworkCore.Design": "5.0.17",
           "Pomelo.EntityFrameworkCore.MySql": "5.0.4",
@@ -165,7 +170,7 @@
           "mscorlib": "4.0.0.0",
           "netstandard": "2.1.0.0",
           "System.AppContext": "5.0.0.0",
-          "System.Buffers": "5.0.0.0",
+          "System.Buffers.Reference": "5.0.0.0",
           "System.Collections.Concurrent": "5.0.0.0",
           "System.Collections": "5.0.0.0",
           "System.Collections.Immutable.Reference": "5.0.0.0",
@@ -287,7 +292,7 @@
           "System.Text.Encoding": "5.0.0.0",
           "System.Text.Encoding.Extensions": "5.0.0.0",
           "System.Text.Encodings.Web": "5.0.0.0",
-          "System.Text.Json": "5.0.0.0",
+          "System.Text.Json.Reference": "5.0.0.0",
           "System.Text.RegularExpressions": "5.0.0.0",
           "System.Threading.Channels": "5.0.0.0",
           "System.Threading": "5.0.0.0",
@@ -324,7 +329,7 @@
           "AGSDocumentGraphQL.dll": {}
         }
       },
-      "GraphQL/5.2.0": {
+      "GraphQL/5.3.1": {
         "dependencies": {
           "GraphQL-Parser": "8.0.0",
           "Microsoft.CSharp": "4.7.0",
@@ -333,8 +338,8 @@
         },
         "runtime": {
           "lib/netstandard2.1/GraphQL.dll": {
-            "assemblyVersion": "5.2.0.0",
-            "fileVersion": "5.2.0.0"
+            "assemblyVersion": "5.3.1.0",
+            "fileVersion": "5.3.1.0"
           }
         },
         "compile": {
@@ -350,6 +355,78 @@
         },
         "compile": {
           "lib/netstandard2.1/GraphQLParser.dll": {}
+        }
+      },
+      "GraphQL.MicrosoftDI/5.3.1": {
+        "dependencies": {
+          "GraphQL": "5.3.1",
+          "Microsoft.Extensions.Options": "5.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/GraphQL.MicrosoftDI.dll": {
+            "assemblyVersion": "5.3.1.0",
+            "fileVersion": "5.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/GraphQL.MicrosoftDI.dll": {}
+        }
+      },
+      "GraphQL.NewtonsoftJson/5.3.1": {
+        "dependencies": {
+          "GraphQL": "5.3.1",
+          "Newtonsoft.Json": "13.0.1",
+          "System.Buffers": "4.5.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/GraphQL.NewtonsoftJson.dll": {
+            "assemblyVersion": "5.3.1.0",
+            "fileVersion": "5.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/GraphQL.NewtonsoftJson.dll": {}
+        }
+      },
+      "GraphQL.Server.Transports.AspNetCore/6.1.0": {
+        "dependencies": {
+          "GraphQL": "5.3.1",
+          "Microsoft.Extensions.Options": "5.0.0"
+        },
+        "runtime": {
+          "lib/net5.0/GraphQL.Server.Transports.AspNetCore.dll": {
+            "assemblyVersion": "6.1.0.0",
+            "fileVersion": "6.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/GraphQL.Server.Transports.AspNetCore.dll": {}
+        }
+      },
+      "GraphQL.Server.Ui.Playground/6.1.0": {
+        "runtime": {
+          "lib/net5.0/GraphQL.Server.Ui.Playground.dll": {
+            "assemblyVersion": "6.1.0.0",
+            "fileVersion": "6.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/GraphQL.Server.Ui.Playground.dll": {}
+        }
+      },
+      "GraphQL.SystemTextJson/5.3.1": {
+        "dependencies": {
+          "GraphQL": "5.3.1",
+          "System.Text.Json": "4.7.2"
+        },
+        "runtime": {
+          "lib/net5.0/GraphQL.SystemTextJson.dll": {
+            "assemblyVersion": "5.3.1.0",
+            "fileVersion": "5.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/GraphQL.SystemTextJson.dll": {}
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -631,6 +708,7 @@
           "lib/netstandard2.1/Pomelo.EntityFrameworkCore.MySql.dll": {}
         }
       },
+      "System.Buffers/4.5.1": {},
       "System.Collections.Immutable/5.0.0": {},
       "System.ComponentModel.Annotations/5.0.0": {},
       "System.Diagnostics.DiagnosticSource/5.0.1": {
@@ -655,6 +733,7 @@
           "lib/netcoreapp3.1/System.Runtime.CompilerServices.Unsafe.dll": {}
         }
       },
+      "System.Text.Json/4.7.2": {},
       "AGSDocumentCore/1.0.0": {
         "dependencies": {
           "Lucene.Net": "4.8.0-beta00015",
@@ -1439,7 +1518,7 @@
         },
         "compileOnly": true
       },
-      "System.Buffers/5.0.0.0": {
+      "System.Buffers.Reference/5.0.0.0": {
         "compile": {
           "System.Buffers.dll": {}
         },
@@ -2171,7 +2250,7 @@
         },
         "compileOnly": true
       },
-      "System.Text.Json/5.0.0.0": {
+      "System.Text.Json.Reference/5.0.0.0": {
         "compile": {
           "System.Text.Json.dll": {}
         },
@@ -2353,12 +2432,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "GraphQL/5.2.0": {
+    "GraphQL/5.3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3Nc/LDNjiUdLSZMMthwLDP1vdoWjgPYiWg8rPv1L3qIZkCRgRz7/5EMCJyRCu2ebIoQkQ5R4OdtQiSNbOawPwg==",
-      "path": "graphql/5.2.0",
-      "hashPath": "graphql.5.2.0.nupkg.sha512"
+      "sha512": "sha512-RAkQl9SDLCfRGRVQQRYTEpqc9rpwX5bkPRulX/9rihAKahQ391Ibz8iTwedDYTkTmpjMzb/siNLWUSijZ80Zaw==",
+      "path": "graphql/5.3.1",
+      "hashPath": "graphql.5.3.1.nupkg.sha512"
     },
     "GraphQL-Parser/8.0.0": {
       "type": "package",
@@ -2366,6 +2445,41 @@
       "sha512": "sha512-kbAEvS0u240X3eN+5zv2eEVKlYTUhW3OB3JmGvI0ZTfiikyQYbWpt3t25C3aykolZUo2WCxewveeCNP4BHXR9A==",
       "path": "graphql-parser/8.0.0",
       "hashPath": "graphql-parser.8.0.0.nupkg.sha512"
+    },
+    "GraphQL.MicrosoftDI/5.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TWmXFPrWsHfEZuMNgxK+YnYDfEvRECtNSR+i2ir4Xw1h/4QpK/WLDXnDkSF9bXX5FbmlwC2hxdVn/bIVZ3xUjg==",
+      "path": "graphql.microsoftdi/5.3.1",
+      "hashPath": "graphql.microsoftdi.5.3.1.nupkg.sha512"
+    },
+    "GraphQL.NewtonsoftJson/5.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EOqhvOld8IJb8LcvBP3KcQYk9GpoVkN3MMrDrb2lkyRoBRlUA/3JYCfgN4fHm+wIITcFesojZdlIeBcfjHGeSQ==",
+      "path": "graphql.newtonsoftjson/5.3.1",
+      "hashPath": "graphql.newtonsoftjson.5.3.1.nupkg.sha512"
+    },
+    "GraphQL.Server.Transports.AspNetCore/6.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-d3vW1dVLPG+tHLVlxJG7Nk6HDievqZ9X41BRv6Qa7m/3BYsmnb0NyuabTUp5qGIyN4DmGxVnXlsn1izJI4+W6Q==",
+      "path": "graphql.server.transports.aspnetcore/6.1.0",
+      "hashPath": "graphql.server.transports.aspnetcore.6.1.0.nupkg.sha512"
+    },
+    "GraphQL.Server.Ui.Playground/6.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GZ7RiW3oxjKrvhpHSsxTv+a7L4Va1JI3+Yp0a+mrDpAyObw4eNC+9dELOUwf45I3EejD4rNUWaJzTAZi2eZqAA==",
+      "path": "graphql.server.ui.playground/6.1.0",
+      "hashPath": "graphql.server.ui.playground.6.1.0.nupkg.sha512"
+    },
+    "GraphQL.SystemTextJson/5.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yyJGcPhbnk52mCCa6PfN/Alh0ubz55uM0bCymuMQJB9v43cwKc2Fa7mn1ILQ32b/wXZYZ3DRJ29EhL0iZIqT4g==",
+      "path": "graphql.systemtextjson/5.3.1",
+      "hashPath": "graphql.systemtextjson.5.3.1.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",
@@ -2549,6 +2663,13 @@
       "path": "pomelo.entityframeworkcore.mysql/5.0.4",
       "hashPath": "pomelo.entityframeworkcore.mysql.5.0.4.nupkg.sha512"
     },
+    "System.Buffers/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg==",
+      "path": "system.buffers/4.5.1",
+      "hashPath": "system.buffers.4.5.1.nupkg.sha512"
+    },
     "System.Collections.Immutable/5.0.0": {
       "type": "package",
       "serviceable": true,
@@ -2576,6 +2697,13 @@
       "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    },
+    "System.Text.Json/4.7.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TcMd95wcrubm9nHvJEQs70rC0H/8omiSGGpU4FQ/ZA1URIqD4pjmFJh2Mfv1yH1eHgJDWTi2hMDXwTET+zOOyg==",
+      "path": "system.text.json/4.7.2",
+      "hashPath": "system.text.json.4.7.2.nupkg.sha512"
     },
     "AGSDocumentCore/1.0.0": {
       "type": "project",
@@ -3217,7 +3345,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Buffers/5.0.0.0": {
+    "System.Buffers.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -3827,7 +3955,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Text.Json/5.0.0.0": {
+    "System.Text.Json.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

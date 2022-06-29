@@ -46,4 +46,8 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Microsoft.EntityFrameworkCore.Design.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/MySqlConnector.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Pomelo.EntityFrameworkCore.MySql.dll
-/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/Debug/net5.0/AGSDocumentGraphQL.csproj.CopyComplete
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQL.MicrosoftDI.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQL.NewtonsoftJson.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQL.Server.Ui.Playground.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQL.SystemTextJson.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/GraphQL.Server.Transports.AspNetCore.dll

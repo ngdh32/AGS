@@ -125,11 +125,27 @@
           "dependencies": {
             "GraphQL": {
               "target": "Package",
-              "version": "[5.2.0, )"
+              "version": "[5.3.1, )"
             },
-            "GraphQL.Server.Ui.GraphiQL": {
+            "GraphQL.MicrosoftDI": {
+              "target": "Package",
+              "version": "[5.3.1, )"
+            },
+            "GraphQL.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.3.1, )"
+            },
+            "GraphQL.Server.Transports.AspNetCore": {
               "target": "Package",
               "version": "[6.1.0, )"
+            },
+            "GraphQL.Server.Ui.Playground": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "GraphQL.SystemTextJson": {
+              "target": "Package",
+              "version": "[5.3.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

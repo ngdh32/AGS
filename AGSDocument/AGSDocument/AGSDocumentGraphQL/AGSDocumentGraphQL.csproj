@@ -29,8 +29,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="5.2.0" />
-    <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="6.1.0" />
+    <PackageReference Include="GraphQL" Version="5.3.1" />
+    <PackageReference Include="GraphQL.MicrosoftDI" Version="5.3.1" />
+    <PackageReference Include="GraphQL.NewtonsoftJson" Version="5.3.1" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="6.1.0" />
+    <!-- <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="4.3.1" /> -->
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="6.1.0" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="5.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

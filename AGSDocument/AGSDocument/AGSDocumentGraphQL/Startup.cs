@@ -4,6 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AGSDocumentInfrastructureEF;
+using GraphQL;
+using GraphQL.MicrosoftDI;
+using GraphQL.Server;
+using GraphQL.SystemTextJson;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,18 +37,37 @@ namespace AGSDocumentGraphQL
             services.AddDbContext<EFDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("Database"), ServerVersion.AutoDetect(Configuration.GetConnectionString("Database")), sql => sql.MigrationsAssembly(migrationsAssembly)));
 
+            AddGraphqlTypes(services);
+
+            services.AddGraphQL(builder => builder
+                .AddHttpMiddleware<AGSDocumentGraphQLSchema>()
+                .AddSystemTextJson()
+                .AddSchema<AGSDocumentGraphQLSchema>()
+                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseRouting();
-            app.UseGraphQLGraphiQL();
-
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseRouting();    
+            app.UseGraphQL<AGSDocumentGraphQLSchema>();
+            app.UseGraphQLPlayground();
+            
+            // app.UseEndpoints(endpoints =>
+            // {
                 
-            });
+            // });
+        }
+
+        private void AddGraphqlTypes(IServiceCollection services)
+        {
+            services.AddTransient<AGSDocumentGraphQLSchema>();
+            services.AddTransient<AGSPermissionGraphType>();
+            services.AddTransient<AGSDocumentQueryType>();
+            services.AddTransient<AGSDocumentMutationType>();
+            services.AddTransient<AGSFileQueryViewGraphType>();
+            services.AddTransient<AGSFolderQueryViewGraphType>();
         }
     }
 }

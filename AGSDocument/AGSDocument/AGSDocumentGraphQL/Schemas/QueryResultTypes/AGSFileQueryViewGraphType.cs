@@ -1,9 +1,9 @@
 using AGSDocumentCore.Models.DTOs.QueryResults;
 using GraphQL.Types;
 
-public class AGSFileQueryViewType : ObjectGraphType<AGSFileQueryView>
+public class AGSFileQueryViewGraphType : ObjectGraphType<AGSFileQueryView>
 {
-    public AGSFileQueryViewType()
+    public AGSFileQueryViewGraphType()
     {
         Field(x => x.FileId);
         Field(x => x.SizeInByte);
