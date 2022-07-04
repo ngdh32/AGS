@@ -1,6 +1,4 @@
-using GraphQL.Types;
-
-public class AGSDocumentMutationType : ObjectGraphType
+public class AGSDocumentMutationType
 {
 
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using AGSDocumentInfrastructureEF;
-using GraphQL;
-using GraphQL.MicrosoftDI;
-using GraphQL.Server;
-using GraphQL.SystemTextJson;
-using GraphQL.Types;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AGSDocumentGraphQL
 {
@@ -33,41 +33,49 @@ namespace AGSDocumentGraphQL
         {
             // this is for ef migration file generation
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            
+
             services.AddDbContext<EFDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("Database"), ServerVersion.AutoDetect(Configuration.GetConnectionString("Database")), sql => sql.MigrationsAssembly(migrationsAssembly)));
 
-            AddGraphqlTypes(services);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = Configuration["AuthUrl"];
+                    options.Audience = "ags.document";
+                    options.RequireHttpsMetadata = false;
+                    options.BackchannelHttpHandler = GetJWTBearerTokenHandler();
+                    options.SaveToken = true;
+                });
 
-            services.AddGraphQL(builder => builder
-                .AddHttpMiddleware<AGSDocumentGraphQLSchema>()
-                .AddSystemTextJson()
-                .AddSchema<AGSDocumentGraphQLSchema>()
-                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
-                );
+            services
+                .AddGraphQLServer()
+                .AddAuthorization()
+                .AddQueryType<AGSDocumentQueryType>();
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseRouting();    
-            app.UseGraphQL<AGSDocumentGraphQLSchema>();
-            app.UseGraphQLPlayground();
-            
-            // app.UseEndpoints(endpoints =>
-            // {
-                
-            // });
+            app.UseAuthentication();
+            // app.UseAuthorization();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL();
+            });
+
         }
 
-        private void AddGraphqlTypes(IServiceCollection services)
+        private static HttpClientHandler GetJWTBearerTokenHandler()
         {
-            services.AddTransient<AGSDocumentGraphQLSchema>();
-            services.AddTransient<AGSPermissionGraphType>();
-            services.AddTransient<AGSDocumentQueryType>();
-            services.AddTransient<AGSDocumentMutationType>();
-            services.AddTransient<AGSFileQueryViewGraphType>();
-            services.AddTransient<AGSFolderQueryViewGraphType>();
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.SslProtocols = SslProtocols.Tls12;
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            return handler;
         }
     }
 }

@@ -123,29 +123,21 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "GraphQL": {
+            "HotChocolate.AspNetCore": {
               "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[12.11.1, )"
             },
-            "GraphQL.MicrosoftDI": {
+            "HotChocolate.AspNetCore.Authorization": {
               "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[12.11.1, )"
             },
-            "GraphQL.NewtonsoftJson": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[5.0.17, )"
             },
-            "GraphQL.Server.Transports.AspNetCore": {
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
-              "version": "[6.1.0, )"
-            },
-            "GraphQL.Server.Ui.Playground": {
-              "target": "Package",
-              "version": "[6.1.0, )"
-            },
-            "GraphQL.SystemTextJson": {
-              "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[5.0.17, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

@@ -141,29 +141,6 @@ namespace AGSIdentity.Data.EF
                     },
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
-                },
-                new Client
-                {
-                    ClientId = CommonConstant.AGSClientIdConstant + "_Document",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    RequireConsent = false,
-                    // secret for authentication
-                    ClientSecrets =
-                    {
-                        new Secret(_configuration["ags_web_secret"].Sha256())
-                    },
-
-                    // scopes that client has access to
-                    AllowedScopes = {
-                        CommonConstant.AGSDocumentScopeConstant
-                        ,CommonConstant.AGSIdentityScopeConstant
-                        ,IdentityServerConstants.StandardScopes.OpenId
-                        ,IdentityServerConstants.StandardScopes.Profile
-                        ,IdentityServerConstants.StandardScopes.Email
-                        ,CommonConstant.AGSFunctionClaimResouceConstant
-                    },
-                    AllowAccessTokensViaBrowser = true,
-                    AlwaysIncludeUserClaimsInIdToken = true,
                 }
             };
         }

@@ -1,12 +1,10 @@
 using System;
-using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 
-public class AGSDocumentGraphQLSchema : Schema
+public class AGSDocumentGraphQLSchema
 {
-    public AGSDocumentGraphQLSchema(IServiceProvider provider) : base(provider)
+    public AGSDocumentGraphQLSchema(IServiceProvider provider) 
     {
-        Query = provider.GetRequiredService<AGSDocumentQueryType>();
-        // Mutation = provider.GetRequiredService<AGSDocumentMutationType>();
+        
     }
 }

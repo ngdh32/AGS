@@ -1,32 +1,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using AGSDocumentCore.Interfaces.Services;
 using AGSDocumentCore.Models.DTOs.Queries;
 using AGSDocumentCore.Models.DTOs.QueryResults;
 using AGSDocumentCore.Models.Entities;
-using GraphQL;
-using GraphQL.Types;
+using HotChocolate;
+using HotChocolate.Types;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-public class AGSDocumentQueryType : ObjectGraphType
+public class AGSDocumentQueryType : ObjectType
 {
     public AGSDocumentQueryType()
     {
-        Field<AGSFolderQueryViewGraphType>("GetFolders", arguments: new QueryArguments(new QueryArgument<StringGraphType>{
-            Name = "folderId"
-        }), resolve: context => {
-            // var queryService = context.RequestServices.GetRequiredService<IAGSDocumentQueryService>();
-            // var httpContextAccessor = context.RequestServices.GetRequiredService<IHttpContextAccessor>();
+        
+    }
+    protected override void Configure(IObjectTypeDescriptor descriptor)
+    {
+        descriptor
+            .Field("getFolder")
+            .Resolve(context =>
+            {
+                var claimsPrincipal = context.GetUser();
+                var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+                return GetFolder();
+            });
+    }
 
-            return result;
-            // var folderId = context.GetArgument<string>("folderId");
-            // return queryService.GetAGSFolder(new GetAGSFolderQuery(){
-            //     FolderId = folderId,
-            //     UserId = httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "sub").Value
-            // });
-        });
+    public AGSFolderQueryView GetFolder(){
+        return result;
     }
 
     private AGSFolderQueryView result = new AGSFolderQueryView()
