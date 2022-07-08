@@ -19,7 +19,7 @@ namespace AGSDocumentFileService
             _containerName = configuration["AzureBlob:ContainerName"];
             _connectionString = configuration["AzureBlob:ConnectionString"];
             _blobServiceClient = new BlobServiceClient(_connectionString);
-            _blobContainerClient = _blobServiceClient.CreateBlobContainerAsync(_containerName).Result;
+            // _blobContainerClient = _blobServiceClient.CreateBlobContainerAsync(_containerName).Result;
         }
 
         public byte[] GetAGSFileContent(string filepath)

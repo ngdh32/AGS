@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AGSDocumentCore.Services
 {
-    public class FIleIndexingService : IFileIndexingService
+    public class FileIndexingService : IFileIndexingService
     {
         private readonly IConfiguration _configuration;
         private const LuceneVersion _appLuceneVersion = LuceneVersion.LUCENE_48;
@@ -22,7 +22,7 @@ namespace AGSDocumentCore.Services
         private const string _fileContentField = "filecontent";
         private const string _fileIdField = "fileId";
 
-        public FIleIndexingService(IConfiguration configuration)
+        public FileIndexingService(IConfiguration configuration)
         {
             _configuration = configuration;
         }

@@ -74,3 +74,11 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Microsoft.Extensions.DiagnosticAdapter.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/HotChocolate.AspNetCore.Authorization.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Azure.Core.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Azure.Storage.Blobs.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/Azure.Storage.Common.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/System.IO.Hashing.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/System.Memory.Data.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/AGSDocumentFileService.dll
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/AGSDocumentFileService.pdb
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/Debug/net5.0/AGSDocumentGraphQL.csproj.CopyComplete

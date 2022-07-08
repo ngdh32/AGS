@@ -24,6 +24,9 @@
     <ProjectReference Include="..\AGSDocumentCore\AGSDocumentCore.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\AGSDocumentFileService\AGSDocumentFileService.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
         <ProjectReference Include="..\AGSDocumentInfrastructureEF\AGSDocumentInfrastructureEF.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

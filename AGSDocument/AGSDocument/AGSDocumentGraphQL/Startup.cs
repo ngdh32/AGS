@@ -6,6 +6,10 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using AGSDocumentCore.Interfaces.Repositories;
+using AGSDocumentCore.Interfaces.Services;
+using AGSDocumentCore.Repositories;
+using AGSDocumentCore.Services;
 using AGSDocumentInfrastructureEF;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using AGSDocumentFileService;
 
 namespace AGSDocumentGraphQL
 {
@@ -46,6 +51,12 @@ namespace AGSDocumentGraphQL
                     options.BackchannelHttpHandler = GetJWTBearerTokenHandler();
                     options.SaveToken = true;
                 });
+
+            services.AddTransient<IFolderRepository, EFFolderRepository>();
+            services.AddTransient<IFileIndexingService, FileIndexingService>();
+            services.AddTransient<IUserRepository, AGSUserRepository>();
+            services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IAGSDocumentQueryService, AGSDocumentQueryService>();
 
             services
                 .AddGraphQLServer()

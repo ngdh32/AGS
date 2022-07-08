@@ -82,6 +82,68 @@
         }
       }
     },
+    "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/AGSDocumentFileService.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/AGSDocumentFileService.csproj",
+        "projectName": "AGSDocumentFileService",
+        "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/AGSDocumentFileService.csproj",
+        "packagesPath": "/Users/timng/.nuget/packages/",
+        "outputPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/timng/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj": {
+                "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.11.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/AGSDocumentGraphQL.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -106,6 +168,9 @@
             "projectReferences": {
               "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj": {
                 "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentCore/AGSDocumentCore.csproj"
+              },
+              "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/AGSDocumentFileService.csproj": {
+                "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentFileService/AGSDocumentFileService.csproj"
               },
               "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj": {
                 "projectPath": "/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentInfrastructureEF/AGSDocumentInfrastructureEF.csproj"

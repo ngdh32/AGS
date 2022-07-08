@@ -13,17 +13,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 public class AGSDocumentQueryType : ObjectType
 {
-    public AGSDocumentQueryType()
-    {
-        
-    }
     protected override void Configure(IObjectTypeDescriptor descriptor)
     {
         descriptor
             .Field("getFolder")
+            .Type<AGSFolderQueryViewGraphType>()
             .Resolve(context =>
             {
                 var claimsPrincipal = context.GetUser();
+                IAGSDocumentQueryService queryService = context.Service<IAGSDocumentQueryService>();
                 var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
                 return GetFolder();
             });

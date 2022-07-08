@@ -4,9 +4,14 @@
 /AGS/obj
 /AGS/.vs
 
-/AGSDocument/bin
-/AGSDocument/obj
-/AGSDocument/.vs
+AGSDocument/AGSDocument/AGSDocumentCore/bin/*
+AGSDocument/AGSDocument/AGSDocumentGraphQL/bin
+
+
+
+
+AGSDocument/AGSDocument/AGSDocumentCore/obj
+AGSDocument/AGSDocument/AGSDocumentCore/.vs
 
 /AGSIdentity/bin
 /AGSIdentity/Migrations
