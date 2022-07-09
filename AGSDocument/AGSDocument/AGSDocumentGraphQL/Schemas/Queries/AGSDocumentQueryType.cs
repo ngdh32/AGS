@@ -8,28 +8,29 @@ using AGSDocumentCore.Models.DTOs.QueryResults;
 using AGSDocumentCore.Models.Entities;
 using HotChocolate;
 using HotChocolate.Types;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
-public class AGSDocumentQueryType : ObjectType
+public class AGSDocumentQueryType : ObjectType<IAGSDocumentQueryService>
 {
-    protected override void Configure(IObjectTypeDescriptor descriptor)
+    protected override void Configure(IObjectTypeDescriptor<IAGSDocumentQueryService> descriptor)
     {
+        descriptor.BindFieldsExplicitly();
+
         descriptor
-            .Field("getFolder")
+            .Field(x => x.GetAGSFolder(default))
             .Type<AGSFolderQueryViewGraphType>()
             .Resolve(context =>
             {
                 var claimsPrincipal = context.GetUser();
                 IAGSDocumentQueryService queryService = context.Service<IAGSDocumentQueryService>();
                 var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
-                return GetFolder();
+                var getAGSFolderQuery = context.ArgumentValue<GetAGSFolderQuery>("getAGSFolderQuery");
+                return queryService.GetAGSFolder(getAGSFolderQuery);
             });
     }
 
-    public AGSFolderQueryView GetFolder(){
-        return result;
-    }
+    // public AGSFolderQueryView GetFolder(){
+    //     return result;
+    // }
 
     private AGSFolderQueryView result = new AGSFolderQueryView()
     {
