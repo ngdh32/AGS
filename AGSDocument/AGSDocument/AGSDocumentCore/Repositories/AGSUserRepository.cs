@@ -7,6 +7,7 @@ using AGSDocumentCore.Interfaces.Services;
 using AGSDocumentCore.Models.DTOs.Services;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AGSDocumentCore.Repositories
 {
@@ -18,12 +19,17 @@ namespace AGSDocumentCore.Repositories
 
         public AGSUserRepository(IConfiguration configuration)
         {
-            _httpClient = new HttpClient();
-            _agsIdentityUrl = configuration["AGSIdentityUrl"];
-            _credentials.Add("client_id", configuration["AGSIdentityClientId"]);
-            _credentials.Add("client_secret", configuration["AGSIdentityClientSecret"]);
-            _credentials.Add("grant_type", configuration["AGSIdentityGrantType"]);
-            _credentials.Add("scope", configuration["AGSIdentityScope"]);
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
+            _httpClient = new HttpClient(httpClientHandler);
+            _agsIdentityUrl = configuration["AGSIdentity:Url"];
+            _credentials.Add("client_id", configuration["AGSIdentity:ClientId"]);
+            _credentials.Add("client_secret", configuration["AGSIdentity:ClientSecret"]);
+            _credentials.Add("grant_type", configuration["AGSIdentity:GrantType"]);
+            _credentials.Add("scope", configuration["AGSIdentity:Scope"]);
         }
 
         public async Task<List<AGSUserViewModel>> GetUsers()
@@ -43,11 +49,17 @@ namespace AGSDocumentCore.Repositories
                 var accessTokenResponse = await _httpClient.SendAsync(tokenRequest);
                 if (accessTokenResponse.IsSuccessStatusCode)
                 {
-                    dynamic tokenResponse = JsonConvert.DeserializeObject(await accessTokenResponse.Content.ReadAsStringAsync());
+                    JObject tokenResponse = JObject.Parse(await accessTokenResponse.Content.ReadAsStringAsync());
                     HttpRequestMessage usersRequest = new HttpRequestMessage(HttpMethod.Get, $"{_agsIdentityUrl}/api/v1/users");
-                    usersRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.access_token);
+                    usersRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse["access_token"].ToString());
                     var usersResponse = await _httpClient.SendAsync(usersRequest);
-                    var userResult = JsonConvert.DeserializeObject<AGSUserResponse<List<AGSUserViewModel>>>(await usersResponse.Content.ReadAsStringAsync());
+                    if (!usersResponse.IsSuccessStatusCode)
+                    {
+                        var errorMessage = await usersResponse.Content.ReadAsStringAsync();;
+                        throw new Exception(errorMessage);
+                    }
+                    var responseString = await usersResponse.Content.ReadAsStringAsync();
+                    var userResult = JsonConvert.DeserializeObject<AGSUserResponse<List<AGSUserViewModel>>>(responseString);
                     return userResult.Data;
                 }
                 else

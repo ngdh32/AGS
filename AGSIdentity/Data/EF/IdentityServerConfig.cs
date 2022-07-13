@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
@@ -22,7 +23,7 @@ namespace AGSIdentity.Data.EF
             var roleResource = new IdentityResource(
                 name: CommonConstant.AGSFunctionClaimResouceConstant,
                 displayName: "User's roles and role-related claims",
-                claimTypes: new[] { CommonConstant.FunctionClaimTypeConstant, JwtClaimTypes.Role });
+                claimTypes: new[] { CommonConstant.FunctionClaimTypeConstant });
 
             return new IdentityResource[]
             {
@@ -82,6 +83,19 @@ namespace AGSIdentity.Data.EF
 
         public IEnumerable<Client> GetClients()
         {
+            List<Claim> claims = new List<Claim>();
+            // add all asg-identity related function claims into Database
+            var ags_identity_constant_type = typeof(CommonConstant);
+            var constant_fields = ags_identity_constant_type.GetFields();
+            foreach (var constant_field in constant_fields)
+            {
+                if (constant_field.Name.EndsWith("ClaimConstant"))
+                {
+                    var claimValue = (string)(constant_field.GetValue(null));
+                    claims.Add(new Claim(CommonConstant.AGSFunctionClaimResouceConstant, claimValue));
+                }
+            }
+
             return new List<Client>
             {
                 new Client
@@ -141,6 +155,25 @@ namespace AGSIdentity.Data.EF
                     },
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
+                },
+                new Client
+                {
+                    ClientId = CommonConstant.AGSClientIdConstant + "_Document",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    RequireConsent = false,
+                    // secret for authentication
+                    ClientSecrets =
+                    {
+                        new Secret(_configuration["ags_web_secret"].Sha256())
+                    },
+
+                    // scopes that client has access to
+                    AllowedScopes = {
+                        CommonConstant.AGSIdentityScopeConstant
+                    },
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    Claims = claims 
                 }
             };
         }

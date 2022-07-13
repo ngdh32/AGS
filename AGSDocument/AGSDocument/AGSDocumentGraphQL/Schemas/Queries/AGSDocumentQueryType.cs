@@ -28,10 +28,6 @@ public class AGSDocumentQueryType : ObjectType<IAGSDocumentQueryService>
             });
     }
 
-    // public AGSFolderQueryView GetFolder(){
-    //     return result;
-    // }
-
     private AGSFolderQueryView result = new AGSFolderQueryView()
     {
         FolderId = "Folder Id",

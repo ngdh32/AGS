@@ -4,13 +4,12 @@
 /AGS/obj
 /AGS/.vs
 
-AGSDocument/AGSDocument/AGSDocumentCore/bin/*
+AGSDocument/AGSDocument/AGSDocumentGraphQL/obj
 AGSDocument/AGSDocument/AGSDocumentGraphQL/bin
-
-
-
-
+AGSDocument/AGSDocument/AGSDocumentFileService/bin
+AGSDocument/AGSDocument/AGSDocumentFileService/obj
 AGSDocument/AGSDocument/AGSDocumentCore/obj
+AGSDocument/AGSDocument/AGSDocumentCore/bin
 AGSDocument/AGSDocument/AGSDocumentCore/.vs
 
 /AGSIdentity/bin

@@ -399,8 +399,9 @@ namespace AGSIdentity
                             {
                                 Console.WriteLine($"Claim: {claim.Type}~{claim.Value}");
                             }
+                            Console.WriteLine($"claimValue:{(string)claimValue}");
                             var hasClaim = context.User.HasClaim(claim =>
-                                claim.Type == CommonConstant.FunctionClaimTypeConstant
+                                claim.Type.Contains(CommonConstant.FunctionClaimTypeConstant)
                                 && claim.Value == (string)claimValue);
                             return hasClaim;
                         });
