@@ -112,7 +112,7 @@ namespace AGSDocumentCore.Services
 
         private bool CheckIfUserHasPermissionToAccess(AGSUserViewModel user, List<AGSPermission> permissions)
         {
-            var result = permissions.Any(x => user.Departments.Any(y => y.DepartmentId == x.DepartmentId));
+            var result = permissions.Any(x => user.Departments.Any(y => y == x.DepartmentId));
             return result;
         }
     }
