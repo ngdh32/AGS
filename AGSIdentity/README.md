@@ -25,14 +25,15 @@ DEV:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p { password here }
 dotnet dev-certs https --trust
 ```
-2. Go to the root folder of AGSIdentity
-3. Run the following command to build a docker image:
+2. Make sure the generated cert is installed in the system
+3. Go to the root folder of AGSIdentity
+4. Run the following command to build a docker image:
 ```sh
 docker build -t ngdh32/ags-identity .
 ```
-4. Run the following command to run the docker image in the container:
+5. Run the following command to run the docker image in the container:
 ```sh
-docker run --rm -it -p 8964:8964 -e ASPNETCORE_URLS="https://+" -e ASPNETCORE_ENVIRONMENT=docker -e ASPNETCORE_HTTPS_PORT=8964 -e ASPNETCORE_Kestrel__Certificates__Default__Password="115500" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ --name ags-identity ngdh32/ags-identity
+docker run --rm -it -p 8964:8964 -e ASPNETCORE_URLS="https://+" -e ASPNETCORE_ENVIRONMENT=docker -e ASPNETCORE_HTTPS_PORT=8964 -e ASPNETCORE_Kestrel__Certificates__Default__Password={ password here} -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ --name ags-identity ngdh32/ags-identity
 ```
 
 ## Production
