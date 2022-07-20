@@ -16,32 +16,44 @@ namespace AGSDocumentCore.Services
         }
 
         #region Folder
-        public void AddAGSFolder(AddAGSFolderToFolderCommand command)
+        public CommandResult AddAGSFolder(AddAGSFolderToFolderCommand command)
         {
             var folder = _folderRepository.GetFolderById(command.ParentFolderId);
             folder.AddNewFolder(command.Name, command.Description, command.CreatedBy, command.Permissions);
             _folderRepository.SaveFolder(folder);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
-        public void CreateAGSFolder(CreateAGSFolderCommand command)
+        public CommandResult CreateAGSFolder(CreateAGSFolderCommand command)
         {
             var folder = new AGSFolder(command.Name, command.Description, command.CreatedBy, command.Permissions);
             _folderRepository.SaveFolder(folder);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
-        public void UpdateAGSFolder(UpdateAGSFolderCommand command)
+        public CommandResult UpdateAGSFolder(UpdateAGSFolderCommand command)
         {
             var folder = _folderRepository.GetFolderById(command.FolderId);
             folder.UpdateFolder(command.Name, command.Description);
             _folderRepository.SaveFolder(folder);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
-        public void DeleteAGSFolder(DeleteAGSFolderCommand command)
+        public CommandResult DeleteAGSFolder(DeleteAGSFolderCommand command)
         {
             _folderRepository.DeleteFolder(command.FolderId);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
-        public void SetAGSFolderPermission(SetAGSFolderPermissionsCommand command)
+        public CommandResult SetAGSFolderPermission(SetAGSFolderPermissionsCommand command)
         {
             var folder = _folderRepository.GetFolderById(command.FolderId);
             var permissions = new List<AGSPermission>();
@@ -55,12 +67,15 @@ namespace AGSDocumentCore.Services
             }
             folder.SetPermissions(permissions);
             _folderRepository.SaveFolder(folder);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
         #endregion
 
         #region File
-        public void AddAGSFileToFolder(AddAGSFileToFolderCommand command)
+        public CommandResult AddAGSFileToFolder(AddAGSFileToFolderCommand command)
         {
             var folder = _folderRepository.GetFolderById(command.FolderId);
             folder.AddNewFile(new AGSFile(
@@ -73,21 +88,30 @@ namespace AGSDocumentCore.Services
             ));
 
             _folderRepository.SaveFolder(folder);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
-        public void DeleteAGSFile(DeleteAGSFileCommand command)
+        public CommandResult DeleteAGSFile(DeleteAGSFileCommand command)
         {
             var (file, folderId) = _folderRepository.GetFileById(command.FileId);
             var folder = _folderRepository.GetFolderById(folderId);
             folder.DeleteFile(command.FileId);
             _folderRepository.SaveFolder(folder);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
-        public void UpdateAGSFile(UpdateAGSFileCommand command)
+        public CommandResult UpdateAGSFile(UpdateAGSFileCommand command)
         {
             var (file, folderId) = _folderRepository.GetFileById(command.FileId);
             file.UpdateFile(command.Name, command.FileExtension, command.Description, command.SizeInByte, command.CreatedBy);
             _folderRepository.SaveFile(file);
+            return new CommandResult{
+                ErrorCode = (int)ErrorCodeType.Success
+            };
         }
 
         #endregion

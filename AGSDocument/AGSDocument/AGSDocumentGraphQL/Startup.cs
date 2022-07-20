@@ -57,11 +57,13 @@ namespace AGSDocumentGraphQL
             services.AddTransient<IUserRepository, AGSUserRepository>();
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<IAGSDocumentQueryService, AGSDocumentQueryService>();
+            services.AddTransient<IAGSDocumentUpdateService, AGSDocumentUpdateService>();
 
             services
                 .AddGraphQLServer()
                 .AddAuthorization()
-                .AddQueryType<AGSDocumentQueryType>();
+                .AddQueryType<AGSDocumentQueryType>()
+                .AddMutationType<AGSDocumentMutationType>();
 
             services.AddHttpContextAccessor();
         }
