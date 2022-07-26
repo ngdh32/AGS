@@ -81,3 +81,4 @@
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/System.Memory.Data.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/AGSDocumentFileService.dll
 /Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/bin/Debug/net5.0/AGSDocumentFileService.pdb
+/Users/timng/Desktop/ags_git/AGS/AGSDocument/AGSDocument/AGSDocumentGraphQL/obj/Debug/net5.0/AGSDocumentGraphQL.csproj.CopyComplete

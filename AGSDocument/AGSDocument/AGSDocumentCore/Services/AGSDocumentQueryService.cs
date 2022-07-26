@@ -46,8 +46,8 @@ namespace AGSDocumentCore.Services
 
             foreach (var fileId in fileIds)
             {
-                var (file, folderId) = _folderRepository.GetFileById(fileId);
-                var folder = _folderRepository.GetFolderById(folderId);
+                var file = _folderRepository.GetFileById(fileId);
+                var folder = _folderRepository.GetFolderByFileId(fileId);
                 var checkPermission = CheckIfUserHasPermissionToAccess(user, folder.Permissions.ToList());
                 if (!checkPermission)
                     return null;

@@ -9,10 +9,10 @@ namespace AGSDocumentCore.Interfaces.Repositories
         public AGSFolder GetFolderById(string folderId);
 
         public void SaveFolder(AGSFolder folder);
-
         public void DeleteFolder(string folderId);
+        public AGSFolder GetFolderByFileId(string fileId);
 
-        public (AGSFile file, string folderId) GetFileById(string fileId);
+        public AGSFile GetFileById(string fileId);
 
         public void SaveFile(AGSFile file);
 

@@ -53,6 +53,14 @@ namespace AGSDocumentCore.Models.Entities
             // add validation here...
             _permissions = permissions;
         }
+        public AGSFolder(string id, string name, string createdBy, DateTime createdDate)
+        {
+            // add validation here...
+            this.Id = id;
+            this.Name = name;
+            this.CreatedBy = createdBy;
+            this.CreatedDate = createdDate;
+        }
 
         public AGSFolder(string id, string name, string createdBy, DateTime createdDate, List<AGSFile> files, List<AGSFolder> childrenFolders, List<AGSPermission> permissions)
         {
@@ -78,6 +86,9 @@ namespace AGSDocumentCore.Models.Entities
             this.Description = description;
             this.CreatedBy = createdBy;
             this._permissions = permissions ?? new();
+            this._childrenFolders = new ();
+            this._files = new ();
+            
         }
     }
 }

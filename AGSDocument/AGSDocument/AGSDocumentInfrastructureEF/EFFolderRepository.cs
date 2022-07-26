@@ -4,6 +4,7 @@ using System.Linq;
 using AGSDocumentCore.Interfaces.Repositories;
 using AGSDocumentCore.Models.Entities;
 using AGSDocumentInfrastructureEF.Entities;
+using J2N.Collections.Generic.Extensions;
 
 namespace AGSDocumentInfrastructureEF
 {
@@ -18,44 +19,43 @@ namespace AGSDocumentInfrastructureEF
 
         public void DeleteFolder(string folderId)
         {
+            var files = _dbContext.Files.Where(x => x.FolderId == folderId);
+            if (files != null && files.Count() > 0)
+            {
+                _dbContext.Files.RemoveRange(files);
+            }
+
             var folder = _dbContext.Folders.FirstOrDefault(x => x.Id == folderId);
             if (folder != null)
             {
-                // related permissions and files are removed when the folders are rmeoved
                 _dbContext.Folders.Remove(folder);
-
-                _dbContext.SaveChanges();
             }
+
+            _dbContext.SaveChanges();
         }
 
-        public (AGSFile file, string folderId) GetFileById(string fileId)
+        public AGSFolder GetFolderByFileId(string fileId)
         {
             var file = _dbContext.Files.FirstOrDefault(x => x.Id == fileId);
             if (file == null)
             {
-                return (null, null);
+                return null;
             }
 
-            var result = GetAGSFileFromEntity(file);
-            return (result, file.FolderId);
+            var folder = _dbContext.Folders.FirstOrDefault(x => x.Id == file.FolderId);
+            return folder == null ? null : GetAGSFolderFromEntity(folder);
+        }
+
+        public AGSFile GetFileById(string fileId)
+        {
+            var file = _dbContext.Files.FirstOrDefault(x => x.Id == fileId);
+            return file == null? null : GetAGSFileFromEntity(file);
         }
 
         public AGSFolder GetFolderById(string folderId)
         {
             var folder = _dbContext.Folders.FirstOrDefault(x => x.Id == folderId);
-            if (folder == null)
-            {
-                return null;
-            }
-
-            var childrenFolderIds = _dbContext.Folders.Where(x => x.ParentFolderId == folderId)?.Select(x => x.Id);
-            var childrenFolders = new List<AGSFolder>();
-            if (childrenFolderIds != null && childrenFolderIds.Count() > 0)
-            {
-                childrenFolders = childrenFolderIds.Select(x => GetFolderById(folderId)).ToList();
-            }
-
-            return GetAGSFolderFromEntity(folder, childrenFolders);
+            return folder == null ? null : GetAGSFolderFromEntity(folder);
         }
 
         public void SaveFile(AGSFile file)
@@ -78,81 +78,64 @@ namespace AGSDocumentInfrastructureEF
         public void SaveFolder(AGSFolder folder)
         {
             var agsFolder = _dbContext.Folders.FirstOrDefault(x => x.Id == folder.Id);
-            if (agsFolder != null)
+            var isFolderNew = agsFolder == null;
+            agsFolder ??= new EFAGSFolder()
             {
-                agsFolder.Name = folder.Name;
-                agsFolder.Description = folder.Description;
-                agsFolder.CreatedBy = folder.CreatedBy;
-                agsFolder.CreatedDate = folder.CreatedDate;
-            }
-            else
+                Id = folder.Id
+            };
+
+            agsFolder.Name = folder.Name;
+            agsFolder.Description = folder.Description;
+            agsFolder.CreatedBy = folder.CreatedBy;
+            agsFolder.CreatedDate = folder.CreatedDate;
+
+            _ = isFolderNew ? _dbContext.Folders.Add(agsFolder) : _dbContext.Folders.Update(agsFolder);
+
+            // remove those files that no longer exist
+            var toBeDeleteFiles = _dbContext.Files.Where(x => x.FolderId == folder.Id && !folder.Files.Any(y => x.Id == y.Id));
+            if (toBeDeleteFiles != null)
+                _dbContext.Files.RemoveRange(toBeDeleteFiles);
+
+            foreach(var file in folder.Files)
             {
-                agsFolder = new EFAGSFolder()
+                var efFile = _dbContext.Files.FirstOrDefault(x => x.Id == file.Id);
+                var isNewFile = efFile == null;
+                efFile ??= new EFAGSFile()
                 {
-                    Id = folder.Id,
-                    Name = folder.Name,
-                    Description = folder.Description,
-                    CreatedBy = folder.CreatedBy,
-                    CreatedDate = folder.CreatedDate
+                    Id = file.Id
                 };
 
-                _dbContext.Folders.Add(agsFolder);
+                efFile.Name = file.Name;
+                efFile.FileExtension = file.FileExtension;
+                efFile.Description = file.Description;
+                efFile.SizeInByte = file.SizeInByte;
+                efFile.FilePath = file.FilePath;
+                efFile.CreatedBy = file.CreatedBy;
+                efFile.CreatedDate = file.CreatedDate;
+                efFile.FolderId = folder.Id;
+
+                _ = isNewFile ? _dbContext.Files.Add(efFile) : _dbContext.Files.Update(efFile);   
             }
 
-            if (folder.Files == null || folder.Files.Count == 0)
-            {
-                var toBeDeletedFiles = _dbContext.Files.Where(x => x.FolderId == folder.Id);
-                if (toBeDeletedFiles != null)
-                    _dbContext.Files.RemoveRange(toBeDeletedFiles);
-            }
+            // remove those permissions that no longer exist
+            var toBeDeletedPermissions = _dbContext.FolderPermissions.Where(x => x.FolderId == folder.Id && !folder.Permissions.Any(y => x.Id == y.Id));
+            if (toBeDeletedPermissions != null)
+                _dbContext.FolderPermissions.RemoveRange(toBeDeletedPermissions);
 
-            if (folder.Files != null && folder.Files.Count > 0)
+            foreach(var permission in folder.Permissions)
             {
-                // just need to add/remove files. Update file will be done in SaveFile
-                var toBeDeleteFiles = _dbContext.Files.Where(x => x.FolderId == folder.Id && folder.Files.All(y => x.Id != y.Id));
-                if (toBeDeleteFiles != null)
-                    _dbContext.Files.RemoveRange(toBeDeleteFiles);
-
-                foreach (var file in folder.Files.Where(x => _dbContext.Files.Where(y => y.FolderId == folder.Id).All(z => z.Id != x.Id)))
+                var efPermission = _dbContext.FolderPermissions.FirstOrDefault(x => x.Id == permission.Id);
+                var isNewPermission = efPermission == null;
+                efPermission ??= new EFAGSFolderPermission()
                 {
-                    EFAGSFile efFile = new EFAGSFile();
-                    efFile.Name = file.Name;
-                    efFile.FileExtension = file.FileExtension;
-                    efFile.Description = file.Description;
-                    efFile.SizeInByte = file.SizeInByte;
-                    efFile.FilePath = file.FilePath;
-                    efFile.CreatedBy = file.CreatedBy;
-                    efFile.CreatedDate = file.CreatedDate;
-                    efFile.FolderId = folder.Id;
+                    Id = permission.Id
+                };
 
-                    _dbContext.Files.Add(efFile);
-                }
-            }
+                efPermission.FolderId = folder.Id;
+                efPermission.DepartmentId = permission.DepartmentId;
+                efPermission.PermissionType = (int)permission.PermissionType;
 
-            if (folder.Permissions == null || folder.Permissions.Count == 0)
-            {
-                var toBeDeletedPermissions = _dbContext.FolderPermissions.Where(x => x.FolderId == folder.Id);
-                if (toBeDeletedPermissions != null)
-                    _dbContext.FolderPermissions.RemoveRange(toBeDeletedPermissions);
-            }
-
-            if (folder.Permissions != null && folder.Permissions.Count > 0)
-            {
-                var toBeDeletedPermissions = _dbContext.FolderPermissions.Where(x => x.FolderId == folder.Id && folder.Permissions.All(y => y.DepartmentId != x.DepartmentId));
-                if (toBeDeletedPermissions != null)
-                    _dbContext.FolderPermissions.RemoveRange(toBeDeletedPermissions);
-
-                foreach (var permission in folder.Permissions.Where(x => _dbContext.FolderPermissions.Where(y => y.FolderId == folder.Id).All(z => z.DepartmentId != x.DepartmentId)))
-                {
-                    EFAGSFolderPermission efPermission = new EFAGSFolderPermission()
-                    {
-                        DepartmentId = permission.DepartmentId,
-                        FolderId = folder.Id,
-                        PermissionType = (int)permission.PermissionType
-                    };
-
-                    _dbContext.FolderPermissions.Add(efPermission);
-                }
+                _ = isNewPermission ? _dbContext.FolderPermissions.Add(efPermission) : _dbContext.FolderPermissions.Update(efPermission);   
             }
 
             _dbContext.SaveChanges();
@@ -173,11 +156,17 @@ namespace AGSDocumentInfrastructureEF
             return new AGSPermission(permission.Id, permission.DepartmentId, permission.PermissionType);
         }
 
-        private AGSFolder GetAGSFolderFromEntity(EFAGSFolder folder, List<AGSFolder> childrenFolders)
+        private AGSFolder GetAGSFolderFromEntity(EFAGSFolder folder)
         {
             var agsFiles = folder.EFAGSFiles.Select(x => GetAGSFileFromEntity(x));
             var agsPermissions = folder.EFAGSFolderPermissions.Select(x => GetAGSPermissionFromEntity(x));
-            return new AGSFolder(folder.Id, folder.Name, folder.CreatedBy, folder.CreatedDate, agsFiles.ToList(), childrenFolders.ToList(), agsPermissions.ToList());
+            var childrenFolders = _dbContext.Folders.Where(x => x.ParentFolderId == folder.Id);
+            var agsChildrenFolders = new List<AGSFolder>();
+            if (childrenFolders != null && childrenFolders.Count() > 0)
+            {
+                agsChildrenFolders = childrenFolders.Select(x => GetAGSFolderFromEntity(x)).ToList();
+            }
+            return new AGSFolder(folder.Id, folder.Name, folder.CreatedBy, folder.CreatedDate, agsFiles.ToList(), agsChildrenFolders.ToList(), agsPermissions.ToList());
         }
     }
 }

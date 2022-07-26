@@ -95,8 +95,7 @@ namespace AGSDocumentCore.Services
 
         public CommandResult DeleteAGSFile(DeleteAGSFileCommand command)
         {
-            var (file, folderId) = _folderRepository.GetFileById(command.FileId);
-            var folder = _folderRepository.GetFolderById(folderId);
+            var folder = _folderRepository.GetFolderByFileId(command.FileId);
             folder.DeleteFile(command.FileId);
             _folderRepository.SaveFolder(folder);
             return new CommandResult{
@@ -106,7 +105,7 @@ namespace AGSDocumentCore.Services
 
         public CommandResult UpdateAGSFile(UpdateAGSFileCommand command)
         {
-            var (file, folderId) = _folderRepository.GetFileById(command.FileId);
+            var file = _folderRepository.GetFileById(command.FileId);
             file.UpdateFile(command.Name, command.FileExtension, command.Description, command.SizeInByte, command.CreatedBy);
             _folderRepository.SaveFile(file);
             return new CommandResult{
